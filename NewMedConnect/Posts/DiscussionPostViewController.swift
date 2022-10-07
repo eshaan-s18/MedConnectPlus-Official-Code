@@ -22,6 +22,7 @@ var countNum = -1
 
 var whichTextField = ""
 
+var reportedPost = "Nil"
 var reportedDiscussion = ""
 var reportedDiscussionReply = ""
 
@@ -38,6 +39,18 @@ var repliesCollectionHeight = 0
 
 var replyTextFieldVal = ""
 
+var sharedDiscussionCommentUserRace:String = ""
+var sharedDiscussionCommentUserBirthday:String = ""
+var sharedDiscussionCommentUserCountry:String = ""
+var sharedDiscussionCommentUserGender:String = ""
+var sharedDiscussionCommentUserAge:Int = 0
+
+
+
+
+
+
+
 var pointX:CGFloat = 0.00
 var pointY:CGFloat = 0.00
 
@@ -50,6 +63,12 @@ struct DiscussionCommentReply {
     var discussionReplyUsername:String
     var discussionReplyButtonTapped:Bool
     var discussionReplyCancelorPost:String
+    
+    var discussionReplyGenderUpvotes:[Int]
+    var discussionReplyAgeUpvotes:[Int]
+    var discussionReplyRaceUpvotes:[Int]
+    var discussionReplyCountry:[String]
+    var discussionReplyCountryUpvotes:[Int]
 }
 
 struct DiscussionComment {
@@ -63,6 +82,12 @@ struct DiscussionComment {
     var commentReplies:[DiscussionCommentReply]
     var discussionReplyButtonTapped:Bool
     var discussionReplyCancelOrPost:String
+    
+    var discussionCommentGenderUpvotes:[Int]
+    var discussionCommentAgeUpvotes:[Int]
+    var discussionCommentRaceUpvotes:[Int]
+    var discussionCommentCountry:[String]
+    var discussionCommentCountryUpvotes:[Int]
 }
 
 
@@ -127,6 +152,9 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
     @IBOutlet weak var viewsOrDate: UIButton!
     
     
+    @IBOutlet weak var deleteOrFlag: UIButton!
+    
+    
     var currentFilter = "Popularity"
     
     var closeRepliesView = false
@@ -142,13 +170,30 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
     var discussionCommentDates = [String]()
     var discussionCommentDownvotes = [Int]()
     var discussionCommentUpvotes = [Int]()
+    
     var discussionCommentUserUpvote = [String]()
     var discussionCommentUserDownvote = [String]()
+    
+    var discussionCommentUserRace:String = ""
+    var discussionCommentUserBirthday:String = ""
+    var discussionCommentUserCountry:String = ""
+    var discussionCommentUserGender:String = ""
+    var discussionCommentUserAge:Int = 0
+
+    
+    
+    
     var discussionCommentPopularity = [Int]()
     var discussionUsername = [String]()
     var discussionCommentRepliesOpen = [Bool]()
     var discussionReplyButtonTapped = [Bool]()
     var discussionReplyCancelOrPost = [String]()
+    
+    var discussionCommentGenderUpvotes = [[Int]]()
+    var discussionCommentAgeUpvotes = [[Int]]()
+    var discussionCommentRaceUpvotes = [[Int]]()
+    var discussionCommentCountry = [[String]]()
+    var discussionCommentCountryUpvotes = [[Int]]()
 
     var discussionCommentsViewHeight = 0
 
@@ -189,7 +234,6 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
 
 
-
         getData()
         
         
@@ -216,7 +260,37 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
         setPopupButton()
         
 //        responsesCollectionViewHeightConstraint.constant = responsesCollectionView.collectionViewLayout.collectionViewContentSize.height
+        
+        
+        deleteOrFlag.showsMenuAsPrimaryAction = true
+        
+        
     }
+    func calcAge(birthday: String) -> Int {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "MM/dd/yyyy"
+        let birthdayDate = dateFormater.date(from: birthday)
+        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
+        let now = Date()
+        let calcAge = calendar.components(.year, from: birthdayDate!, to: now, options: [])
+        let age = calcAge.year
+        return age!
+    }
+    
+    @objc func reportCommentButtonTapped() {
+        var reportResponseVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "ReportResponseViewController")
+        if let sheet = reportResponseVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 25
+            
+        }
+
+        self.present(reportResponseVC, animated: true, completion: nil)
+
+    }
+    
+   
     
     
     @objc private func hideKeyboard() {
@@ -366,6 +440,12 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
         self.discussionReplyButtonTapped = [Bool]()
         self.discussionReplyCancelOrPost = [String]()
         
+        self.discussionCommentGenderUpvotes = [[Int]]()
+        self.discussionCommentAgeUpvotes = [[Int]]()
+        self.discussionCommentRaceUpvotes = [[Int]]()
+        self.discussionCommentCountry = [[String]]()
+        self.discussionCommentCountryUpvotes = [[Int]]()
+        
 
         self.filterVals = [DiscussionCommentReply]()
 
@@ -380,6 +460,29 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
+                    if querySnapshot!.documents.count == 0 {
+                        self.navigationController?.popViewController(animated: true)
+
+
+                        let alert = UIAlertController(title: "Error: Discussion post not found", message: "Please refresh discussion page", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                            switch action.style{
+                                case .default:
+                                print("default")
+
+
+                                case .cancel:
+                                print("cancel")
+
+                                case .destructive:
+                                print("destructive")
+
+                            }
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    
+                    
                     for document in querySnapshot!.documents {
                         discussionDocument = document.documentID
                         print("\(document.documentID) => \(document.data())")
@@ -409,6 +512,90 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                     self.db.collection(conditionSelected).document(document!.documentID).updateData(["views": newViews])
                                     self.discussionViewCount.text = newViews + " views"
                                     self.discussionUsernameLabel.text = "User " + discussion.user!
+                                    
+                                    
+                                    var delimeter = " "
+                                    var usernameLabel = self.discussionUsernameLabel.text
+                                    let newUsernameLabel = usernameLabel?.components(separatedBy: delimeter)
+                                    print(newUsernameLabel![1])
+                                    
+                                    self.deleteOrFlag.showsMenuAsPrimaryAction = true
+                                    
+                                    if newUsernameLabel![1] == Auth.auth().currentUser!.uid {
+                                        self.deleteOrFlag.menu = UIMenu(children: [
+                                            UIAction(title: "Delete Response",image: UIImage(systemName: "trash"), handler: { action in
+                                                self.db.collection(conditionSelected).whereField("discussion", isEqualTo: selectedDiscussion).getDocuments() { (querySnapshot, err) in
+                                                    if let err = err {
+                                                        print("Error getting documents: \(err)")
+                                                        let alert = UIAlertController(title: "Error⚠️❌", message: "Please Connect to WiFi or Restart App", preferredStyle: .alert)
+                                                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                                            switch action.style{
+                                                                case .default:
+                                                                print("default")
+
+                                                                
+                                                                case .cancel:
+                                                                print("cancel")
+                                                                
+                                                                case .destructive:
+                                                                print("destructive")
+                                                                
+                                                            }
+                                                        }))
+                                                        
+                                                        self.present(alert, animated: true, completion: nil)
+                                                    } else {
+                                                        for document in querySnapshot!.documents {
+                                                            
+
+                                                            print("\(document.documentID) => \(document.data())")
+
+                                                            self.db.collection(conditionSelected).document(document.documentID).updateData(["discussion" : " "])
+
+                                                            let alert = UIAlertController(title: "Successfully Deleted🗑", message: "Please refresh discussion page", preferredStyle: .alert)
+                                                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                                                switch action.style{
+                                                                    case .default:
+                                                                    print("default")
+                                                                    self.navigationController?.popViewController(animated: true)
+
+
+
+                                                                    case .cancel:
+                                                                    print("cancel")
+
+                                                                    case .destructive:
+                                                                    print("destructive")
+
+                                                                }
+                                                            }))
+                                                            self.present(alert, animated: true, completion: nil)
+                                                            
+
+                                                        
+                                                            
+                                                        }
+                                                    }
+                                            }
+                                            
+                                        })
+                                    ])
+                                }
+                                else {
+                                    self.deleteOrFlag.menu = UIMenu(children: [
+                                        
+                                        UIAction(title: "Report Post",image: UIImage(systemName: "flag"), handler: { action in
+                                            reportedPost = selectedDiscussion
+
+                                            reportedDiscussion = "Nil"
+                                            reportedDiscussionReply = "Nil"
+
+                                            self.reportCommentButtonTapped()
+                                            
+                                        })
+                                    ])
+                                }
+                                    
                                     
                                     
                                     self.discussionComments = [String]()
@@ -507,15 +694,12 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                 filterVals = [DiscussionCommentReply]()
                                                                                                 if replyDocument != "0" {
                                                                                                     let newDateTwo = self.dateFormatter.date(from: reply.repliesDate!)
-                                                                                                    self.unsortedDiscussionCommentReplies.append(DiscussionCommentReply.init(discussCommentTitle: reply.commentTitle!, discussionCommentReplyTitle: reply.repliesTitle!, discussionCommentReplyDate: newDateTwo!, discussionCommentReplyDownvotes: reply.repliesDownvotes!, discussionCommentReplyUpvotes: reply.repliesUpvotes!, discussionReplyUsername: reply.repliesUser!, discussionReplyButtonTapped: false, discussionReplyCancelorPost: ""))
+                                                                                                    self.unsortedDiscussionCommentReplies.append(DiscussionCommentReply.init(discussCommentTitle: reply.commentTitle!, discussionCommentReplyTitle: reply.repliesTitle!, discussionCommentReplyDate: newDateTwo!, discussionCommentReplyDownvotes: reply.repliesDownvotes!, discussionCommentReplyUpvotes: reply.repliesUpvotes!, discussionReplyUsername: reply.repliesUser!, discussionReplyButtonTapped: false, discussionReplyCancelorPost: "", discussionReplyGenderUpvotes: reply.genderUpvotes!, discussionReplyAgeUpvotes: reply.ageUpvotes!, discussionReplyRaceUpvotes: reply.raceUpvotes!, discussionReplyCountry: reply.country!, discussionReplyCountryUpvotes: reply.countryUpvotes!))
                                                                                                         //self.questionLabel.text = question.question
                                                                                                     print("okay")
                                                                                                     print(unsortedDiscussionCommentReplies)
                                                                                                                                                                                                         
-//                                                                                                    print(sortedDiscussionCommentReplies)
-//                                                                                                                             self.responsesCollectionView.reloadData()
-//                                                                                                                             self.responsesCollectionView.dataSource = self
-//                                                                                                                             self.responsesCollectionView.delegate = self
+
  
                                                                                                     print(sortedDiscussionCommentReplies)
                                                                                                     
@@ -558,7 +742,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                     
                                                                                                     print(unsortedDiscussionComments)
                                                                                                     let newDate = self.dateFormatter.date(from: discussionComments.date!)
-                                                                                                    self.unsortedDiscussionComments.append(DiscussionComment.init(discussionsCommentTitle: discussionComments.commentTitle!, discussionCommentDate: newDate!, discussionCommentDownvotes: discussionComments.downvotes!, discussionCommentUpvotes: discussionComments.upvotes!, discussionCommentPopularity: discussionComments.upvotes! - discussionComments.downvotes!, discussionUsername: discussionComments.user!, discussionCommentRepliesOpen: false, commentReplies: filterVals, discussionReplyButtonTapped: false, discussionReplyCancelOrPost: ""))
+                                                                                                    self.unsortedDiscussionComments.append(DiscussionComment.init(discussionsCommentTitle: discussionComments.commentTitle!, discussionCommentDate: newDate!, discussionCommentDownvotes: discussionComments.downvotes!, discussionCommentUpvotes: discussionComments.upvotes!, discussionCommentPopularity: discussionComments.upvotes! - discussionComments.downvotes!, discussionUsername: discussionComments.user!, discussionCommentRepliesOpen: false, commentReplies: filterVals, discussionReplyButtonTapped: false, discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: discussionComments.genderUpvotes!, discussionCommentAgeUpvotes: discussionComments.ageUpvotes!, discussionCommentRaceUpvotes: discussionComments.raceUpvotes!, discussionCommentCountry: discussionComments.country!, discussionCommentCountryUpvotes: discussionComments.countryUpvotes!))
                                                                                                 }
                                                                                                     
                                                                                                     print(sortedDiscussionCommentReplies)
@@ -611,21 +795,48 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                     print(unsortedDiscussionComments)
                                                                                                     print(sortedDiscussionComments)
                                                                                                     
-                                                                                                    countNum = -1
                                                                                                     var i = 0
+
+                                                                                                    
+                                                                                                    countNum = -1
                                                                                                     print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle}))
                                                                                                     while i < (self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count) {
                                                                                                         print(i)
                                                                                                         print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[i])
                                                                                                         if self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[i].prefix(1) == " " {
                                                                                                         
+                                                                                                            
                                                                                                             self.sortedDiscussionComments.remove(at: i)
                                                                                                             i = -1
                                                                                                             
 
                                                                                                         }
+                                                                                                        
+                                                                                                         
+                                                                                                                                                                                                            
                                                                                                         i+=1
                                                                                                     }
+                                                                                                    
+                                                                                                    i = 0
+                                                                                                    while i < (self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count) {
+                                                                                                        
+                                                                                                        var k = 0
+                                                                                                        print(self.sortedDiscussionComments.map({$0.commentReplies})[i])
+                                                                                                        while k < self.sortedDiscussionComments.map({$0.commentReplies})[i].map({$0.discussionCommentReplyTitle}).count {
+                                                                                                            if self.sortedDiscussionComments.map({$0.commentReplies})[i].map({$0.discussionCommentReplyTitle})[k] == " " {
+                                                                                                                print(self.sortedDiscussionComments.map({$0.commentReplies})[i].map({$0.discussionCommentReplyTitle})[k])
+                                                                                                                self.sortedDiscussionComments[i].commentReplies.remove(at: k)
+                                                                                                                k = -1
+                                                                                                            }
+                                                                                                            k += 1
+                                                                                                        }
+                                                                                                        
+                                                                                                        i+=1
+                                                                                                    }
+                                                                                                    
+                                                                                                    discussionCommentCount.text = String(sortedDiscussionComments.count)
+                                                                                                    
+                                                                                                    
                                                                                                     
                                                                                                     
                                                                                                     
@@ -706,6 +917,45 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                             self.discussionCommentUserDownvote = downvote.downvotes!
                                                                                             self.discussionCommentUserUpvote = upvote.upvotes!
                                                                                             
+                                                                                            let docRefOne = db.collection("Users").document(Auth.auth().currentUser!.uid)
+
+                                                                                            docRefOne.getDocument { (document, error) in
+
+                                                                                                let result = Result {
+                                                                                                  try document?.data(as: UserReference.self)
+
+                                                                                                }
+                                                                                                print(result)
+                                                                                                switch result {
+                                                                                                case .success(let user):
+                                                                                                    if let user = user {
+                                                                                                        // A `City` value was successfully initialized from the DocumentSnapshot.
+                                                                                                        self.discussionCommentUserRace = user.race!
+                                                                                                        self.discussionCommentUserBirthday = user.birthday!
+                                                                                                        self.discussionCommentUserAge = calcAge(birthday: user.birthday!)
+                                                                                                        self.discussionCommentUserCountry = user.country!
+                                                                                                        self.discussionCommentUserGender = user.gender!
+                                                                                                        
+                                                                                                        sharedDiscussionCommentUserRace = discussionCommentUserRace
+                                                                                                        sharedDiscussionCommentUserBirthday = discussionCommentUserBirthday
+                                                                                                        sharedDiscussionCommentUserAge = discussionCommentUserAge
+                                                                                                        sharedDiscussionCommentUserCountry = discussionCommentUserCountry
+                                                                                                        sharedDiscussionCommentUserGender = discussionCommentUserGender
+                                                                                                        //self.questionLabel.text = question.question
+                                                                                                        print("okay")
+                                                                                                    } else {
+                                                                                                        // A nil value was successfully initialized from the DocumentSnapshot,
+                                                                                                        // or the DocumentSnapshot was nil.
+                                                                                                        print("Document does not exist")
+                                                                                                    }
+                                                                                                case .failure(let error):
+                                                                                                    // A `City` value could not be initialized from the DocumentSnapshot.
+                                                                                                    print("Error decoding question: \(error)")
+                                                                                                    }
+                                                                                                }
+                                                                                            
+                                                                                            
+                                                                                            
                                                                                             var i = 0
                                                                                             while i < self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count {
                                                                                             
@@ -756,7 +1006,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                     
                                                     
                                                                     
-                                                                    self.discussionCommentCount.text = String(self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count)
+//                                                                    self.discussionCommentCount.text = String(self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count)
                                                                     
                                                                     
                                                                     
@@ -893,7 +1143,8 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         var delimeter = "-"
         var commentTitle = self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row]
         var newCommentTitle = commentTitle.components(separatedBy: delimeter)
-        
+        cell?.commentLabel.text = newCommentTitle[0]
+
         
         cell?.commentLabel.sizeToFit()
         cell?.commentLabel.numberOfLines = 0
@@ -907,7 +1158,6 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
 
      
         
-        cell?.commentLabel.text = newCommentTitle[0]
 
         
         
@@ -915,7 +1165,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         
         if self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath.row] == Auth.auth().currentUser!.uid {
             cell?.deleteOrFlag.menu = UIMenu(children: [
-                UIAction(title: "Delete Post",image: UIImage(systemName: "trash"), handler: { action in
+                UIAction(title: "Delete Response",image: UIImage(systemName: "trash"), handler: { action in
                     
                     
                     self.db.collection(conditionSelected).document(discussionDocument).collection("comments").whereField("commentTitle", isEqualTo: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row]).whereField("date", isEqualTo: displayedDate[indexPath.row]).whereField("user", isEqualTo: self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath.row])
@@ -945,7 +1195,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                     
                                     self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData(["commentTitle" : " - " + document.documentID])
                                     
-                                    let alert = UIAlertController(title: "Success‼️✅", message: "Please Refresh", preferredStyle: .alert)
+                                    let alert = UIAlertController(title: "Successfully Deleted🗑", message: "Please Refresh", preferredStyle: .alert)
                                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                                         switch action.style{
                                             case .default:
@@ -976,7 +1226,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             cell?.deleteOrFlag.menu = UIMenu(children: [
                 
                 UIAction(title: "Report Post",image: UIImage(systemName: "flag"), handler: { action in
-                    reportedDiscussion = (cell?.commentLabel.text)!
+                    reportedDiscussion = (self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row])
                     reportedDiscussionReply = "Nil"
 
                     self.reportCommentButtonTapped()
@@ -1036,6 +1286,13 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
 
         
         if self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexPath.row] == true {
+            
+            viewInScrollViewHeight = Int(self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height + 45)
+            print(viewInScrollViewHeight)
+            self.viewInScrollViewHeightConstraint.constant = CGFloat(viewInScrollViewHeight)
+            
+            
+            
             print(cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)
             whichTextField = "comment"
             //
@@ -1047,8 +1304,10 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
             
             if cell?.responseCommentsViewHeightConstraint.constant != (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65 {
+                print(cell?.responseCommentsViewHeightConstraint.constant)
                 cell?.responseCommentsViewHeightConstraint.constant += (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
                 
+                print(cell?.responseCommentsViewHeightConstraint.constant)
                 //TEMPORARY SOLUTION NEED TO FIX
                 
                 
@@ -1091,38 +1350,45 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
             print(cell?.responseCommentsViewHeightConstraint.constant)
             print((cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65)
-            if cell?.responseCommentsViewHeightConstraint.constant == (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65 {
+            
+            cell?.responseCommentsViewHeightConstraint.constant = 0
+            cell?.responseCommentsView.layoutIfNeeded()
+            
+            
+            if (cell?.responseCommentsViewHeightConstraint.constant)! == (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65{
                 
-                cell?.responseCommentsViewHeightConstraint.constant -= (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
-
-                self.viewInScrollViewHeightConstraint.constant -= (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
+                //TEMPORARY SOLUTION NEED TO FIX
+                //*********************************
                 
-                for reply in sortedDiscussionComments.map({$0.commentReplies})[indexPath.row].map({$0.discussionCommentReplyTitle}) {
-                    
-                    var count = reply.count
-                    
-                    while count > 35 {
-                        cell?.responseCommentsViewHeightConstraint.constant -= 25
-                        self.viewInScrollViewHeightConstraint.constant -= 25
-                        count -= 35
-                    }
-                    
-                    
-                }
-                
-                cell?.responseCommentsView.layoutIfNeeded()
-
-                print(cell?.responseCommentsViewHeightConstraint.constant)
-                
-                print(viewInScrollViewHeightConstraint.constant)
-                
-                closeRepliesView = false
+//                cell?.responseCommentsViewHeightConstraint.constant -= (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
+//
+//                self.viewInScrollViewHeightConstraint.constant -= (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
+//
+//                for reply in sortedDiscussionComments.map({$0.commentReplies})[indexPath.row].map({$0.discussionCommentReplyTitle}) {
+//
+//                    var count = reply.count
+//
+//                    while count > 35 {
+//                        cell?.responseCommentsViewHeightConstraint.constant -= 25
+//                        self.viewInScrollViewHeightConstraint.constant -= 25
+//                        count -= 35
+//                    }
+//
+//
+//                }
+//
+//                cell?.responseCommentsView.layoutIfNeeded()
+//
+//                print(cell?.responseCommentsViewHeightConstraint.constant)
+//
+//                print(viewInScrollViewHeightConstraint.constant)
+//
+//                closeRepliesView = false
 
             }
             
             else {
-                cell?.responseCommentsViewHeightConstraint.constant = 0
-                cell?.responseCommentsView.layoutIfNeeded()
+                
             }
             
             
@@ -1175,7 +1441,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                     
                                     let replyTitle = cell?.replyTextField.text
                                         
-                                    self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").document("\(docCount)").setData(["commentTitle" : discussionComment, "repliesTitle" : replyTextFieldVal, "repliesDate": dateFormatter.string(from: date), "repliesDownvotes": 0, "repliesUpvotes": 0, "repliesUser": Auth.auth().currentUser!.uid])
+                                    self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").document("\(docCount)").setData(["commentTitle" : discussionComment, "repliesTitle" : replyTextFieldVal, "repliesDate": dateFormatter.string(from: date), "repliesDownvotes": 0, "repliesUpvotes": 0, "repliesUser": Auth.auth().currentUser!.uid, "gender": ["Male", "Female", "Other"], "genderUpvotes": [0,0,0], "race": ["White", "Black or African American", "American Indian or Alaska Native", "Asian", "Native Hawaiian or Other Pacific Islander"], "raceUpvotes": [0,0,0,0,0], "age": ["0-10","10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80+"], "ageUpvotes": [0,0,0,0,0,0,0,0,0], "country": [""], "countryUpvotes": [0]])
                                     
                                     let alert = UIAlertController(title: "Success‼️✅", message: "Please Refresh", preferredStyle: .alert)
                                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -1274,7 +1540,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         
         print(discussionCommentUserUpvote)
 
-        if self.discussionCommentUserUpvote.contains((cell?.commentLabel.text)!) {
+        if self.discussionCommentUserUpvote.contains((self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row])) {
             cell?.upHeartImage.image = UIImage(systemName: "arrow.up.heart.fill")
             cell?.upHeartView.backgroundColor = UIColor.white
             
@@ -1290,7 +1556,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         
         print(discussionCommentUserDownvote)
         
-        if self.discussionCommentUserDownvote.contains((cell?.commentLabel.text)!) {
+        if self.discussionCommentUserDownvote.contains((self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row])) {
             cell?.downHeartImage.image = UIImage(systemName: "arrow.down.heart.fill")
             cell?.downHeartView.backgroundColor = UIColor.white
         }
@@ -1312,6 +1578,19 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         cell?.upHeartButton.addTarget(self, action: #selector(upheartTapped(sender:)), for: .touchUpInside)
         cell?.downHeartButton.addTarget(self, action: #selector(downheartTapped(sender:)), for: .touchUpInside)
         
+        
+     //   cell?.pieChartButton.addTarget(self, action: #selector(pieChartButtonTapped(sender:)), for: .touchUpInside)
+        
+        cell?.pieChartButton.addTarget(self, action: #selector(pieChartButtonTapped(sender:)), for: .touchUpInside)
+
+//        UIAction(title: "Report Post",image: UIImage(systemName: "flag"), handler: { action in
+//            reportedDiscussion = (self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row])
+//            reportedDiscussionReply = "Nil"
+//
+//            self.reportCommentButtonTapped()
+//
+//        })
+        cell?.pieChartButton.tag = indexPath.row
         cell?.replyCancelSendButton.tag = indexPath.row
         cell?.replyTextField.tag = indexPath.row
         cell?.upHeartButton.tag = indexPath.row
@@ -1351,19 +1630,46 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
     
     }
     
-    @objc func reportCommentButtonTapped() {
-        var reportResponseVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "ReportResponseViewController")
-        if let sheet = reportResponseVC.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 25
-            
-        }
-        
-        self.present(reportResponseVC, animated: true, completion: nil)
-
-    }
+//    @objc func reportCommentButtonTapped() {
+//        var reportResponseVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "ReportResponseViewController")
+//        if let sheet = reportResponseVC.sheetPresentationController {
+//            sheet.detents = [.medium()]
+//            sheet.prefersGrabberVisible = true
+//            sheet.preferredCornerRadius = 25
+//
+//        }
+//
+//        self.present(reportResponseVC, animated: true, completion: nil)
+//
+//    }
     
+    
+    @objc func pieChartButtonTapped(sender:UIButton) {
+        let indexpath = IndexPath(row: sender.tag, section: 0)
+        print(indexpath.row)
+        
+        var delimeter = "-"
+        var commentTitle = self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath.row]
+        var newCommentTitle = commentTitle.components(separatedBy: delimeter)
+        
+        selectedPieChartResponse = newCommentTitle[0]
+        
+        selectedGenderVotes = self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath.row]
+        selectedRaceVotes = self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath.row]
+        selectedAgeVotes = self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath.row]
+        selectedCountry = self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath.row]
+        selectedCountryVotes = self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath.row]
+        
+        sharedDiscussionCommentUserRace = discussionCommentUserRace
+        sharedDiscussionCommentUserBirthday = discussionCommentUserBirthday
+        sharedDiscussionCommentUserAge = discussionCommentUserAge
+        sharedDiscussionCommentUserCountry = discussionCommentUserCountry
+        sharedDiscussionCommentUserGender = discussionCommentUserGender
+        
+        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "PieChartViewController")
+
+        self.present(pieChartVC, animated: true, completion: nil)
+    }
     
     
 
@@ -1379,7 +1685,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             }
             
             print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row])
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: ""), at: indexpath4.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath4.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath4.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath4.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath4.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath4.row]), at: indexpath4.row)
             
             self.sortedDiscussionComments.remove(at: indexpath4.row + 1)
             self.view.endEditing(true)
@@ -1391,7 +1697,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         } else {
             print("Post")
             print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row])
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: "Post"), at: indexpath4.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: "Post", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath4.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath4.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath4.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath4.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath4.row]), at: indexpath4.row)
             
             
             
@@ -1411,7 +1717,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         sender.becomeFirstResponder()
         let indexpath4 = IndexPath(row: sender.tag, section: 0)
         if sender.text!.count > 0 {
-                self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath4.row], discussionReplyCancelOrPost: "Post"), at: indexpath4.row)
+                self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath4.row], discussionReplyCancelOrPost: "Post", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath4.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath4.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath4.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath4.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath4.row]), at: indexpath4.row)
                 
                 self.sortedDiscussionComments.remove(at: indexpath4.row + 1)
                 
@@ -1420,7 +1726,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         
     
         else {
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath4.row], discussionReplyCancelOrPost: ""), at: indexpath4.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath4.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath4.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath4.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath4.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath4.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath4.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath4.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath4.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath4.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath4.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath4.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath4.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath4.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath4.row]), at: indexpath4.row)
             
             self.sortedDiscussionComments.remove(at: indexpath4.row + 1)
             
@@ -1434,7 +1740,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         let indexPath3 = IndexPath(row: sender.tag, section: 0)
         
         if self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexPath3.row] == false {
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath3.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexPath3.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexPath3.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexPath3.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexPath3.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath3.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexPath3.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexPath3.row], discussionReplyButtonTapped: true, discussionReplyCancelOrPost: ""), at: indexPath3.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath3.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexPath3.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexPath3.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexPath3.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexPath3.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath3.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexPath3.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexPath3.row], discussionReplyButtonTapped: true, discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexPath3.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexPath3.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexPath3.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexPath3.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexPath3.row]), at: indexPath3.row)
             
             self.sortedDiscussionComments.remove(at: indexPath3.row + 1)
             
@@ -1449,7 +1755,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                     if self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[i] == true {
                         collapseRepliesSubtract += self.sortedDiscussionComments.map({$0.commentReplies})[i].count
                     }
-                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[i], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[i], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[i], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[i]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[i], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[i], discussionCommentRepliesOpen: false, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[i], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: ""), at: i)
+                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[i], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[i], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[i], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[i]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[i], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[i], discussionCommentRepliesOpen: false, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[i], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[i], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[i], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[i], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[i], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[i]), at: i)
                     
                     self.sortedDiscussionComments.remove(at: i + 1)
                 }
@@ -1477,7 +1783,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         if self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexPath2.row] == false {
             sortedDiscussionComments = sharedComments
 
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath2.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexPath2.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexPath2.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexPath2.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexPath2.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath2.row], discussionCommentRepliesOpen: true, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexPath2.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexPath2.row], discussionReplyCancelOrPost: ""), at: indexPath2.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath2.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexPath2.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexPath2.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexPath2.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexPath2.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath2.row], discussionCommentRepliesOpen: true, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexPath2.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexPath2.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexPath2.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexPath2.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexPath2.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexPath2.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexPath2.row]), at: indexPath2.row)
             
             print(self.sortedDiscussionComments)
             self.sortedDiscussionComments.remove(at: indexPath2.row + 1)
@@ -1500,7 +1806,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                         totalCommentsSubtract += self.sortedDiscussionComments.map({$0.commentReplies})[i].count
                         print(totalCommentsSubtract)
                     }
-                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[i], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[i], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[i], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[i]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[i], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[i], discussionCommentRepliesOpen: false, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[i], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: ""), at: i)
+                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[i], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[i], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[i], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[i]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[i], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[i], discussionCommentRepliesOpen: false, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[i], discussionReplyButtonTapped: false, discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[i], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[i], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[i], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[i], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[i]), at: i)
                     
                     self.sortedDiscussionComments.remove(at: i + 1)
                 }
@@ -1552,7 +1858,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         else {
             sortedDiscussionComments = sharedComments
 
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath2.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexPath2.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexPath2.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexPath2.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexPath2.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath2.row], discussionCommentRepliesOpen: false, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexPath2.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexPath2.row], discussionReplyCancelOrPost: ""), at: indexPath2.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath2.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexPath2.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexPath2.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexPath2.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexPath2.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath2.row], discussionCommentRepliesOpen: false, commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexPath2.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexPath2.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexPath2.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexPath2.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexPath2.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexPath2.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexPath2.row]), at: indexPath2.row)
             
             print(self.sortedDiscussionComments)
             self.sortedDiscussionComments.remove(at: indexPath2.row + 1)
@@ -1592,28 +1898,130 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                         for document in querySnapshot!.documents {
                             print("\(document.documentID) => \(document.data())")
                             
-                            self.self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
-                                "upvotes": (Int(self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]) - 1)
+                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                "upvotes": (Int(self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]))
                                 
                                 
                             ])
                             
+                            if self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row].contains(self.discussionCommentUserCountry) {
+                                print(self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row])
+                                
+                                let countryIndex = self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row].firstIndex(of: self.discussionCommentUserCountry)
+                                
+                                
+                                
+                                self.sortedDiscussionComments[indexpath1.row].discussionCommentCountryUpvotes[countryIndex!] -= 1
+                                
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                    "countryUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]])
+                                
+                                
+                            }
+                            
+                            print(self.discussionCommentUserGender)
+                            var genderIndex = 0
+                            if self.discussionCommentUserGender == "Male" {
+                                genderIndex = 0
+                            }
+                            else if self.discussionCommentUserGender == "Female" {
+                                genderIndex = 1
+                                
+                            }
+                            else if self.discussionCommentUserGender == "Other" {
+                                genderIndex = 2
+                                
+                            }
+                            
+                            self.sortedDiscussionComments[indexpath1.row].discussionCommentGenderUpvotes[genderIndex] -= 1
+
+                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                "genderUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row]])
+                            
+                            print(self.discussionCommentUserRace)
+                            
+                            var raceIndex = 0
+                            if self.discussionCommentUserRace == "White" {
+                                raceIndex = 0
+                            }
+                            else if self.discussionCommentUserRace == "Black or African American" {
+                                raceIndex = 1
+                                
+                            }
+                            else if self.discussionCommentUserRace == "American Indian or Alaska Native" {
+                                raceIndex = 2
+                                
+                            }
+                            else if self.discussionCommentUserRace == "Asian" {
+                                raceIndex = 3
+                                
+                            }
+                            else if self.discussionCommentUserRace == "Native Hawaiian or Other Pacific Islander" {
+                                raceIndex = 4
+                                
+                            }
+                            
+                            
+                            self.sortedDiscussionComments[indexpath1.row].discussionCommentRaceUpvotes[raceIndex] -= 1
+
+                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                "raceUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row]])
+                            
+                            
+                            print(self.discussionCommentUserAge)
+
+                            var ageIndex = 0
+                            if self.discussionCommentUserAge > 0 && self.discussionCommentUserAge <= 10 {
+                                ageIndex = 0
+                            }
+                            else if self.discussionCommentUserAge > 10 && self.discussionCommentUserAge <= 20 {
+                                ageIndex = 1
+                            }
+                            else if self.discussionCommentUserAge > 20 && self.discussionCommentUserAge <= 30 {
+                                ageIndex = 2
+                            }
+                            else if self.discussionCommentUserAge > 30 && self.discussionCommentUserAge <= 40 {
+                                ageIndex = 3
+                            }
+                            else if self.discussionCommentUserAge > 40 && self.discussionCommentUserAge <= 50 {
+                                ageIndex = 4
+                            }
+                            else if self.discussionCommentUserAge > 50 && self.discussionCommentUserAge <= 60 {
+                                ageIndex = 5
+                            }
+                            else if self.discussionCommentUserAge > 60 && self.discussionCommentUserAge <= 70 {
+                                ageIndex = 6
+                            }
+                            else if self.discussionCommentUserAge > 70 && self.discussionCommentUserAge <= 80 {
+                                ageIndex = 7
+                            }
+                            else if self.discussionCommentUserAge > 80 {
+                                ageIndex = 8
+                            }
+                            
+                            
+                            self.sortedDiscussionComments[indexpath1.row].discussionCommentAgeUpvotes[ageIndex] -= 1
+
+                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                "ageUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row]])
+                            
+                            
+                            
+                            
+                            
                         }
                         
-                    }
+                    }}
                 
                     
-                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row] - 1), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: ""), at: indexpath1.row)
+                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row] - 1), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]), at: indexpath1.row)
                     print(self.sortedDiscussionComments)
                     self.sortedDiscussionComments.remove(at: indexpath1.row + 1)
                     print(self.sortedDiscussionComments)
                     print(indexpath1.row)
 
-                    self.responsesCollectionView.reloadData()
-                    self.responsesCollectionView.dataSource = self
-                    self.responsesCollectionView.delegate = self
-
-            }
+                    
+            
             
             var index = 0
             var i = 1
@@ -1630,6 +2038,10 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             print(index)
             discussionCommentUserUpvote.remove(at: index)
             print(discussionCommentUserUpvote)
+            
+            self.responsesCollectionView.reloadData()
+            self.responsesCollectionView.dataSource = self
+            self.responsesCollectionView.delegate = self
             
             
         }
@@ -1658,12 +2070,137 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                             self.self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
                                 "upvotes": (Int(self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]))
                             ])
+                            
+                            
+                            
+                                                        if self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row].contains(self.discussionCommentUserCountry) {
+                                                            print(self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row])
+                            
+                                                            var countryIndex = self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row].firstIndex(of: self.discussionCommentUserCountry)
+                            
+                                                            print(self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row])
+                            
+                                                            self.sortedDiscussionComments[indexpath1.row].discussionCommentCountryUpvotes[countryIndex!] += 1
+                            
+                                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                                                "countryUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]])
+                            
+                            
+                                                        }
+                                                        else {
+                                                            print(self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row])
+                            
+                                                            self.sortedDiscussionComments[indexpath1.row].discussionCommentCountry.append(self.discussionCommentUserCountry)
+                            
+                                                            print(self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row])
+                            
+                                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                                                "country": self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row]
+                                                            ])
+                                                            
+                                                            
+                                                            self.sortedDiscussionComments[indexpath1.row].discussionCommentCountryUpvotes.append(1)
+                                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                                                "countryUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]
+                                                            ])
+                            
+                            
+                                                        }
+                            
+                            
+                            print(self.discussionCommentUserGender)
+                            var genderIndex = 0
+                            if self.discussionCommentUserGender == "Male" {
+                                genderIndex = 0
+                            }
+                            else if self.discussionCommentUserGender == "Female" {
+                                genderIndex = 1
+                                
+                            }
+                            else if self.discussionCommentUserGender == "Other" {
+                                genderIndex = 2
+                                
+                            }
+                            
+                            self.sortedDiscussionComments[indexpath1.row].discussionCommentGenderUpvotes[genderIndex] += 1
+
+                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                "genderUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row]])
+                            
+                            print(self.discussionCommentUserRace)
+                            
+                            var raceIndex = 0
+                            if self.discussionCommentUserRace == "White" {
+                                raceIndex = 0
+                            }
+                            else if self.discussionCommentUserRace == "Black or African American" {
+                                raceIndex = 1
+                                
+                            }
+                            else if self.discussionCommentUserRace == "American Indian or Alaska Native" {
+                                raceIndex = 2
+                                
+                            }
+                            else if self.discussionCommentUserRace == "Asian" {
+                                raceIndex = 3
+                                
+                            }
+                            else if self.discussionCommentUserRace == "Native Hawaiian or Other Pacific Islander" {
+                                raceIndex = 4
+                                
+                            }
+                            
+                            
+                            self.sortedDiscussionComments[indexpath1.row].discussionCommentRaceUpvotes[raceIndex] += 1
+
+                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                "raceUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row]])
+                            
+                            
+                            print(self.discussionCommentUserAge)
+
+                            var ageIndex = 0
+                            if self.discussionCommentUserAge > 0 && self.discussionCommentUserAge <= 10 {
+                                ageIndex = 0
+                            }
+                            else if self.discussionCommentUserAge > 10 && self.discussionCommentUserAge <= 20 {
+                                ageIndex = 1
+                            }
+                            else if self.discussionCommentUserAge > 20 && self.discussionCommentUserAge <= 30 {
+                                ageIndex = 2
+                            }
+                            else if self.discussionCommentUserAge > 30 && self.discussionCommentUserAge <= 40 {
+                                ageIndex = 3
+                            }
+                            else if self.discussionCommentUserAge > 40 && self.discussionCommentUserAge <= 50 {
+                                ageIndex = 4
+                            }
+                            else if self.discussionCommentUserAge > 50 && self.discussionCommentUserAge <= 60 {
+                                ageIndex = 5
+                            }
+                            else if self.discussionCommentUserAge > 60 && self.discussionCommentUserAge <= 70 {
+                                ageIndex = 6
+                            }
+                            else if self.discussionCommentUserAge > 70 && self.discussionCommentUserAge <= 80 {
+                                ageIndex = 7
+                            }
+                            else if self.discussionCommentUserAge > 80 {
+                                ageIndex = 8
+                            }
+                            
+                            
+                            self.sortedDiscussionComments[indexpath1.row].discussionCommentAgeUpvotes[ageIndex] += 1
+
+                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                "ageUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row]])
+                            
+                            
                         }
                     }
             }
             
 
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row] + 1), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: ""), at: indexpath1.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row] + 1), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]), at: indexpath1.row)
             print(self.sortedDiscussionComments)
             print(self.sortedDiscussionComments)
             self.sortedDiscussionComments.remove(at: indexpath1.row + 1)
@@ -1691,7 +2228,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                         }
                         
                         
-                        self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row] - 1, discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: ""), at: indexpath1.row)
+                        self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row] - 1, discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]), at: indexpath1.row)
                         print(self.sortedDiscussionComments)
                         self.sortedDiscussionComments.remove(at: indexpath1.row + 1)
                         print(self.sortedDiscussionComments)
@@ -1769,7 +2306,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                     
                     
                     
-                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row] - 1, discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: ""), at: indexpath1.row)
+                    self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row] - 1, discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]), at: indexpath1.row)
                     print(self.sortedDiscussionComments)
                     self.sortedDiscussionComments.remove(at: indexpath1.row + 1)
                     print(self.sortedDiscussionComments)
@@ -1819,7 +2356,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             }
             
             
-            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row] + 1, discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: ""), at: indexpath1.row)
+            self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row] + 1, discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]), at: indexpath1.row)
             print(self.sortedDiscussionComments)
             self.sortedDiscussionComments.remove(at: indexpath1.row + 1)
             print(self.sortedDiscussionComments)
@@ -1848,11 +2385,112 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                    
                                 ])
                                 
+                                if self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row].contains(self.discussionCommentUserCountry) {
+                                    print(self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row])
+                                    
+                                    let countryIndex = self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row].firstIndex(of: self.discussionCommentUserCountry)
+                                    
+                                    
+                                    
+                                    self.sortedDiscussionComments[indexpath1.row].discussionCommentCountryUpvotes[countryIndex!] -= 1
+                                    
+                                    self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                        "countryUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]])
+                                    
+                                    
+                                }
+                                
+                                print(self.discussionCommentUserGender)
+                                var genderIndex = 0
+                                if self.discussionCommentUserGender == "Male" {
+                                    genderIndex = 0
+                                }
+                                else if self.discussionCommentUserGender == "Female" {
+                                    genderIndex = 1
+                                    
+                                }
+                                else if self.discussionCommentUserGender == "Other" {
+                                    genderIndex = 2
+                                    
+                                }
+                                
+                                self.sortedDiscussionComments[indexpath1.row].discussionCommentGenderUpvotes[genderIndex] -= 1
+
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                    "genderUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row]])
+                                
+                                print(self.discussionCommentUserRace)
+                                
+                                var raceIndex = 0
+                                if self.discussionCommentUserRace == "White" {
+                                    raceIndex = 0
+                                }
+                                else if self.discussionCommentUserRace == "Black or African American" {
+                                    raceIndex = 1
+                                    
+                                }
+                                else if self.discussionCommentUserRace == "American Indian or Alaska Native" {
+                                    raceIndex = 2
+                                    
+                                }
+                                else if self.discussionCommentUserRace == "Asian" {
+                                    raceIndex = 3
+                                    
+                                }
+                                else if self.discussionCommentUserRace == "Native Hawaiian or Other Pacific Islander" {
+                                    raceIndex = 4
+                                    
+                                }
+                                
+                                
+                                self.sortedDiscussionComments[indexpath1.row].discussionCommentRaceUpvotes[raceIndex] -= 1
+
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                    "raceUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row]])
+                                
+                                
+                                print(self.discussionCommentUserAge)
+
+                                var ageIndex = 0
+                                if self.discussionCommentUserAge > 0 && self.discussionCommentUserAge <= 10 {
+                                    ageIndex = 0
+                                }
+                                else if self.discussionCommentUserAge > 10 && self.discussionCommentUserAge <= 20 {
+                                    ageIndex = 1
+                                }
+                                else if self.discussionCommentUserAge > 20 && self.discussionCommentUserAge <= 30 {
+                                    ageIndex = 2
+                                }
+                                else if self.discussionCommentUserAge > 30 && self.discussionCommentUserAge <= 40 {
+                                    ageIndex = 3
+                                }
+                                else if self.discussionCommentUserAge > 40 && self.discussionCommentUserAge <= 50 {
+                                    ageIndex = 4
+                                }
+                                else if self.discussionCommentUserAge > 50 && self.discussionCommentUserAge <= 60 {
+                                    ageIndex = 5
+                                }
+                                else if self.discussionCommentUserAge > 60 && self.discussionCommentUserAge <= 70 {
+                                    ageIndex = 6
+                                }
+                                else if self.discussionCommentUserAge > 70 && self.discussionCommentUserAge <= 80 {
+                                    ageIndex = 7
+                                }
+                                else if self.discussionCommentUserAge > 80 {
+                                    ageIndex = 8
+                                }
+                                
+                                
+                                self.sortedDiscussionComments[indexpath1.row].discussionCommentAgeUpvotes[ageIndex] -= 1
+
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
+                                    "ageUpvotes": self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row]])
+                                
                             }
                         }
                         
                         
-                        self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row] - 1), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: ""), at: indexpath1.row)
+                        self.sortedDiscussionComments.insert(DiscussionComment(discussionsCommentTitle: self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row], discussionCommentDate: self.sortedDiscussionComments.map({$0.discussionCommentDate})[indexpath1.row], discussionCommentDownvotes: self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexpath1.row], discussionCommentUpvotes: (self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row] - 1), discussionCommentPopularity: self.sortedDiscussionComments.map({$0.discussionCommentPopularity})[indexpath1.row], discussionUsername: self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row], discussionCommentRepliesOpen: self.sortedDiscussionComments.map({$0.discussionCommentRepliesOpen})[indexpath1.row], commentReplies: self.sortedDiscussionComments.map({$0.commentReplies})[indexpath1.row], discussionReplyButtonTapped: self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexpath1.row], discussionReplyCancelOrPost: "", discussionCommentGenderUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentGenderUpvotes})[indexpath1.row], discussionCommentAgeUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentAgeUpvotes})[indexpath1.row], discussionCommentRaceUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentRaceUpvotes})[indexpath1.row], discussionCommentCountry: self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row], discussionCommentCountryUpvotes: self.sortedDiscussionComments.map({$0.discussionCommentCountryUpvotes})[indexpath1.row]), at: indexpath1.row)
                         print(self.sortedDiscussionComments)
                         self.sortedDiscussionComments.remove(at: indexpath1.row + 1)
                         print(self.sortedDiscussionComments)

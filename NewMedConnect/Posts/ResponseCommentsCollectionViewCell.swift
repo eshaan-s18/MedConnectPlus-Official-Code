@@ -35,6 +35,9 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
     
     @IBOutlet weak var downheartImage: UIImageView!
     
+    @IBOutlet weak var pieChartButton: UIButton!
+    
+    
     
     @IBOutlet weak var deleteOrFlag: UIButton!
     
@@ -63,6 +66,10 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
         
     }
     
+    @objc func presentPieChart() {
+        
+    }
+    
     @objc func presentError() {
         let alert = UIAlertController(title: "Error⚠️❌", message: "Please Connect to WiFi or Restart App", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -82,6 +89,11 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
         
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
 //        self.viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func presentReport() {
+        
+       
     }
     
     @objc func presentSuccess() {

@@ -72,6 +72,10 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
     @IBOutlet weak var replyButton: UIButton!
     
     
+    @IBOutlet weak var pieChartButton: UIButton!
+    
+    
+    
     @IBOutlet weak var postReplyView: UIView!
     
     @IBOutlet weak var replyTextField: UITextField!
@@ -406,7 +410,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                 
                                 let replyTitle = cell?.postCommentReplyTextField.text
                                 
-                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").document("\(docCount2)").setData(["commentTitle" : originalDiscussionComment, "repliesTitle" : ("@User_" + sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row].prefix(12) + "... " + replyTextFieldVal2), "repliesDate": dateFormatter.string(from: date), "repliesDownvotes": 0, "repliesUpvotes": 0, "repliesUser": Auth.auth().currentUser!.uid])
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").document("\(docCount2)").setData(["commentTitle" : originalDiscussionComment, "repliesTitle" : ("@User_" + sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row].prefix(12) + "... " + replyTextFieldVal2), "repliesDate": dateFormatter.string(from: date), "repliesDownvotes": 0, "repliesUpvotes": 0, "repliesUser": Auth.auth().currentUser!.uid, "gender": ["Male", "Female", "Other"], "genderUpvotes": [0,0,0], "race": ["White", "Black or African American", "American Indian or Alaska Native", "Asian", "Native Hawaiian or Other Pacific Islander"], "raceUpvotes": [0,0,0,0,0], "age": ["0-10","10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80+"], "ageUpvotes": [0,0,0,0,0,0,0,0,0], "country": [""], "countryUpvotes": [0]])
                                 
                                 cell?.presentSuccess()
                             }}
@@ -517,7 +521,114 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 cell?.postCommentReplyTextField.tag = collectionView.tag
         
         
+        
+        cell?.deleteOrFlag.showsMenuAsPrimaryAction = true
+        
+        if sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row] == Auth.auth().currentUser!.uid {
+            cell?.deleteOrFlag.menu = UIMenu(children: [
+                UIAction(title: "Delete Response", image: UIImage(systemName: "trash"), handler: { action in
+                    
+                    
+                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row])
+                    self.db.collection(conditionSelected).document(discussionDocument).collection("comments").whereField("commentTitle", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row])
+                        .getDocuments() { (querySnapshot, err) in
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                            } else {
+                                for document in querySnapshot!.documents {
+                                    print("\(document.documentID) => \(document.data())")
+                                    
+                                    let commentDocument = document.documentID
+                                    
+                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row])
+                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyTitle})[indexPath.row])
+                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyDate})[indexPath.row])
+                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row])
+
+
+                                    
+                                    self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").whereField("commentTitle", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row]).whereField("repliesTitle", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyTitle})[indexPath.row]).whereField("repliesDate", isEqualTo: displayedDate[indexPath.row]).whereField("repliesUser", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row])
+                                        .getDocuments() { (querySnapshot, err) in
+                                            if let err = err {
+                                                print("Error getting documents: \(err)")
+                                                let alert = UIAlertController(title: "Error⚠️❌", message: "Please Connect to WiFi or Restart App", preferredStyle: .alert)
+                                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                                    switch action.style{
+                                                        case .default:
+                                                        print("default")
+
+                                                        
+                                                        case .cancel:
+                                                        print("cancel")
+                                                        
+                                                        case .destructive:
+                                                        print("destructive")
+                                                        
+                                                    }
+                                                }))
+                                                
+                                                cell?.presentError()
+                                            }
+                                            
+                                            else {
+                                                print(querySnapshot!.documents)
+                                                for document in querySnapshot!.documents {
+                                                    self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(commentDocument).collection("replies").document(document.documentID).updateData(["repliesTitle" : " "])
+                                                    
+                                                    let alert = UIAlertController(title: "Successfully Deleted🗑", message: "Please Refresh", preferredStyle: .alert)
+                                                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                                        switch action.style{
+                                                            case .default:
+                                                            print("default")
+
+                                                            
+                                                            case .cancel:
+                                                            print("cancel")
+                                                            
+                                                            case .destructive:
+                                                            print("destructive")
+                                                            
+                                                        }
+                                                    }))
+                                                    
+                                                    cell?.presentSuccess()
+                                                    
+                                                    cell?.responseReplyLabel.textColor = UIColor.red
+                                                 
+                                                }
+                                            }
+                                            
+                                    
+                                    
+                                }
+                                
+                            }}
+                    
+                    
+                    
+               
+                    }
+                    
+                })
+            ])
+        }
+        else {
+            cell?.deleteOrFlag.menu = UIMenu(children: [
                 
+                UIAction(title: "Report Post",image: UIImage(systemName: "flag"), handler: { action in
+                    
+                    reportedDiscussion = sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row]
+
+                    reportedDiscussionReply = (cell?.responseReplyLabel.text)!
+
+                    self.reportCommentButtonTapped()
+                    
+                })
+            ])
+        }
+                
+        cell?.pieChartButton.addTarget(self, action: #selector(pieChartButtonTapped(sender:)), for: .touchUpInside)
+
         
                 
                 
@@ -532,6 +643,26 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
 //
 //        print((sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row]))
 //    }
+    @objc func pieChartButtonTapped(sender:UIButton) {
+        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "PieChartViewController")
+
+        self.window?.rootViewController?.present(pieChartVC, animated: true, completion: nil)
+    }
+    
+    
+    @objc func reportCommentButtonTapped() {
+        var reportResponseVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "ReportResponseViewController")
+        if let sheet = reportResponseVC.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 25
+            
+        }
+        
+        self.window?.rootViewController?.present(reportResponseVC, animated: true, completion: nil)
+
+    }
+    
     
     
     @objc func postOrCancelButton(sender: UIButton) {
@@ -652,6 +783,105 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
 
 
                                             ])
+                                            
+                                            if sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].contains(sharedDiscussionCommentUserCountry) {
+                                                var countryIndex = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].firstIndex(of: sharedDiscussionCommentUserCountry)
+                                                sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCountryUpvotes[countryIndex!] -= 1
+
+                                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                    "countryUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row]])
+                                            }
+
+
+
+
+
+                                            var genderIndex = 0
+                                            if sharedDiscussionCommentUserGender == "Male" {
+                                                genderIndex = 0
+                                            }
+                                            else if sharedDiscussionCommentUserGender == "Female" {
+                                                genderIndex = 1
+
+                                            }
+                                            else if sharedDiscussionCommentUserGender == "Other" {
+                                                genderIndex = 2
+
+                                            }
+                                            
+                                            
+                                            sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyGenderUpvotes[genderIndex] -= 1
+                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                "genderUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyGenderUpvotes})[indexpath1.row]
+                                            ])
+                                            
+                                            var raceIndex = 0
+                                            if sharedDiscussionCommentUserRace == "White" {
+                                                raceIndex = 0
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "Black or African American" {
+                                                raceIndex = 1
+
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "American Indian or Alaska Native" {
+                                                raceIndex = 2
+
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "Asian" {
+                                                raceIndex = 3
+
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "Native Hawaiian or Other Pacific Islander" {
+                                                raceIndex = 4
+
+                                            }
+
+                                            
+                                            
+                                            
+                                            sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyRaceUpvotes[raceIndex] -= 1
+                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                "raceUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyRaceUpvotes})[indexpath1.row]
+                                            ])
+                                            
+                                            
+                
+
+
+                                            var ageIndex = 0
+                                            if sharedDiscussionCommentUserAge > 0 && sharedDiscussionCommentUserAge <= 10 {
+                                                ageIndex = 0
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 10 && sharedDiscussionCommentUserAge <= 20 {
+                                                ageIndex = 1
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 20 && sharedDiscussionCommentUserAge <= 30 {
+                                                ageIndex = 2
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 30 && sharedDiscussionCommentUserAge <= 40 {
+                                                ageIndex = 3
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 40 && sharedDiscussionCommentUserAge <= 50 {
+                                                ageIndex = 4
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 50 && sharedDiscussionCommentUserAge <= 60 {
+                                                ageIndex = 5
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 60 && sharedDiscussionCommentUserAge <= 70 {
+                                                ageIndex = 6
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 70 && sharedDiscussionCommentUserAge <= 80 {
+                                                ageIndex = 7
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 80 {
+                                                ageIndex = 8
+                                            }
+
+
+                                            sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyAgeUpvotes[ageIndex] -= 1
+                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                "ageUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyAgeUpvotes})[indexpath1.row]
+                                            ])
 
                                         }
 
@@ -736,6 +966,137 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                             self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
                                                 "repliesUpvotes": (Int(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyUpvotes})[indexpath1.row]))
                                             ])
+                                            
+                                            
+                                            
+                                            print(sharedDiscussionCommentUserCountry)
+                                            if sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].contains(sharedDiscussionCommentUserCountry) {
+                                                print(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row])
+                                                var countryIndex = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].firstIndex(of: sharedDiscussionCommentUserCountry)
+                                                sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCountryUpvotes[countryIndex!] += 1
+                                               
+                                                print(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row])
+
+                                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                    "countryUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row]])
+                                            }
+
+
+
+                                            else {
+
+                                                sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCountry.append(sharedDiscussionCommentUserCountry)
+
+
+
+                                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                    "country": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row]
+                                                ])
+
+
+                                                sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCountryUpvotes.append(1)
+                                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                    "countryUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row]
+                                                ])
+
+
+                                            }
+
+
+                                            var genderIndex = 0
+                                            if sharedDiscussionCommentUserGender == "Male" {
+                                                genderIndex = 0
+                                            }
+                                            else if sharedDiscussionCommentUserGender == "Female" {
+                                                genderIndex = 1
+
+                                            }
+                                            else if sharedDiscussionCommentUserGender == "Other" {
+                                                genderIndex = 2
+
+                                            }
+                                            
+                                            
+                                            sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyGenderUpvotes[genderIndex] += 1
+                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                "genderUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyGenderUpvotes})[indexpath1.row]
+                                            ])
+                                            
+                                            
+                                            print(sharedDiscussionCommentUserRace)
+                                            var raceIndex = 0
+                                            if sharedDiscussionCommentUserRace == "White" {
+                                                raceIndex = 0
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "Black or African American" {
+                                                raceIndex = 1
+
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "American Indian or Alaska Native" {
+                                                raceIndex = 2
+
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "Asian" {
+                                                raceIndex = 3
+
+                                            }
+                                            else if sharedDiscussionCommentUserRace == "Native Hawaiian or Other Pacific Islander" {
+                                                raceIndex = 4
+
+                                            }
+
+                                            
+                                            
+                                            
+                                            sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyRaceUpvotes[raceIndex] += 1
+                                            print(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyRaceUpvotes})[indexpath1.row])
+                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                "raceUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyRaceUpvotes})[indexpath1.row]
+                                            ])
+                                            
+                                            
+                
+
+
+                                            var ageIndex = 0
+                                            if sharedDiscussionCommentUserAge > 0 && sharedDiscussionCommentUserAge <= 10 {
+                                                ageIndex = 0
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 10 && sharedDiscussionCommentUserAge <= 20 {
+                                                ageIndex = 1
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 20 && sharedDiscussionCommentUserAge <= 30 {
+                                                ageIndex = 2
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 30 && sharedDiscussionCommentUserAge <= 40 {
+                                                ageIndex = 3
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 40 && sharedDiscussionCommentUserAge <= 50 {
+                                                ageIndex = 4
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 50 && sharedDiscussionCommentUserAge <= 60 {
+                                                ageIndex = 5
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 60 && sharedDiscussionCommentUserAge <= 70 {
+                                                ageIndex = 6
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 70 && sharedDiscussionCommentUserAge <= 80 {
+                                                ageIndex = 7
+                                            }
+                                            else if sharedDiscussionCommentUserAge > 80 {
+                                                ageIndex = 8
+                                            }
+
+
+                                            sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyAgeUpvotes[ageIndex] += 1
+                                            self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
+                                                "ageUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyAgeUpvotes})[indexpath1.row]
+                                            ])
+                                            
+                                            
+                                            
+                                            
+        
                                         }
                                     }
                             }
@@ -781,6 +1142,9 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                 self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
                                     "repliesDownvotes": (Int(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyDownvotes})[indexpath1.row]) - 1)
                                 ])
+                                
+                                
+                                
 
                             }
                         }
@@ -1012,6 +1376,107 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                     "repliesUpvotes": (Int(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyUpvotes})[indexpath1.row]) - 1)
                                 ])
 
+                                
+                                
+                                if sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].contains(sharedDiscussionCommentUserCountry) {
+                                    var countryIndex = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].firstIndex(of: sharedDiscussionCommentUserCountry)
+                                    sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCountryUpvotes[countryIndex!] -= 1
+
+                                    self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum2).collection("replies").document(document.documentID).updateData([
+                                        "countryUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row]])
+                                }
+
+
+
+
+
+                                var genderIndex = 0
+                                if sharedDiscussionCommentUserGender == "Male" {
+                                    genderIndex = 0
+                                }
+                                else if sharedDiscussionCommentUserGender == "Female" {
+                                    genderIndex = 1
+
+                                }
+                                else if sharedDiscussionCommentUserGender == "Other" {
+                                    genderIndex = 2
+
+                                }
+                                
+                                
+                                sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyGenderUpvotes[genderIndex] -= 1
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum2).collection("replies").document(document.documentID).updateData([
+                                    "genderUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyGenderUpvotes})[indexpath1.row]
+                                ])
+                                
+                                var raceIndex = 0
+                                if sharedDiscussionCommentUserRace == "White" {
+                                    raceIndex = 0
+                                }
+                                else if sharedDiscussionCommentUserRace == "Black or African American" {
+                                    raceIndex = 1
+
+                                }
+                                else if sharedDiscussionCommentUserRace == "American Indian or Alaska Native" {
+                                    raceIndex = 2
+
+                                }
+                                else if sharedDiscussionCommentUserRace == "Asian" {
+                                    raceIndex = 3
+
+                                }
+                                else if sharedDiscussionCommentUserRace == "Native Hawaiian or Other Pacific Islander" {
+                                    raceIndex = 4
+
+                                }
+
+                                
+                                
+                                
+                                sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyRaceUpvotes[raceIndex] -= 1
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum2).collection("replies").document(document.documentID).updateData([
+                                    "raceUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyRaceUpvotes})[indexpath1.row]
+                                ])
+                                
+                                
+    
+
+
+                                var ageIndex = 0
+                                if sharedDiscussionCommentUserAge > 0 && sharedDiscussionCommentUserAge <= 10 {
+                                    ageIndex = 0
+                                }
+                                else if sharedDiscussionCommentUserAge > 10 && sharedDiscussionCommentUserAge <= 20 {
+                                    ageIndex = 1
+                                }
+                                else if sharedDiscussionCommentUserAge > 20 && sharedDiscussionCommentUserAge <= 30 {
+                                    ageIndex = 2
+                                }
+                                else if sharedDiscussionCommentUserAge > 30 && sharedDiscussionCommentUserAge <= 40 {
+                                    ageIndex = 3
+                                }
+                                else if sharedDiscussionCommentUserAge > 40 && sharedDiscussionCommentUserAge <= 50 {
+                                    ageIndex = 4
+                                }
+                                else if sharedDiscussionCommentUserAge > 50 && sharedDiscussionCommentUserAge <= 60 {
+                                    ageIndex = 5
+                                }
+                                else if sharedDiscussionCommentUserAge > 60 && sharedDiscussionCommentUserAge <= 70 {
+                                    ageIndex = 6
+                                }
+                                else if sharedDiscussionCommentUserAge > 70 && sharedDiscussionCommentUserAge <= 80 {
+                                    ageIndex = 7
+                                }
+                                else if sharedDiscussionCommentUserAge > 80 {
+                                    ageIndex = 8
+                                }
+
+
+                                sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyAgeUpvotes[ageIndex] -= 1
+                                self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum2).collection("replies").document(document.documentID).updateData([
+                                    "ageUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyAgeUpvotes})[indexpath1.row]
+                                ])
+                                
                             }
                         }
                 

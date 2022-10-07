@@ -15,6 +15,11 @@ public struct DiscussionComments: Codable {
     let downvotes: Int?
     let user: String?
     let date: String?
+    let genderUpvotes: [Int]?
+    let ageUpvotes: [Int]?
+    let raceUpvotes: [Int]?
+    let country: [String]?
+    let countryUpvotes: [Int]?
     let options: [String]?
     let path : [String]?
     
@@ -24,6 +29,11 @@ public struct DiscussionComments: Codable {
         case downvotes
         case user
         case date
+        case genderUpvotes
+        case ageUpvotes
+        case raceUpvotes
+        case country
+        case countryUpvotes
         case options
         case path
     }

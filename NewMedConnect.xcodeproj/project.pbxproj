@@ -25,6 +25,8 @@
 		EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740001289F4C0800C21FB0 /* UpvoteReference.swift */; };
 		EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740003289F4C4400C21FB0 /* DownvoteReference.swift */; };
 		EE93827928E8E6B700CCB9F6 /* ReportResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */; };
+		EE93827B28EB8BC600CCB9F6 /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */; };
+		EE93827D28EBB9CC00CCB9F6 /* UserReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */; };
 		EE98997B28B5CB6200D74F8F /* ResponseCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */; };
 		EE9DF0BE28547DA100A26D61 /* Manrope-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE9DF0B728547DA100A26D61 /* Manrope-Bold.ttf */; };
 		EE9DF0BF28547DA100A26D61 /* Manrope-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE9DF0B828547DA100A26D61 /* Manrope-Regular.ttf */; };
@@ -104,6 +106,8 @@
 		EE740001289F4C0800C21FB0 /* UpvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteReference.swift; sourceTree = "<group>"; };
 		EE740003289F4C4400C21FB0 /* DownvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownvoteReference.swift; sourceTree = "<group>"; };
 		EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportResponseViewController.swift; sourceTree = "<group>"; };
+		EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
+		EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReference.swift; sourceTree = "<group>"; };
 		EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
 		EE9DF0B728547DA100A26D61 /* Manrope-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Bold.ttf"; path = "../../../../../Downloads/Manrope/static/Manrope-Bold.ttf"; sourceTree = "<group>"; };
 		EE9DF0B828547DA100A26D61 /* Manrope-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Regular.ttf"; path = "../../../../../Downloads/Manrope/static/Manrope-Regular.ttf"; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				EEB89B6A287BC2F700801388 /* AddDiscussionCommentViewController.swift */,
 				EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */,
 				EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */,
+				EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				EEBFD9462870BE4E001834DB /* SavedReference.swift */,
 				EEB89B68287BBA7700801388 /* DiscussionComments.swift */,
 				EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */,
+				EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -572,6 +578,7 @@
 				EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */,
 				EECE6CC5286BFE6F00E4A04A /* SearchConditionCollectionViewCell.swift in Sources */,
 				EEBC3BE228663BD600715395 /* DiscussionNewCollectionViewCell.swift in Sources */,
+				EE93827B28EB8BC600CCB9F6 /* PieChartViewController.swift in Sources */,
 				EE313F0B28433AF00084994E /* LoginViewController.swift in Sources */,
 				EE3D45A2285895A000A2E0E6 /* PinnedReference.swift in Sources */,
 				EE00DDDB28734D56005CD04A /* DiscussionPostViewController.swift in Sources */,
@@ -594,6 +601,7 @@
 				EEB3900D284B87E300050B18 /* CountryReference.swift in Sources */,
 				EE340B2F2845D5B600E2798C /* SelectAgeViewController.swift in Sources */,
 				EE313F0D28433B240084994E /* SignUpViewController.swift in Sources */,
+				EE93827D28EBB9CC00CCB9F6 /* UserReference.swift in Sources */,
 				EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */,
 				EEBFD9472870BE4E001834DB /* SavedReference.swift in Sources */,
 				EE3D45A42858CBD700A2E0E6 /* PinnedTableViewCell.swift in Sources */,

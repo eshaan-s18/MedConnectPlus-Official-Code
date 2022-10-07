@@ -36,7 +36,21 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
         reportResponseTextView.delegate = self
         
         print(reportedDiscussion)
-        reportLabel.text = reportedDiscussion
+        
+        if reportedDiscussionReply != "Nil" {
+            reportLabel.text = reportedDiscussionReply
+
+        }
+        
+        else if reportedDiscussion != "Nil" {
+            reportLabel.text = reportedDiscussion
+
+        }
+        
+        else {
+            reportLabel.text = reportedPost
+
+        }
         
         reportView.layer.cornerRadius = 10
         
@@ -120,7 +134,7 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
                 print("Hello this is document count")
                 print(documentsCount)
                 
-                db.collection("REPORTED DISCUSSIONS").document("\(documentsCount)").setData(["condition": conditionSelected, "discussion": selectedDiscussion, "reportedComment": reportedDiscussion, "reportedCommentReply": reportedDiscussionReply])
+                db.collection("REPORTED DISCUSSIONS").document("\(documentsCount)").setData(["condition": conditionSelected, "post": reportedPost, "discussion": selectedDiscussion, "reportedComment": reportedDiscussion, "reportedCommentReply": reportedDiscussionReply])
                 
                 
                 

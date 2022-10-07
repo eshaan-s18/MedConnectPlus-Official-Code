@@ -34,7 +34,7 @@ struct DiscussionStruct {
     var discussionsUser:String
     var discussionDates:Date
     var discussionViews:Int
-    var discussionComments:[String]
+    var discussionCommentCount:Int
 }
 
 var selectedDiscussion = ""
@@ -193,6 +193,7 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
         
     }
     
+
     @objc func getDiscussionData() {
         completionNumber = 0
         
@@ -236,6 +237,7 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
                             switch result {
                             case .success(let discussion):
                                 if let discussion = discussion {
+                                    var discussionDocument = document?.documentID
                                     if document?.documentID == "0" {
                                         print("okay")
                                     }
@@ -258,41 +260,74 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
                                                     let newDate = self.dateFormatter.date(from: discussion.date!)
                                                     self.discussionSaved = saved.saved!
                                                     print(self.discussionSaved)
-                                                    self.unsortedDiscussions.append(DiscussionStruct.init(discussionsTitle: discussion.discussion!, discussionsUser: discussion.user!, discussionDates: newDate!, discussionViews: Int(discussion.views!)!, discussionComments: discussion.comments!))
-                                                    print(self.unsortedDiscussions)
                                                     
-                                                    self.savedUnsorted = self.unsortedDiscussions
-            //                                        self.discussions.append()
-            //                                        self.discussionDates.append()
-            //                                        self.discussionViews.append()
-            //                                        self.discussionComments.append()
-                                                //self.questionLabel.text = question.question
-                                                    print(self.unsortedDiscussions.count)
-                                                    print(self.documentsCount)
-                                                    if self.unsortedDiscussions.count == Int(self.documentsCount)! - 1 {
-                                                        print("reloading"...)
-                                                        if self.currentFilter == "Views" {
-                                                            self.sortedDiscussions = self.unsortedDiscussions.sorted(by: {$0.discussionViews > $1.discussionViews})
-                                                            print(self.sortedDiscussions.map({$0.discussionsTitle}))
-                                                            self.completionNumber = 1
-                                                        }
-                                                        else {
-                                                            self.sortedDiscussions = self.unsortedDiscussions.sorted(by: {$0.discussionDates.compare($1.discussionDates) == .orderedDescending})
-                                                            print(self.sortedDiscussions.map({$0.discussionsTitle}))
-                                                            self.completionNumber = 1
-                                                        }
-                                                        
-                                                        
-                                            
-                                                        self.discussionCollectionView.reloadData()
-                                                        
-                                                        self.discussionCollectionView.dataSource = self
-                                                        self.discussionCollectionView.delegate = self
-                                                        
-                                                        self.activityIndicator.stopAnimating()
+                                                    print(discussionDocument)
+                                                    
+                                                    self.db.collection(conditionSelected).document(discussionDocument!).collection("comments")
+                                                        .getDocuments() { (querySnapshot, err) in
+                                                            if let err = err {
+                                                                print("Error getting documents: \(err)")
+                                                            } else {
+                                                                print(querySnapshot!.documents.count)
+                                                                
+                                                                                    
+                                                                    self.unsortedDiscussions.append(DiscussionStruct.init(discussionsTitle: discussion.discussion!, discussionsUser: discussion.user!, discussionDates: newDate!, discussionViews: Int(discussion.views!)!, discussionCommentCount: (querySnapshot!.documents.count-1)))
+                                                                
+                                                            
+                                                                    
+                                                                    
+                                                                    
+                                                                   
+                                                                    print(self.unsortedDiscussions)
+                                                                    
+                                                                    self.savedUnsorted = self.unsortedDiscussions
+                            //                                        self.discussions.append()
+                            //                                        self.discussionDates.append()
+                            //                                        self.discussionViews.append()
+                            //                                        self.discussionComments.append()
+                                                                //self.questionLabel.text = question.question
+                                                                    print(self.unsortedDiscussions.count)
+                                                                    print(self.documentsCount)
+                                                    
+                                                                    if self.unsortedDiscussions.count == Int(self.documentsCount)! - 1 {
+                                                                        print("reloading"...)
+                                                                        if self.currentFilter == "Views" {
+                                                                            self.sortedDiscussions = self.unsortedDiscussions.sorted(by: {$0.discussionViews > $1.discussionViews})
+                                                                            print(self.sortedDiscussions.map({$0.discussionsTitle}))
+                                                                            self.completionNumber = 1
+                                                                        }
+                                                                        else {
+                                                                            self.sortedDiscussions = self.unsortedDiscussions.sorted(by: {$0.discussionDates.compare($1.discussionDates) == .orderedDescending})
+                                                                            print(self.sortedDiscussions.map({$0.discussionsTitle}))
+                                                                            self.completionNumber = 1
+                                                                        }
+                                                                        
+                                                                        var i = 0
+                                                                        
+                                                                        while i < self.sortedDiscussions.count {
+                                                                            if self.sortedDiscussions.map({$0.discussionsTitle})[i] == " " {
+                                                                                self.sortedDiscussions.remove(at: i)
+                                                                                i = -1
+                                                                            }
+                                                                            i += 1
+                                                                            
+                                                                        }
+                                                                        
+                                                                        
+                                                            
+                                                                        self.discussionCollectionView.reloadData()
+                                                                        
+                                                                        self.discussionCollectionView.dataSource = self
+                                                                        self.discussionCollectionView.delegate = self
+                                                                        
+                                                                        self.activityIndicator.stopAnimating()
+                                                                    }
+                                                                    //self.questionLabel.text = question.question
+                                                                    print("okay")
+                                                            }
                                                     }
-                                                    //self.questionLabel.text = question.question
-                                                    print("okay")
+                                                                                    
+                                                                
                                                 } else {
                                                     // A nil value was successfully initialized from the DocumentSnapshot,
                                                     // or the DocumentSnapshot was nil.
@@ -424,7 +459,7 @@ extension DiscussionNewViewController: UICollectionViewDelegate, UICollectionVie
             cell?.discussionNewDate.text = String(displayedDate[indexPath.row][..<displayedDate[indexPath.row].index(displayedDate[indexPath.row].startIndex, offsetBy:10)])
             
             cell?.discussionNewViews.text = self.sortedDiscussions.map({String($0.discussionViews)})[indexPath.row] + " views"
-            cell?.discussionNewComments.text = self.sortedDiscussions.map({String($0.discussionComments.count)})[indexPath.row]
+            cell?.discussionNewComments.text = self.sortedDiscussions.map({String($0.discussionCommentCount)})[indexPath.row]
             
             print(cell?.discussionLabel.text)
             print(discussionSaved)

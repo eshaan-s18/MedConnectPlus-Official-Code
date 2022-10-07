@@ -16,6 +16,11 @@ public struct DiscussionResponseReplies: Codable {
     let repliesTitle: String?
     let repliesUpvotes: Int?
     let repliesUser: String?
+    let genderUpvotes: [Int]?
+    let ageUpvotes: [Int]?
+    let raceUpvotes: [Int]?
+    let country: [String]?
+    let countryUpvotes: [Int]?
 
     let options: [String]?
     let path : [String]?
@@ -27,6 +32,12 @@ public struct DiscussionResponseReplies: Codable {
         case repliesTitle
         case repliesUpvotes
         case repliesUser
+        case genderUpvotes
+        case ageUpvotes
+        case raceUpvotes
+        case country
+        case countryUpvotes
+        
         case options
         case path
     }

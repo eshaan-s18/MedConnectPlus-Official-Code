@@ -603,6 +603,10 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
   - BulletinBoard (5.0.0)
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
   - Firebase (9.6.0):
     - Firebase/Core (= 9.6.0)
   - Firebase/Core (9.6.0):
@@ -776,9 +780,11 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.1.1)
+  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
   - BulletinBoard
+  - Charts
   - Firebase
   - FirebaseAuth
   - FirebaseDatabase
@@ -790,6 +796,7 @@ SPEC REPOS:
     - abseil
     - BoringSSL-GRPC
     - BulletinBoard
+    - Charts
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -810,11 +817,13 @@ SPEC REPOS:
     - Libuv-gRPC
     - nanopb
     - PromisesObjC
+    - SwiftAlgorithms
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   BulletinBoard: dba77053c2a7b64953f63073f7534165af2edd21
+  Charts: 354f86803d11d9c35de280587fef50d1af063978
   Firebase: 5ae8b7cf8efce559a653aef0ad95bab3f427c351
   FirebaseAnalytics: 89ad762c6c3852a685794174757e2c60a36b6a82
   FirebaseAuth: e4a5d3c36e778e41141b91cc861103a441d80bcc
@@ -835,7 +844,8 @@ SPEC CHECKSUMS:
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: 3cc5f56695176b4b09848d0eafb0948a1c764195
+PODFILE CHECKSUM: 0bbe662594ebd376e3bd00b92429288aefd436bc
 
 COCOAPODS: 1.11.3

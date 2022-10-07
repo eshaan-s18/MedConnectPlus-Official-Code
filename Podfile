@@ -12,5 +12,6 @@ target 'NewMedConnect' do
   pod "FirebaseFirestore"
   pod "FirebaseFirestoreSwift"
   pod "BulletinBoard"
+  pod "Charts"
 
 end
