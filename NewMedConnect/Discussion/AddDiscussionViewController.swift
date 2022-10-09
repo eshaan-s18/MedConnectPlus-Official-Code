@@ -140,8 +140,22 @@ class AddDiscussionViewController: UIViewController, UITextViewDelegate {
                 print(documentsCount)
                 db.collection(conditionSelected).document("\(documentsCount)").setData(["discussion" : discussionTextView.text, "views": "0", "date": dateFormatter.string(from: date), "comments": [""], "user": Auth.auth().currentUser!.uid])
                 
+                
+                
                 self.db.collection(conditionSelected).document("\(documentsCount)").collection("comments").document("0").setData(["commentTitle" : "", "date": "", "downvotes": 0, "upvotes": 0, "user": ""])
                 delegate?.addDiscussion()
+                
+                
+                db.collection("Users").document(Auth.auth().currentUser!.uid).collection("discussions").getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        let discussionsCreatedDocumentCount = querySnapshot!.documents.count
+                        
+                        self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("discussions").document(String(discussionsCreatedDocumentCount)).setData(["yourDiscussionTitle": discussionTextView.text, "yourDiscussionDate": dateFormatter.string(from: date), "conditionSelected": conditionSelected])
+                        
+                    }
+                }
                 
                 let alert = UIAlertController(title: "Success‼️✅", message: "Please Refresh Page", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in

@@ -629,7 +629,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 
         cell?.pieChartButton.addTarget(self, action: #selector(pieChartButtonTapped(sender:)), for: .touchUpInside)
 
-        
+        cell?.pieChartButton.tag = indexPath.row
                 
                 
                 return cell!
@@ -644,9 +644,31 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
 //        print((sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row]))
 //    }
     @objc func pieChartButtonTapped(sender:UIButton) {
-        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "PieChartViewController")
+        let indexpath1 = IndexPath(row: sender.tag, section: 0)
 
+        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "PieChartViewController")
+        if let sheet = pieChartVC.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+        }
+            
+        
+        var delimeter = "-"
+        var commentTitle = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussCommentTitle})[indexpath1.row]
+        var newCommentTitle = commentTitle.components(separatedBy: delimeter)
+        
+        selectedPieChartResponse = newCommentTitle[0]
+        
+        selectedGenderVotes = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyGenderUpvotes})[indexpath1.row]
+        selectedRaceVotes = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyRaceUpvotes})[indexpath1.row]
+        selectedAgeVotes = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyAgeUpvotes})[indexpath1.row]
+        selectedCountry = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row]
+        selectedCountryVotes = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row]
+        
+        print(selectedGenderVotes)
+        
         self.window?.rootViewController?.present(pieChartVC, animated: true, completion: nil)
+
+        
     }
     
     

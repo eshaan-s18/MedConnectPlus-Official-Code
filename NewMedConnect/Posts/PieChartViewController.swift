@@ -32,6 +32,7 @@ class PieChartViewController: UIViewController {
     
     @IBOutlet weak var selectedResponseLabel: UILabel!
     
+    @IBOutlet weak var selectedResponseView: UIView!
     
     
     //GENDER VARIABLEs
@@ -86,6 +87,8 @@ class PieChartViewController: UIViewController {
         otherDataEntry.label = "Other"
         
         filter = "Gender"
+        
+        selectedResponseView.layer.cornerRadius = 10
         
         numberOfUpvotesDataEntries = [maleDataEntry, femaleDataEntry, otherDataEntry]
         
@@ -214,61 +217,61 @@ class PieChartViewController: UIViewController {
         
         if filter == "Gender"{
             if sharedDiscussionCommentUserGender == "Male" {
-                 colors = [UIColor.systemMint, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserGender == "Female" {
-                 colors = [UIColor.lightGray, UIColor.systemMint, UIColor.lightGray]
+                 colors = [UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserGender == "Other" {
-                 colors = [UIColor.lightGray, UIColor.lightGray, UIColor.systemMint]
+                 colors = [UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0)]
             }
         }
         
         else if filter == "Age" {
             if sharedDiscussionCommentUserAge > 0 && sharedDiscussionCommentUserAge <= 10 {
-                colors = [UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 10 && sharedDiscussionCommentUserAge <= 20 {
-                colors = [UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 20 && sharedDiscussionCommentUserAge <= 30 {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 30 && sharedDiscussionCommentUserAge <= 40 {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 40 && sharedDiscussionCommentUserAge <= 50 {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 50 && sharedDiscussionCommentUserAge <= 60 {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 60 && sharedDiscussionCommentUserAge <= 70 {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 70 && sharedDiscussionCommentUserAge <= 80 {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserAge > 80 {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0)]
             }
         }
         
         else if filter == "Race" {
             if sharedDiscussionCommentUserRace == "White" {
-                colors = [UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserRace == "Black or African American" {
-                colors = [UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserRace == "American Indian or Alaska Native" {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray, UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserRace == "Asian" {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint, UIColor.lightGray]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0), UIColor.lightGray]
             }
             else if sharedDiscussionCommentUserRace == "Native Hawaiian or Other Pacific Islander" {
-                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.systemMint]
+                colors = [UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor.lightGray, UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0)]
             }
         }
         
@@ -281,7 +284,7 @@ class PieChartViewController: UIViewController {
                 i+=1
             }
             
-            colors[countryIndex!] = UIColor.systemMint
+            colors[countryIndex!] = UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0)
         }
         
         

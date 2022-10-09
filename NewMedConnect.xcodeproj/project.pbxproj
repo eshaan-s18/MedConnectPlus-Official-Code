@@ -27,6 +27,10 @@
 		EE93827928E8E6B700CCB9F6 /* ReportResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */; };
 		EE93827B28EB8BC600CCB9F6 /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */; };
 		EE93827D28EBB9CC00CCB9F6 /* UserReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */; };
+		EE93828028F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827F28F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift */; };
+		EE93828228F25CBF00CCB9F6 /* YourDiscussionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */; };
+		EE93828428F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */; };
+		EE93828628F28AFB00CCB9F6 /* SavedDiscussionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */; };
 		EE98997B28B5CB6200D74F8F /* ResponseCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */; };
 		EE9DF0BE28547DA100A26D61 /* Manrope-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE9DF0B728547DA100A26D61 /* Manrope-Bold.ttf */; };
 		EE9DF0BF28547DA100A26D61 /* Manrope-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE9DF0B828547DA100A26D61 /* Manrope-Regular.ttf */; };
@@ -108,6 +112,11 @@
 		EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportResponseViewController.swift; sourceTree = "<group>"; };
 		EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
 		EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReference.swift; sourceTree = "<group>"; };
+		EE93827E28F1354000CCB9F6 /* NewMedConnect.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NewMedConnect.entitlements; sourceTree = "<group>"; };
+		EE93827F28F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDiscussionsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDiscussionReference.swift; sourceTree = "<group>"; };
+		EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDiscussionsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDiscussionReference.swift; sourceTree = "<group>"; };
 		EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
 		EE9DF0B728547DA100A26D61 /* Manrope-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Bold.ttf"; path = "../../../../../Downloads/Manrope/static/Manrope-Bold.ttf"; sourceTree = "<group>"; };
 		EE9DF0B828547DA100A26D61 /* Manrope-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Regular.ttf"; path = "../../../../../Downloads/Manrope/static/Manrope-Regular.ttf"; sourceTree = "<group>"; };
@@ -282,6 +291,8 @@
 				EEB89B68287BBA7700801388 /* DiscussionComments.swift */,
 				EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */,
 				EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */,
+				EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */,
+				EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -290,7 +301,9 @@
 			isa = PBXGroup;
 			children = (
 				EEA758FF2848E200008CBC37 /* HomeViewController.swift */,
+				EE93827F28F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift */,
 				EEA75906284A2311008CBC37 /* YourInformationViewController.swift */,
+				EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -342,6 +355,7 @@
 		EECE51C5284145F800B5CC72 /* NewMedConnect */ = {
 			isa = PBXGroup;
 			children = (
+				EE93827E28F1354000CCB9F6 /* NewMedConnect.entitlements */,
 				EE00DDD928734D41005CD04A /* Posts */,
 				EE00DDD628734AA2005CD04A /* Storyboard */,
 				EE7C5A242854792E000A32EA /* fonts */,
@@ -566,9 +580,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE93828428F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift in Sources */,
 				EE340B332846462100E2798C /* HapticsManager.swift in Sources */,
 				EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */,
 				EEA758FC2848C3D6008CBC37 /* PasswordResetViewController.swift in Sources */,
+				EE93828028F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift in Sources */,
 				EEA75907284A2313008CBC37 /* YourInformationViewController.swift in Sources */,
 				EEA5A70F2867B35C00F0DE6F /* Discussion.swift in Sources */,
 				EEF9F6C12879118400FDB1D4 /* DiscussionCommentsCollectionViewCell.swift in Sources */,
@@ -599,8 +615,10 @@
 				EEB390142850D99C00050B18 /* CategoriesViewController.swift in Sources */,
 				EEB89B6B287BC2F700801388 /* AddDiscussionCommentViewController.swift in Sources */,
 				EEB3900D284B87E300050B18 /* CountryReference.swift in Sources */,
+				EE93828628F28AFB00CCB9F6 /* SavedDiscussionReference.swift in Sources */,
 				EE340B2F2845D5B600E2798C /* SelectAgeViewController.swift in Sources */,
 				EE313F0D28433B240084994E /* SignUpViewController.swift in Sources */,
+				EE93828228F25CBF00CCB9F6 /* YourDiscussionReference.swift in Sources */,
 				EE93827D28EBB9CC00CCB9F6 /* UserReference.swift in Sources */,
 				EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */,
 				EEBFD9472870BE4E001834DB /* SavedReference.swift in Sources */,
@@ -784,6 +802,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NewMedConnect/NewMedConnect.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 986PBCGC56;
@@ -805,6 +825,7 @@
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -817,6 +838,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NewMedConnect/NewMedConnect.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 986PBCGC56;
@@ -838,6 +861,7 @@
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

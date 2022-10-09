@@ -513,6 +513,22 @@ extension DiscussionNewViewController: UICollectionViewDelegate, UICollectionVie
             self.db.collection("Users").document(Auth.auth().currentUser!.uid).updateData([
                 "saved": FieldValue.arrayRemove([self.sortedDiscussions.map({$0.discussionsTitle})[indexpath1.row]
                                                 ])])
+            
+            self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").whereField("savedDiscussionTitle", isEqualTo: self.sortedDiscussions.map({$0.discussionsTitle})[indexpath1.row])
+                .getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            
+                            self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").document(document.documentID).updateData(["savedDiscussionTitle": " "])
+                            
+                        }
+                    }
+            }
+            
+            
             var index = 0
             var i = 1
             print(discussionSaved.count)
@@ -536,6 +552,21 @@ extension DiscussionNewViewController: UICollectionViewDelegate, UICollectionVie
             
             self.db.collection("Users").document(Auth.auth().currentUser!.uid).updateData(["saved": FieldValue.arrayUnion([self.sortedDiscussions.map({$0.discussionsTitle})[indexpath1.row]
                                                 ])])
+            
+            db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    let discussionsCreatedDocumentCount = querySnapshot!.documents.count
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+                    let date = Date()
+                    
+                    self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").document(String(discussionsCreatedDocumentCount)).setData(["savedDiscussionTitle": self.sortedDiscussions.map({$0.discussionsTitle})[indexpath1.row], "savedDiscussionDate": dateFormatter.string(from: self.sortedDiscussions.map({$0.discussionDates})[indexpath1.row]), "savedDiscussionSavedDate": dateFormatter.string(from: date), "conditionSelected": conditionSelected])
+                    
+                }
+            }
                 
             print(discussionSaved)
             discussionSaved.append(self.sortedDiscussions.map({$0.discussionsTitle})[indexpath1.row])
@@ -561,10 +592,22 @@ extension DiscussionNewViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedDiscussion = self.sortedDiscussions.map({$0.discussionsTitle})[indexPath.row]
+        switch collectionView{
+        case searchCollectionView:
+            selectedDiscussion = searchedDiscussion[indexPath.row]
+            performSegue(withIdentifier: "toDiscussionPost", sender: self)
+            
+        case discussionCollectionView:
+            selectedDiscussion = self.sortedDiscussions.map({$0.discussionsTitle})[indexPath.row]
+            performSegue(withIdentifier: "toDiscussionPost", sender: self)
+            
+        default:
+            print("error")
+        }
+        
+        print(selectedDiscussion)
 
         
-        performSegue(withIdentifier: "toDiscussionPost", sender: self)
         
     }
     

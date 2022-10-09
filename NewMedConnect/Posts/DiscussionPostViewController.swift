@@ -551,25 +551,41 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                             print("\(document.documentID) => \(document.data())")
 
                                                             self.db.collection(conditionSelected).document(document.documentID).updateData(["discussion" : " "])
+                                                            
+                                                            print(selectedDiscussion)
+                                                            self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("discussions").whereField("yourDiscussionTitle", isEqualTo: selectedDiscussion)
+                                                                .getDocuments() { (querySnapshot, err) in
+                                                                    if let err = err {
+                                                                        print("Error getting documents: \(err)")
+                                                                    } else {
+                                                                        for document in querySnapshot!.documents {
+                                                                            print("\(document.documentID) => \(document.data())")
+                                                                            
+                                                                            self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("discussions").document(document.documentID).updateData(["yourDiscussionTitle": " "])
+                                                                            
+                                                                            let alert = UIAlertController(title: "Successfully Deleted🗑", message: "Please refresh discussion page", preferredStyle: .alert)
+                                                                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                                                                switch action.style{
+                                                                                    case .default:
+                                                                                    print("default")
+                                                                                    self.navigationController?.popViewController(animated: true)
 
-                                                            let alert = UIAlertController(title: "Successfully Deleted🗑", message: "Please refresh discussion page", preferredStyle: .alert)
-                                                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                                                                switch action.style{
-                                                                    case .default:
-                                                                    print("default")
-                                                                    self.navigationController?.popViewController(animated: true)
 
 
+                                                                                    case .cancel:
+                                                                                    print("cancel")
 
-                                                                    case .cancel:
-                                                                    print("cancel")
+                                                                                    case .destructive:
+                                                                                    print("destructive")
 
-                                                                    case .destructive:
-                                                                    print("destructive")
+                                                                                }
+                                                                            }))
+                                                                            self.present(alert, animated: true, completion: nil)
+                                                                        }
+                                                                    }
+                                                            }
 
-                                                                }
-                                                            }))
-                                                            self.present(alert, animated: true, completion: nil)
+                                                            
                                                             
 
                                                         
@@ -1195,6 +1211,9 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                     
                                     self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData(["commentTitle" : " - " + document.documentID])
                                     
+                                    
+                                    
+                                    
                                     let alert = UIAlertController(title: "Successfully Deleted🗑", message: "Please Refresh", preferredStyle: .alert)
                                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                                         switch action.style{
@@ -1213,6 +1232,14 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                     self.present(alert, animated: true, completion: nil)
                                 
                                     self.getData()
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                     
                                     
                                 }
@@ -1666,7 +1693,12 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         sharedDiscussionCommentUserCountry = discussionCommentUserCountry
         sharedDiscussionCommentUserGender = discussionCommentUserGender
         
-        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "PieChartViewController")
+        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "DiscussionPostViewController")
+        
+        if let sheet = pieChartVC.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            
+        }
 
         self.present(pieChartVC, animated: true, completion: nil)
     }
