@@ -1693,7 +1693,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         sharedDiscussionCommentUserCountry = discussionCommentUserCountry
         sharedDiscussionCommentUserGender = discussionCommentUserGender
         
-        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "DiscussionPostViewController")
+        var pieChartVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "PieChartViewController")
         
         if let sheet = pieChartVC.sheetPresentationController {
             sheet.prefersGrabberVisible = true

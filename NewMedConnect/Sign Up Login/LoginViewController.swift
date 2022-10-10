@@ -31,7 +31,14 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         loginButton.layer.cornerRadius = 10.0
         signUpButton.layer.cornerRadius = 10.0
-
+//
+        //navigationController?.navigationBar.barTintColor = UIColor.blue
+        
+        navigationController?.navigationBar.isHidden = false
+        
+        navigationController?.navigationBar.backgroundColor = UIColor.white
+        
+        tabBarController?.tabBar.isHidden = true
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
         

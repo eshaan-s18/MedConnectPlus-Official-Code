@@ -164,7 +164,6 @@ class SignUpViewController: UIViewController {
                         if (result == true) {
                             self.handleSignUp()
                             self.finalError.isHidden = true
-                            self.performSegue(withIdentifier: "fromSignUpSegue", sender: self)
                             self.loading.stopAnimating()
                         }
                         else {
@@ -209,6 +208,7 @@ class SignUpViewController: UIViewController {
                 return
             }
             
+            
             let emailValues = ["email": email]
             let uidValues = ["userID": userID]
             
@@ -216,8 +216,13 @@ class SignUpViewController: UIViewController {
             
             userID = uid
             
+            print(uid)
+            
             self.db.collection("Users").document(userID).setData(emailValues)
             self.db.collection("Users").document(userID).setData(uidValues)
+            
+            self.performSegue(withIdentifier: "fromSignUpSegue", sender: self)
+
 //            Database.database().reference().child("Users").child(uid).updateChildValues(values, withCompletionBlock: { (error, ref) in
 //                if let error = error {
 //                    print("failed sign up")

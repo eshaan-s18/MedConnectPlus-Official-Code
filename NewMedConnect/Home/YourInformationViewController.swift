@@ -44,6 +44,12 @@ class YourInformationViewController: UIViewController {
     @IBOutlet weak var genderPicker: UIPickerView!
     
     
+    @IBOutlet weak var logOutButton: UIButton!
+    
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    
+    
     var savedEmail = ""
     var savedCountry = ""
     var savedBirthday = ""
@@ -602,11 +608,21 @@ class YourInformationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadInformationData()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
-            self.loading.stopAnimating()
-        }
+        
         loading.hidesWhenStopped = true
+        loading.startAnimating()
+        
+        deleteButton.layer.cornerRadius = 25
+        
+        loadInformationData()
+        
+        logOutButton.layer.cornerRadius = 25
+        
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+//            self.loading.stopAnimating()
+//        }
+        
+        datePicker.backgroundColor = UIColor.systemGray6
         
 
         datePicker.addTarget(self, action: #selector(datePickerValueChange(sender:)), for: UIControl.Event.valueChanged)
@@ -646,6 +662,110 @@ class YourInformationViewController: UIViewController {
 
        
     }
+    
+    
+    
+    @IBAction func logOutButtonTapped(_ sender: Any) {
+        handleSignOut()
+    }
+    
+    @IBAction func reportABugTapped(_ sender: Any) {
+    }
+    
+    @IBAction func contactUsButtonTapped(_ sender: Any) {
+    }
+    
+    @IBAction func privacyButtonTapped(_ sender: Any) {
+    }
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        emailTextField.text = savedEmail
+        
+        let alert = UIAlertController(title: "Confirm Delete Account", message: "Please type in your password to confirm your account delete.", preferredStyle: UIAlertController.Style.alert)
+            let action = UIAlertAction(title: "Delete", style: .default) { (alertAction) in
+                let textField = alert.textFields![0] as UITextField
+                FirebaseAuth.Auth.auth().signIn(withEmail: self.savedEmail, password: textField.text!, completion: { [weak self] result, error in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    guard error == nil else {
+                        self!.errorVibration()
+                        let alert = Service.createAlertController(title: "Error - Failed Account Delete", message: "Password incorrect. Account delete failed.")
+                        self!.present(alert, animated: true, completion: nil)
+                        print("error")
+                        
+                        
+                        return
+                    }
+                    print("Signed In")
+                    
+                    let credential = EmailAuthProvider.credential(withEmail: self!.savedEmail, password: textField.text!)
+                    Auth.auth().currentUser?.reauthenticate(with: credential)
+                    
+                    let user = Auth.auth().currentUser
+                    
+                    
+                    self!.db.collection("Users").document(user!.uid).delete()
+                    
+                    user?.delete()
+                    
+                    
+                    self!.handleSignOut()
+                    
+                    
+                })
+            }
+            alert.addTextField { (textField) in
+                textField.placeholder = "Enter your password"
+                textField.isSecureTextEntry = true
+                
+            }
+            alert.addAction(action)
+            self.present(alert, animated:true, completion: nil)
+        }
+    
+    
+        
+        
+        
+        
+        
+        
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "toLoginPageSegue" {
+//            let fullScreenViewController = segue.destination
+//            fullScreenViewController.modalPresentationStyle = UIModalPresentationStyle.automatic
+//            fullScreenViewController.activePresentationController!.delegate = self
+//        }
+    }
+    
+    
+    
+    
+    
+    @objc func handleSignOut() {
+        let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
+            self.signOut()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            performSegue(withIdentifier: "toLoginPageSegue", sender: self)
+        } catch let error {
+            let alert = Service.createAlertController(title: "Error", message: error.localizedDescription)
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    
+    
     
     @objc private func errorVibration() {
         HapticsManager.shared.vibrate(for: .error)
@@ -924,7 +1044,6 @@ class YourInformationViewController: UIViewController {
 
     func loadInformationData() {
         
-        loading.startAnimating()
         let docRefOne = db.collection("Users").document(Auth.auth().currentUser!.uid)
 
         docRefOne.getDocument { (document, error) in
@@ -1080,6 +1199,9 @@ class YourInformationViewController: UIViewController {
                         // A `City` value was successfully initialized from the DocumentSnapshot.
                         self.genderButton.setTitle(gender.gender, for: .normal)
                         self.savedGender = gender.gender!
+                        
+                        self.loading.stopAnimating()
+
 
                         //self.questionLabel.text = question.question
                         print("okay")

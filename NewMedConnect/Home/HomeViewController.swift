@@ -65,11 +65,17 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        authAndConfig()
+
         navigationItem.title = "Home"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
         navigationItem.hidesBackButton = true
+        
+        navigationController?.navigationBar.backgroundColor = UIColor.systemGray6
+
+        tabBarController?.tabBar.isHidden = false
         
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
@@ -91,7 +97,6 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
 
         scrollControl.isHidden = true
         savedScrollControl.isHidden = true
-        getData()
       
         
     }
@@ -117,7 +122,7 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         savedDiscussions = [SavedDiscussionStruct]()
         
         
-        
+        print(Auth.auth().currentUser!.uid)
         db.collection("Users").document(Auth.auth().currentUser!.uid).collection("discussions").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -267,7 +272,6 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
 
     }
     override func viewWillAppear(_ animated: Bool) {
-        authAndConfig()
     }
     
      func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -298,10 +302,15 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     }
     
     func authAndConfig() {
+        
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "toLoginPageSegue", sender: self)
             }
+        }
+        else{
+            getData()
+
         }
     }
     
