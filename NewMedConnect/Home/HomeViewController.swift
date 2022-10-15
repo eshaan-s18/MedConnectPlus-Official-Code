@@ -66,11 +66,14 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         authAndConfig()
+        
 
         navigationItem.title = "Home"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
+        
+        tabBarController?.navigationController?.navigationBar.isHidden = true
         navigationItem.hidesBackButton = true
         
         navigationController?.navigationBar.backgroundColor = UIColor.systemGray6

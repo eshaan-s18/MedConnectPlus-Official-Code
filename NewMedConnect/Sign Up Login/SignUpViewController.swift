@@ -13,7 +13,10 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
-var userID = ""
+var sharedEmail = ""
+var sharedPassword = ""
+
+var sharedUserID = ""
 
 class SignUpViewController: UIViewController {
 
@@ -49,6 +52,23 @@ class SignUpViewController: UIViewController {
         emailTextField.autocorrectionType = .no
         
         loading.hidesWhenStopped = true
+        
+        let alert = UIAlertController(title: "Reminder", message: "Signing up for an account involves using a valid email. MedConnect allows you to remain completely anonymous while using the app. Your email will only be used for logging in and only be visible to you.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            switch action.style{
+                case .default:
+                print("default")
+
+
+                case .cancel:
+                print("cancel")
+
+                case .destructive:
+                print("destructive")
+
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
         
         
         
@@ -194,7 +214,13 @@ class SignUpViewController: UIViewController {
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
         
-        createUser(withEmail: email, password: password)
+        sharedEmail = email
+        sharedPassword = password
+        
+        self.performSegue(withIdentifier: "fromSignUpSegue", sender: self)
+
+        
+        //createUser(withEmail: email, password: password)
     }
     
     
@@ -210,18 +236,17 @@ class SignUpViewController: UIViewController {
             
             
             let emailValues = ["email": email]
-            let uidValues = ["userID": userID]
+            let uidValues = ["userID": sharedUserID]
             
             guard let uid = result?.user.uid else { return }
             
-            userID = uid
+            sharedUserID = uid
             
             print(uid)
             
-            self.db.collection("Users").document(userID).setData(emailValues)
-            self.db.collection("Users").document(userID).setData(uidValues)
+            self.db.collection("Users").document(sharedUserID).setData(emailValues)
+            self.db.collection("Users").document(sharedUserID).setData(uidValues)
             
-            self.performSegue(withIdentifier: "fromSignUpSegue", sender: self)
 
 //            Database.database().reference().child("Users").child(uid).updateChildValues(values, withCompletionBlock: { (error, ref) in
 //                if let error = error {

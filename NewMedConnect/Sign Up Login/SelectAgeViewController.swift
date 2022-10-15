@@ -13,6 +13,7 @@ import Firebase
 import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
+var sharedBirthday = ""
 
 class SelectAgeViewController: UIViewController {
 
@@ -70,6 +71,17 @@ class SelectAgeViewController: UIViewController {
         }
         
         }
+    
+    func calcAge(birthday: String) -> Int {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "MM/dd/yyyy"
+        let birthdayDate = dateFormater.date(from: birthday)
+        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
+        let now = Date()
+        let calcAge = calendar.components(.year, from: birthdayDate!, to: now, options: [])
+        let age = calcAge.year
+        return age!
+    }
 
     
     
@@ -89,10 +101,17 @@ class SelectAgeViewController: UIViewController {
             errorVibration()
             errorMessage.text = "Please select a valid birthday."
         }
+        else if calcAge(birthday: (selectBirthdayButton.titleLabel?.text)!) < 13 {
+            errorMessage.isHidden = false
+            errorVibration()
+            errorMessage.text = "You must be 13 or older to sign up for an account."
+        }
+            
         else {
             
 //            print(calcAge(birthday: (selectBirthdayButton.titleLabel?.text)!))
-            db.collection("Users").document(userID).updateData(["birthday" : selectBirthdayButton.titleLabel?.text])
+            
+            sharedBirthday = (selectBirthdayButton.titleLabel?.text)!
             errorMessage.isHidden = true
             performSegue(withIdentifier: "fromBirthdaySegue", sender: self)
         }

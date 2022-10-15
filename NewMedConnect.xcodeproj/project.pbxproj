@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		EE00DDD828734AE2005CD04A /* Discussion.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE00DDD728734AE2005CD04A /* Discussion.storyboard */; };
 		EE00DDDB28734D56005CD04A /* DiscussionPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE00DDDA28734D56005CD04A /* DiscussionPostViewController.swift */; };
+		EE0F71B328F75D7C00626F95 /* ReportABugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0F71B228F75D7C00626F95 /* ReportABugViewController.swift */; };
+		EE0F71B528FA38B900626F95 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0F71B428FA38B900626F95 /* PrivacyPolicyViewController.swift */; };
 		EE1CF51F285A39AD00089CF9 /* ConditionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1CF51E285A39AD00089CF9 /* ConditionReference.swift */; };
 		EE313F0B28433AF00084994E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE313F0A28433AEF0084994E /* LoginViewController.swift */; };
 		EE313F0D28433B240084994E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE313F0C28433B240084994E /* SignUpViewController.swift */; };
@@ -95,6 +97,8 @@
 		95DCE37A2BAE4AB66FB2C343 /* Pods-NewMedConnect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewMedConnect.debug.xcconfig"; path = "Target Support Files/Pods-NewMedConnect/Pods-NewMedConnect.debug.xcconfig"; sourceTree = "<group>"; };
 		EE00DDD728734AE2005CD04A /* Discussion.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discussion.storyboard; sourceTree = "<group>"; };
 		EE00DDDA28734D56005CD04A /* DiscussionPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionPostViewController.swift; sourceTree = "<group>"; };
+		EE0F71B228F75D7C00626F95 /* ReportABugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugViewController.swift; sourceTree = "<group>"; };
+		EE0F71B428FA38B900626F95 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		EE1CF51E285A39AD00089CF9 /* ConditionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionReference.swift; sourceTree = "<group>"; };
 		EE313F0A28433AEF0084994E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EE313F0C28433B240084994E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +308,8 @@
 				EE93827F28F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift */,
 				EEA75906284A2311008CBC37 /* YourInformationViewController.swift */,
 				EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */,
+				EE0F71B228F75D7C00626F95 /* ReportABugViewController.swift */,
+				EE0F71B428FA38B900626F95 /* PrivacyPolicyViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -599,6 +605,7 @@
 				EE3D45A2285895A000A2E0E6 /* PinnedReference.swift in Sources */,
 				EE00DDDB28734D56005CD04A /* DiscussionPostViewController.swift in Sources */,
 				EECE51CB284145F800B5CC72 /* ViewController.swift in Sources */,
+				EE0F71B328F75D7C00626F95 /* ReportABugViewController.swift in Sources */,
 				EE9DF0C62854C07900A26D61 /* ConditionsViewController.swift in Sources */,
 				EECE51C7284145F800B5CC72 /* AppDelegate.swift in Sources */,
 				EECE51C9284145F800B5CC72 /* SceneDelegate.swift in Sources */,
@@ -608,6 +615,7 @@
 				EE313F0F2843AA850084994E /* EnterInformationViewController.swift in Sources */,
 				EE93827928E8E6B700CCB9F6 /* ReportResponseViewController.swift in Sources */,
 				EEA758FE2848D8CB008CBC37 /* Service.swift in Sources */,
+				EE0F71B528FA38B900626F95 /* PrivacyPolicyViewController.swift in Sources */,
 				EE98997B28B5CB6200D74F8F /* ResponseCommentsCollectionViewCell.swift in Sources */,
 				EEB39011284B884900050B18 /* GenderReference.swift in Sources */,
 				EEB89B69287BBA7700801388 /* DiscussionComments.swift in Sources */,

@@ -24,6 +24,9 @@ class SelectPersonalViewController: UIViewController {
     
     @IBOutlet weak var errorMessage: UILabel!
     
+    var selectedRace = ""
+    var selectedGender = ""
+    
     
     @IBOutlet weak var whiteRaceButton: UIButton!
     
@@ -238,8 +241,7 @@ class SelectPersonalViewController: UIViewController {
     
     @IBAction func nextButtonTapped(_ sender: Any) {
         if ((whiteRaceCircle.image == UIImage(systemName: "checkmark.circle.fill") || blackRaceCircle.image == UIImage(systemName: "checkmark.circle.fill") || americanIndianRaceCircle.image == UIImage(systemName: "checkmark.circle.fill") || asianRaceCircle.image == UIImage(systemName: "checkmark.circle.fill") || nativeHawaiianCircle.image == UIImage(systemName: "checkmark.circle.fill")) && (femaleCircle.image == UIImage(systemName: "checkmark.circle.fill") || maleCircle.image == UIImage(systemName: "checkmark.circle.fill") || otherCircle.image == UIImage(systemName: "checkmark.circle.fill"))) {
-            var selectedRace = ""
-            var selectedGender = ""
+            
             if whiteRaceCircle.image == UIImage(systemName: "checkmark.circle.fill") {
                 selectedRace = whiteRaceButton.titleLabel!.text!
             }
@@ -256,7 +258,6 @@ class SelectPersonalViewController: UIViewController {
                 selectedRace = americanIndianRaceButton.titleLabel!.text!
             }
             
-            db.collection("Users").document(userID).updateData(["race" : selectedRace])
             
             if femaleCircle.image == UIImage(systemName: "checkmark.circle.fill") {
                 selectedGender = femaleButton.titleLabel!.text!
@@ -267,11 +268,45 @@ class SelectPersonalViewController: UIViewController {
             else if otherCircle.image == UIImage(systemName: "checkmark.circle.fill") {
                 selectedGender = otherButton.titleLabel!.text!
             }
-            db.collection("Users").document(userID).updateData(["gender" : selectedGender])
-            db.collection("Users").document(userID).updateData(["pinned" : [""]])
-            db.collection("Users").document(userID).updateData(["saved" : [""]])
-            db.collection("Users").document(userID).updateData(["upvotes" : [""]])
-            db.collection("Users").document(userID).updateData(["downvotes" : [""]])
+            
+            
+            let alert = UIAlertController(title: "Confirm Sign up", message: "By clicking sign up you are giving MedConnect consent for the collection and sharing of the data you have inputted. You will remain completely anonymous while using MedConnect. Please reference our Privacy Policy for more information.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default) { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            })
+            
+            alert.addAction(UIAlertAction(title: "Privacy Policy", style: .default) { (action) in
+                var privacyPolicyVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PrivacyPolicyViewController")
+                if let sheet = privacyPolicyVC.sheetPresentationController {
+                    sheet.detents = [.large()]
+                    sheet.prefersGrabberVisible = true
+                    sheet.preferredCornerRadius = 10
+                    
+                }
+
+                self.present(privacyPolicyVC, animated: true, completion: nil)
+            })
+            
+            alert.addAction(UIAlertAction(title: "Sign Up", style: .default) { (action) in
+                alert.dismiss(animated: true, completion: nil)
+                self.createUser(withEmail: sharedEmail, password: sharedPassword)
+            })
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            
+            //createUser(withEmail: sharedEmail, password: sharedPassword)
+            
+            
             
             
             errorMessage.isHidden = true
@@ -295,6 +330,67 @@ class SelectPersonalViewController: UIViewController {
             errorMessage.isHidden = false
             errorMessage.text = "Please select your race and your gender."
             errorVibration()
+        }
+    }
+    
+    func createUser(withEmail email: String, password: String) {
+        print(email)
+        print(password)
+        print(sharedUserID)
+        print(sharedEmail)
+        print(sharedBirthday)
+        print(sharedCountry)
+        print(selectedRace)
+        print(selectedGender)
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            
+            if let error = error {
+                let alert = Service.createAlertController(title: "Error", message: error.localizedDescription)
+                self.present(alert, animated: true, completion: nil)
+                print("failed sign up")
+                return
+            }
+            
+            
+//            let emailValues = ["email": email]
+//            let uidValues = ["userID": sharedUserID]
+            
+            guard let uid = result?.user.uid else { return }
+            
+            sharedUserID = uid
+            print(sharedUserID)
+            
+            print(uid)
+            
+            //UID NOT WORKING FOR SOME REASON
+            self.db.collection("Users").document(sharedUserID).setData(["userID": sharedUserID])
+            self.db.collection("Users").document(sharedUserID).updateData(["email": sharedEmail])
+            self.db.collection("Users").document(sharedUserID).updateData(["birthday": sharedBirthday])
+            self.db.collection("Users").document(sharedUserID).updateData(["country" : sharedCountry])
+            self.db.collection("Users").document(sharedUserID).updateData(["race" : self.selectedRace])
+            self.db.collection("Users").document(sharedUserID).updateData(["gender" : self.selectedGender])
+            self.db.collection("Users").document(sharedUserID).updateData(["pinned" : [""]])
+            self.db.collection("Users").document(sharedUserID).updateData(["saved" : [""]])
+            self.db.collection("Users").document(sharedUserID).updateData(["upvotes" : [""]])
+            self.db.collection("Users").document(sharedUserID).updateData(["downvotes" : [""]])
+            
+            
+
+
+            self.performSegue(withIdentifier: "signUpSegue", sender: self)
+
+            
+
+//            Database.database().reference().child("Users").child(uid).updateChildValues(values, withCompletionBlock: { (error, ref) in
+//                if let error = error {
+//                    print("failed sign up")
+//                    return
+//                }
+//
+//                print("success")
+//            })
+            
+            
         }
     }
     

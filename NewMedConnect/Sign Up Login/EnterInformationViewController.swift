@@ -13,6 +13,8 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
+var sharedCountry = ""
+
 class EnterInformationViewController: UIViewController {
 
 
@@ -625,7 +627,7 @@ class EnterInformationViewController: UIViewController {
             fixedCountry!.removeFirst()
             fixedCountry!.removeFirst()
             print(fixedCountry!)
-            db.collection("Users").document(userID).updateData(["country" : fixedCountry])
+            sharedCountry = fixedCountry!
             errorMessage.isHidden = true
             performSegue(withIdentifier: "fromCountrySegue", sender: self)
         }

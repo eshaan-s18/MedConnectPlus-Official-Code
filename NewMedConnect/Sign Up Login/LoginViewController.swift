@@ -102,6 +102,7 @@ class LoginViewController: UIViewController {
                 return
             }
             print("Signed In")
+            print(Auth.auth().currentUser!.uid)
             
             self!.performSegue(withIdentifier: "loginSegue", sender: self)
             self!.activityIndicator.stopAnimating()

@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import MessageUI
 
 
 class YourInformationViewController: UIViewController {
@@ -673,9 +674,35 @@ class YourInformationViewController: UIViewController {
     }
     
     @IBAction func contactUsButtonTapped(_ sender: Any) {
+        showMailComposer()
+        
+    }
+    
+    
+    func showMailComposer() {
+        guard MFMailComposeViewController.canSendMail() else {
+            return
+        }
+        let composer = MFMailComposeViewController()
+        composer.mailComposeDelegate = self
+        composer.setToRecipients(["contact.medconnect@gmail.com"])
+        composer.setSubject("MedConnect App Support")
+        composer.setMessageBody("Please describe your reason to contact MedConnect support:\n--> ", isHTML: false)
+        
+        present(composer, animated: true)
+        
     }
     
     @IBAction func privacyButtonTapped(_ sender: Any) {
+        var privacyPolicyVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PrivacyPolicyViewController")
+        if let sheet = privacyPolicyVC.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 10
+            
+        }
+
+        self.present(privacyPolicyVC, animated: true, completion: nil)
     }
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
@@ -710,7 +737,7 @@ class YourInformationViewController: UIViewController {
                     user?.delete()
                     
                     
-                    self!.handleSignOut()
+                    self!.signOut()
                     
                     
                 })
@@ -1286,3 +1313,66 @@ extension YourInformationViewController: UIPickerViewDelegate, UIPickerViewDataS
 
 }
 
+extension YourInformationViewController:MFMailComposeViewControllerDelegate {
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        if let _ = error {
+            controller.dismiss(animated: true)
+            return
+        }
+        
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+            controller.dismiss(animated: true)
+
+        case .failed:
+            let alert = UIAlertController(title: "Error", message: "Failed support email send. Please try again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                switch action.style{
+                    case .default:
+                    print("default")
+                    controller.dismiss(animated: true)
+
+                    
+                    case .cancel:
+                    print("cancel")
+                    
+                    case .destructive:
+                    print("destructive")
+                    
+                }
+            }))
+            controller.dismiss(animated: true)
+
+            self.present(alert, animated: true, completion: nil)
+        case .saved:
+            print("Saved")
+            controller.dismiss(animated: true)
+
+        case .sent:
+            let alert = UIAlertController(title: "Support Email Sent", message: "Please give our team a couple days to get back to you", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                switch action.style{
+                    case .default:
+                    print("default")
+
+                    
+                    case .cancel:
+                    print("cancel")
+                    
+                    case .destructive:
+                    print("destructive")
+                    
+                }
+            }))
+            
+            controller.dismiss(animated: true)
+
+            self.present(alert, animated: true, completion: nil)
+            
+
+        }
+
+    }
+}

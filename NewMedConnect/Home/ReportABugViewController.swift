@@ -1,8 +1,8 @@
 //
-//  ReportResponseViewController.swift
+//  ReportABugViewController.swift
 //  NewMedConnect
 //
-//  Created by Eshaan Sharma on 10/1/22.
+//  Created by Eshaan Sharma on 10/12/22.
 //
 
 import UIKit
@@ -14,102 +14,61 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
+class ReportABugViewController: UIViewController, UITextViewDelegate {
 
-class ReportResponseViewController: UIViewController, UITextViewDelegate {
-
-    @IBOutlet weak var reportView: UIView!
     
-    @IBOutlet weak var reportLabel: UILabel!
-    
-    @IBOutlet weak var reportResponseTextView: UITextView!
+    @IBOutlet weak var sendReportButton: UIBarButtonItem!
     
     @IBOutlet weak var placeholderText: UILabel!
     
-    @IBOutlet weak var sendReportButton: UIBarButtonItem!
+    @IBOutlet weak var reportTextView: UITextView!
     
     var db = Firestore.firestore()
     var documentsCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        reportResponseTextView.delegate = self
-        
-        print(reportedDiscussion)
-        
-        if reportedDiscussionReply != "Nil" {
-            reportLabel.text = reportedDiscussionReply
-
-        }
-        
-        else if reportedDiscussion != "Nil" {
-            var delimeter = "-"
-            var commentTitle = reportedDiscussion
-            var newCommentTitle = commentTitle.components(separatedBy: delimeter)
-            print(newCommentTitle[0])
-
-            reportLabel.text = newCommentTitle[0]
-
-        }
-        
-        else {
-            reportLabel.text = reportedPost
-
-        }
-        
-        reportView.layer.cornerRadius = 10
-        
-        allowPost()
 
         // Do any additional setup after loading the view.
+        
+        reportTextView.delegate = self
+        
+        
     }
-    @objc private func allowPost() {
-        if reportResponseTextView.text!.count >= 1 {
+    
+    func allowPost() {
+        if reportTextView.text!.count >= 1 {
             sendReportButton.isEnabled = true
             placeholderText.isHidden = true
         }
         else {
-            placeholderText.isHidden = false
             sendReportButton.isEnabled = false
-        }
-    }
-    
-    @objc private func hideKeyboard() {
-        self.view.endEditing(true)
-        
-        if placeholderText.isHidden == true {
             placeholderText.isHidden = false
         }
     }
     
-    
-    @IBAction func cancelTapped(_ sender: Any) {
+    @IBAction func cancelButtonTapped(_ sender: Any) {
         self.dismiss(animated: true)
     }
     
     func textViewDidChange(_ textView: UITextView) {
         allowPost()
-
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
         placeholderText.isHidden = true
-        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         placeholderText.isHidden = true
     }
     
-    
-    @IBAction func reportButtonTapped(_ sender: Any) {
+    @IBAction func sendReportButtonTapped(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
         let date = Date()
         
-        db.collection("REPORTED DISCUSSIONS").getDocuments()
+        db.collection("REPORTED BUGS").getDocuments()
         { [self]
             (querySnapshot, err) in
 
@@ -146,7 +105,7 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
                 var newCommentTitle = commentTitle.components(separatedBy: delimeter)
                 print(newCommentTitle[0])
                 
-                db.collection("REPORTED DISCUSSIONS").document("\(documentsCount)").setData(["condition": conditionSelected, "post": reportedPost, "discussion": selectedDiscussion, "reportedComment": newCommentTitle[0], "reportedCommentReply": reportedDiscussionReply, "reportDescription": "!!REPORT: " + reportResponseTextView.text])
+                db.collection("REPORTED BUGS").document("\(documentsCount)").setData(["bugReportDescription" : reportTextView.text])
                 
                 
                 
@@ -174,8 +133,11 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
             }
         }
         
-        
     }
+    
+    
+    
+    
     
 
     /*
