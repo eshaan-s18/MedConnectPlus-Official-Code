@@ -403,6 +403,23 @@
                                                     <constraint firstAttribute="height" constant="20" id="PlF-08-wUM"/>
                                                 </constraints>
                                             </activityIndicatorView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WCg-bV-cXx">
+                                                <rect key="frame" x="20" y="268" width="374" height="150"/>
+                                                <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="150" id="z30-hi-Qen"/>
+                                                </constraints>
+                                            </view>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No created discussions. 😕                       " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQn-Th-RVP">
+                                                <rect key="frame" x="82" y="313" width="250" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="dPH-hE-mh6"/>
+                                                    <constraint firstAttribute="width" constant="250" id="tCo-8w-qCv"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Discussions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ey-Xm-cdh">
                                                 <rect key="frame" x="55" y="428.5" width="250" height="39"/>
                                                 <constraints>
@@ -442,7 +459,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="149"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="testSaved" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFa-kv-boq">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFa-kv-boq">
                                                                     <rect key="frame" x="34" y="25" width="306" height="104"/>
                                                                     <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="17"/>
                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -510,33 +527,61 @@
                                                     <constraint firstAttribute="width" constant="20" id="nVt-vB-Gx2"/>
                                                 </constraints>
                                             </activityIndicatorView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyN-a9-iMA">
+                                                <rect key="frame" x="20" y="468" width="374" height="150"/>
+                                                <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="150" id="c8O-vT-ADW"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="drc-J9-ZbL"/>
+                                                </constraints>
+                                            </view>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No saved discussions. 😕                       " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bM7-Zh-SMe">
+                                                <rect key="frame" x="82" y="513" width="250" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="250" id="Z7R-t3-1QR"/>
+                                                    <constraint firstAttribute="height" constant="60" id="diU-6f-8bB"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <constraints>
                                             <constraint firstItem="FiO-3m-4Rw" firstAttribute="centerY" secondItem="zgp-Qs-Yy6" secondAttribute="centerY" id="0Q7-X4-KFZ"/>
                                             <constraint firstItem="hsx-f7-1Wc" firstAttribute="bottom" secondItem="nmC-XC-6qg" secondAttribute="bottom" id="5Gd-Z1-eZn"/>
                                             <constraint firstItem="hsx-f7-1Wc" firstAttribute="leading" secondItem="aP2-2S-3Ii" secondAttribute="leading" constant="20" id="6qv-TH-6fz"/>
+                                            <constraint firstItem="WCg-bV-cXx" firstAttribute="top" secondItem="FiO-3m-4Rw" secondAttribute="bottom" constant="5" id="930-ZC-A8c"/>
                                             <constraint firstAttribute="trailing" secondItem="hsx-f7-1Wc" secondAttribute="trailing" constant="20" id="9bM-j8-pSl"/>
                                             <constraint firstItem="FiO-3m-4Rw" firstAttribute="leading" secondItem="Rji-qa-xUX" secondAttribute="leading" constant="20" id="Ioe-By-bpj"/>
                                             <constraint firstItem="FiO-3m-4Rw" firstAttribute="top" secondItem="WGN-IZ-Xcf" secondAttribute="bottom" constant="15" id="Lmd-zH-xO4"/>
                                             <constraint firstItem="YeA-bJ-3dB" firstAttribute="top" secondItem="Rji-qa-xUX" secondAttribute="bottom" constant="15" id="MJv-l9-IXI"/>
                                             <constraint firstAttribute="trailing" secondItem="Rji-qa-xUX" secondAttribute="trailing" id="Mc9-t2-jmO"/>
                                             <constraint firstItem="vYc-Fq-OhV" firstAttribute="centerY" secondItem="Rji-qa-xUX" secondAttribute="centerY" id="MlO-H5-GV0"/>
+                                            <constraint firstItem="zyN-a9-iMA" firstAttribute="top" secondItem="YeA-bJ-3dB" secondAttribute="bottom" constant="5" id="PHP-In-Xa8"/>
+                                            <constraint firstItem="WCg-bV-cXx" firstAttribute="leading" secondItem="aP2-2S-3Ii" secondAttribute="leading" constant="20" id="PJF-hb-5ol"/>
                                             <constraint firstItem="YeA-bJ-3dB" firstAttribute="leading" secondItem="Rji-qa-xUX" secondAttribute="leading" constant="20" id="QHb-na-deO"/>
                                             <constraint firstItem="vYc-Fq-OhV" firstAttribute="centerX" secondItem="Rji-qa-xUX" secondAttribute="centerX" id="Rmt-OV-ssM"/>
+                                            <constraint firstItem="HQn-Th-RVP" firstAttribute="centerX" secondItem="Rji-qa-xUX" secondAttribute="centerX" id="VrW-Ro-XYg"/>
                                             <constraint firstItem="nmC-XC-6qg" firstAttribute="top" secondItem="YeA-bJ-3dB" secondAttribute="bottom" constant="5" id="Wls-MK-ZXU"/>
+                                            <constraint firstItem="bM7-Zh-SMe" firstAttribute="centerY" secondItem="nmC-XC-6qg" secondAttribute="centerY" id="XmA-xO-rKF"/>
                                             <constraint firstItem="B70-Ht-zll" firstAttribute="centerX" secondItem="nmC-XC-6qg" secondAttribute="centerX" id="ZNo-CL-3Dc"/>
                                             <constraint firstItem="B70-Ht-zll" firstAttribute="centerY" secondItem="nmC-XC-6qg" secondAttribute="centerY" id="brK-OW-LPU"/>
                                             <constraint firstItem="YeA-bJ-3dB" firstAttribute="centerY" secondItem="8Ey-Xm-cdh" secondAttribute="centerY" id="cA3-oX-EwG"/>
+                                            <constraint firstAttribute="trailing" secondItem="WCg-bV-cXx" secondAttribute="trailing" constant="20" id="cqE-nn-5dY"/>
                                             <constraint firstItem="hsx-f7-1Wc" firstAttribute="centerX" secondItem="nmC-XC-6qg" secondAttribute="centerX" id="d7H-Kt-0A7"/>
+                                            <constraint firstAttribute="trailing" secondItem="zyN-a9-iMA" secondAttribute="trailing" constant="20" id="idL-5d-USs"/>
                                             <constraint firstItem="nmC-XC-6qg" firstAttribute="leading" secondItem="aP2-2S-3Ii" secondAttribute="leading" id="lQg-gh-E7G"/>
                                             <constraint firstItem="8Ey-Xm-cdh" firstAttribute="leading" secondItem="YeA-bJ-3dB" secondAttribute="trailing" constant="5" id="mIs-EF-NKA"/>
                                             <constraint firstItem="WGN-IZ-Xcf" firstAttribute="leading" secondItem="aP2-2S-3Ii" secondAttribute="leading" constant="20" id="nGe-I1-MZr"/>
                                             <constraint firstItem="zgp-Qs-Yy6" firstAttribute="leading" secondItem="FiO-3m-4Rw" secondAttribute="trailing" constant="5" id="p5h-QE-Zet"/>
                                             <constraint firstAttribute="trailing" secondItem="nmC-XC-6qg" secondAttribute="trailing" id="pNB-LQ-FEq"/>
+                                            <constraint firstItem="HQn-Th-RVP" firstAttribute="centerY" secondItem="Rji-qa-xUX" secondAttribute="centerY" id="q3o-AI-T3H"/>
                                             <constraint firstItem="Rji-qa-xUX" firstAttribute="leading" secondItem="aP2-2S-3Ii" secondAttribute="leading" id="s2u-jn-9wZ"/>
+                                            <constraint firstItem="bM7-Zh-SMe" firstAttribute="centerX" secondItem="nmC-XC-6qg" secondAttribute="centerX" id="vQ0-Ce-IjN"/>
                                             <constraint firstItem="Rji-qa-xUX" firstAttribute="top" secondItem="FiO-3m-4Rw" secondAttribute="bottom" constant="5" id="wWA-xk-WSs"/>
                                             <constraint firstAttribute="trailing" secondItem="WGN-IZ-Xcf" secondAttribute="trailing" constant="20" id="xQM-uQ-iZd"/>
+                                            <constraint firstItem="zyN-a9-iMA" firstAttribute="leading" secondItem="aP2-2S-3Ii" secondAttribute="leading" constant="20" id="ySK-rM-ON7"/>
                                         </constraints>
                                     </view>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="K0u-xT-Knk">
@@ -605,13 +650,17 @@
                     </navigationItem>
                     <connections>
                         <outlet property="loadingIndicator" destination="vYc-Fq-OhV" id="POr-2J-z7y"/>
+                        <outlet property="noCreatedDiscussions" destination="HQn-Th-RVP" id="Qsw-WR-hWT"/>
+                        <outlet property="noSavedDiscussions" destination="bM7-Zh-SMe" id="s1q-lv-1Di"/>
                         <outlet property="savedDiscussionsCollectionView" destination="nmC-XC-6qg" id="7Io-Wh-432"/>
+                        <outlet property="savedDiscussionsView" destination="zyN-a9-iMA" id="2I4-YW-TLL"/>
                         <outlet property="savedLoadingIndicator" destination="B70-Ht-zll" id="ofm-WK-o7Z"/>
                         <outlet property="savedScrollControl" destination="hsx-f7-1Wc" id="3dm-W9-q8V"/>
                         <outlet property="scrollControl" destination="K0u-xT-Knk" id="IwZ-qv-mMu"/>
                         <outlet property="scrollView" destination="usI-rf-dxC" id="jZI-c5-xpm"/>
                         <outlet property="welcomeView" destination="WGN-IZ-Xcf" id="TUz-h7-xFO"/>
                         <outlet property="yourDiscussionsCollectionView" destination="Rji-qa-xUX" id="nvP-an-ug4"/>
+                        <outlet property="yourDiscussionsView" destination="WCg-bV-cXx" id="dc7-AQ-7fO"/>
                         <segue destination="nWJ-mB-dVQ" kind="popoverPresentation" identifier="popoverSegue" popoverAnchorView="aP2-2S-3Ii" id="nUb-2G-XKV">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
@@ -815,6 +864,30 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VG7-V4-sUv">
+                                <rect key="frame" x="47" y="432.5" width="320" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="Y5G-VQ-Pky"/>
+                                    <constraint firstAttribute="width" constant="320" id="eup-FE-Giy"/>
+                                </constraints>
+                                <string key="text">Can't find what you're looking for?😕                                                                         Send a request for a new group/condition to be added!💡</string>
+                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="18"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="966-yR-puc">
+                                <rect key="frame" x="149.5" y="532.5" width="115" height="45"/>
+                                <color key="backgroundColor" systemColor="tintColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="ccX-5U-zsD"/>
+                                    <constraint firstAttribute="width" constant="115" id="rA1-Gk-rzv"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Send Request">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Yb4-yY-1iK">
                                 <rect key="frame" x="197" y="257" width="20" height="20"/>
                                 <constraints>
@@ -831,20 +904,24 @@
                             <constraint firstItem="nHt-cT-YKM" firstAttribute="leading" secondItem="LQF-Hj-tlQ" secondAttribute="leading" id="A4V-m3-Fco"/>
                             <constraint firstItem="LQF-Hj-tlQ" firstAttribute="centerX" secondItem="BFO-mP-Xn3" secondAttribute="centerX" id="EaG-cE-Cj0"/>
                             <constraint firstItem="18P-4x-n6N" firstAttribute="leading" secondItem="BFO-mP-Xn3" secondAttribute="leading" id="Go8-cp-qL3"/>
+                            <constraint firstItem="VG7-V4-sUv" firstAttribute="centerY" secondItem="18P-4x-n6N" secondAttribute="centerY" id="IrT-Gf-KwB"/>
                             <constraint firstItem="LQF-Hj-tlQ" firstAttribute="top" secondItem="9gR-tW-leg" secondAttribute="bottom" id="JfP-vP-UAM"/>
                             <constraint firstItem="LQF-Hj-tlQ" firstAttribute="top" secondItem="rBY-wA-eHu" secondAttribute="bottom" constant="50" id="K1e-RY-ohv"/>
                             <constraint firstItem="nHt-cT-YKM" firstAttribute="centerY" secondItem="9gR-tW-leg" secondAttribute="centerY" id="LCn-oU-9lA"/>
+                            <constraint firstItem="VG7-V4-sUv" firstAttribute="centerX" secondItem="18P-4x-n6N" secondAttribute="centerX" id="OOY-3J-48R"/>
                             <constraint firstItem="Yb4-yY-1iK" firstAttribute="centerX" secondItem="LQF-Hj-tlQ" secondAttribute="centerX" id="QX8-MN-otr"/>
                             <constraint firstItem="18P-4x-n6N" firstAttribute="top" secondItem="rBY-wA-eHu" secondAttribute="bottom" id="ScY-cG-GT5"/>
                             <constraint firstItem="XpI-8E-qYg" firstAttribute="leading" secondItem="EeO-QI-rEp" secondAttribute="trailing" constant="5" id="Slz-Ea-SEc"/>
                             <constraint firstItem="9gR-tW-leg" firstAttribute="leading" secondItem="nHt-cT-YKM" secondAttribute="trailing" constant="5" id="Zbu-ws-UEP"/>
                             <constraint firstItem="rBY-wA-eHu" firstAttribute="leading" secondItem="BFO-mP-Xn3" secondAttribute="leading" id="dsN-Nu-KkQ"/>
+                            <constraint firstItem="966-yR-puc" firstAttribute="centerX" secondItem="VG7-V4-sUv" secondAttribute="centerX" id="eYp-0X-WDV"/>
                             <constraint firstItem="EeO-QI-rEp" firstAttribute="centerY" secondItem="XpI-8E-qYg" secondAttribute="centerY" id="hSl-m4-zpx"/>
                             <constraint firstItem="BFO-mP-Xn3" firstAttribute="trailing" secondItem="18P-4x-n6N" secondAttribute="trailing" id="hUn-Je-VAG"/>
                             <constraint firstItem="EeO-QI-rEp" firstAttribute="leading" secondItem="ZjO-l4-BZG" secondAttribute="leading" id="p3z-1h-EH9"/>
                             <constraint firstItem="ZjO-l4-BZG" firstAttribute="top" secondItem="XpI-8E-qYg" secondAttribute="bottom" id="q33-u7-DcF"/>
                             <constraint firstItem="BFO-mP-Xn3" firstAttribute="bottom" secondItem="ZjO-l4-BZG" secondAttribute="bottom" constant="20" id="qDG-cV-3NH"/>
                             <constraint firstItem="Yb4-yY-1iK" firstAttribute="centerY" secondItem="LQF-Hj-tlQ" secondAttribute="centerY" id="sBR-G2-pr1"/>
+                            <constraint firstItem="966-yR-puc" firstAttribute="top" secondItem="VG7-V4-sUv" secondAttribute="bottom" constant="10" id="ssR-XV-QvB"/>
                             <constraint firstItem="BFO-mP-Xn3" firstAttribute="bottom" secondItem="18P-4x-n6N" secondAttribute="bottom" id="svE-qE-oQ8"/>
                             <constraint firstItem="ZjO-l4-BZG" firstAttribute="top" secondItem="LQF-Hj-tlQ" secondAttribute="bottom" constant="54" id="yAR-DJ-Lac"/>
                             <constraint firstItem="rBY-wA-eHu" firstAttribute="top" secondItem="BFO-mP-Xn3" secondAttribute="top" id="zrS-zI-0i6"/>
@@ -864,7 +941,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KcV-lz-gmW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-855" y="2340"/>
+            <point key="canvasLocation" x="-855.07246376811599" y="2339.7321428571427"/>
         </scene>
         <!--Conditions-->
         <scene sceneID="FuT-rf-kAV">
@@ -3019,9 +3096,9 @@ Please contact us if you have any questions about our privacy practices.</string
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="255" id="5fK-ul-cjV"/>
                                                 </constraints>
-                                                <mutableString key="text">All data stored from direct identification data, such as an email, and data that does not directly identify you, like gender, race, location, or age, is considered personal data and is protected under privacy rights.
+                                                <string key="text">All data stored from direct identification data, such as an email, and data that does not directly identify you, like gender, race, location, or age, is considered personal data and is protected under privacy rights.
 
-This Privacy Policy covers how MedConnect handles personal data that you share with our app. MedConnect may also link to third parties on our app. MedConnect’s Privacy Policy does not apply to how third parties define personal data or how they use it. So, we encourage you to read their privacy policies and know your privacy rights before interacting with them.</mutableString>
+This Privacy Policy covers how MedConnect handles personal data that you share with our app. MedConnect may also link to third parties on our app. MedConnect’s Privacy Policy does not apply to how third parties define personal data or how they use it. So, we encourage you to read their privacy policies and know your privacy rights before interacting with them.</string>
                                                 <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="14"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -3061,12 +3138,12 @@ This Privacy Policy covers how MedConnect handles personal data that you share w
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="385" id="Vqw-SG-6Bz"/>
                                                 </constraints>
-                                                <mutableString key="text">MedConnect only connects personal data that is needed for in-app functions. 
+                                                <string key="text">MedConnect only connects personal data that is needed for in-app functions. 
 
 When you sign up for a MedConnect account, we will collect the following information, including:
 •Email Address: Your email address is used to login to your MedConnect account. Your email address is not accessible to any other user but you, where you can access and change it in the ‘Your Information’ page.
 •Password: Your password is used to login to your MedConnect account. Your password is secured by Firebase and is not available to any user nor the MedConnect team. 
-•Personal information: Your date of birth, country location, gender, and race is collected by MedConnect. This personal information is not directly associated with your email or User ID when it is displayed on the MedConnect app. No user on MedConnect can use this information to find your account. </mutableString>
+•Personal information: Your date of birth, country location, gender, and race is collected by MedConnect. This personal information is not directly associated with your email or User ID when it is displayed on the MedConnect app. No user on MedConnect can use this information to find your account. </string>
                                                 <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="14"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -3493,10 +3570,107 @@ MedConnect only retains personal data for the necessary processes of the app suc
             </objects>
             <point key="canvasLocation" x="96" y="1616"/>
         </scene>
+        <!--ReportA Bug View Controller-->
+        <scene sceneID="fgy-aT-ief">
+            <objects>
+                <viewController id="btd-Om-Z6a" customClass="ReportABugViewController" customModule="NewMedConnect" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IHs-FX-FD5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a Bug" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JB4-3U-BFC">
+                                <rect key="frame" x="55" y="59.5" width="215" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="2SQ-Hj-iYP"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="39" id="MrP-Rv-dAG"/>
+                                    <constraint firstAttribute="width" constant="215" id="jmO-0R-Uuy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="25"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ladybug" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="TIi-TM-hsw">
+                                <rect key="frame" x="20" y="63" width="30" height="32"/>
+                                <color key="tintColor" red="0.1134203929" green="0.43927556820000002" blue="0.1977922214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2Mb-2c-eAl"/>
+                                    <constraint firstAttribute="width" constant="30" id="UNK-AV-M5N"/>
+                                </constraints>
+                            </imageView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e4k-yW-RNX">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <color key="barTintColor" systemColor="systemGray6Color"/>
+                                <items>
+                                    <navigationItem id="Avc-y6-xVf">
+                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="fco-Yc-Fu6">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="btd-Om-Z6a" id="28e-Sa-lI7"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Send Report" style="plain" id="wC5-99-1r7">
+                                            <connections>
+                                                <action selector="sendReportButtonTapped:" destination="btd-Om-Z6a" id="s83-HZ-JrH"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aMT-wg-Xb9">
+                                <rect key="frame" x="20" y="98.5" width="374" height="280"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="Xwx-J8-aDD"/>
+                                </constraints>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DM8-5x-Oop">
+                                <rect key="frame" x="25" y="107.5" width="364" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="yUu-Qx-ZEO"/>
+                                </constraints>
+                                <string key="text">Please explain the bug you have found                                                                                                                                                                                                                                                                                                                                                                                                                                                        .</string>
+                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="18"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="f09-my-OCw"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstItem="DM8-5x-Oop" firstAttribute="trailing" secondItem="aMT-wg-Xb9" secondAttribute="trailing" constant="-5" id="0tx-jX-jIG"/>
+                            <constraint firstItem="e4k-yW-RNX" firstAttribute="top" secondItem="IHs-FX-FD5" secondAttribute="top" id="52l-Cq-oas"/>
+                            <constraint firstAttribute="trailing" secondItem="e4k-yW-RNX" secondAttribute="trailing" id="ACv-cK-BQ8"/>
+                            <constraint firstItem="e4k-yW-RNX" firstAttribute="leading" secondItem="IHs-FX-FD5" secondAttribute="leading" id="Ar1-nx-BVB"/>
+                            <constraint firstItem="aMT-wg-Xb9" firstAttribute="leading" secondItem="f09-my-OCw" secondAttribute="leading" constant="20" id="BaC-IZ-lx9"/>
+                            <constraint firstItem="f09-my-OCw" firstAttribute="trailing" secondItem="aMT-wg-Xb9" secondAttribute="trailing" constant="20" id="CJR-ZY-fYG"/>
+                            <constraint firstItem="TIi-TM-hsw" firstAttribute="centerY" secondItem="JB4-3U-BFC" secondAttribute="centerY" id="FZj-1H-DgO"/>
+                            <constraint firstItem="TIi-TM-hsw" firstAttribute="leading" secondItem="aMT-wg-Xb9" secondAttribute="leading" id="Hn0-mX-TeN"/>
+                            <constraint firstItem="aMT-wg-Xb9" firstAttribute="top" secondItem="JB4-3U-BFC" secondAttribute="bottom" id="JCo-DN-iOt"/>
+                            <constraint firstItem="JB4-3U-BFC" firstAttribute="leading" secondItem="TIi-TM-hsw" secondAttribute="trailing" constant="5" id="OpB-v6-0UM"/>
+                            <constraint firstItem="aMT-wg-Xb9" firstAttribute="centerX" secondItem="f09-my-OCw" secondAttribute="centerX" id="Q0P-TH-cdZ"/>
+                            <constraint firstItem="DM8-5x-Oop" firstAttribute="top" secondItem="aMT-wg-Xb9" secondAttribute="top" constant="9" id="ZXp-oc-DHj"/>
+                            <constraint firstItem="TIi-TM-hsw" firstAttribute="top" secondItem="e4k-yW-RNX" secondAttribute="bottom" constant="20" id="eut-lO-8pw"/>
+                            <constraint firstItem="DM8-5x-Oop" firstAttribute="leading" secondItem="aMT-wg-Xb9" secondAttribute="leading" constant="5" id="tiN-dg-KOj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Hab-YR-Dgs"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="414" height="896"/>
+                    <connections>
+                        <outlet property="placeholderText" destination="DM8-5x-Oop" id="qj6-60-Urp"/>
+                        <outlet property="reportTextView" destination="aMT-wg-Xb9" id="Lua-Ug-UZZ"/>
+                        <outlet property="sendReportButton" destination="wC5-99-1r7" id="Jlu-Ad-Wfl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RR8-LO-XjD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-693" y="3052"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="v9z-Tm-olM"/>
-        <segue reference="T0p-aG-psm"/>
+        <segue reference="GBo-Is-a3n"/>
         <segue reference="lx6-dp-i4o"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -3525,6 +3699,9 @@ MedConnect only retains personal data for the necessary processes of the app suc
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemCyanColor">
             <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

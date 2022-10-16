@@ -185,8 +185,7 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
     @objc func refresh() {
         getDiscussionData()
         
-        self.discussionCollectionView.dataSource = self
-        self.discussionCollectionView.delegate = self
+
         
         self.discussionCollectionView.refreshControl?.endRefreshing()
 
@@ -195,6 +194,7 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
     
 
     @objc func getDiscussionData() {
+        documentsCount = ""
         completionNumber = 0
         
         self.discussions = [String]()

@@ -373,6 +373,8 @@ class SelectPersonalViewController: UIViewController {
             self.db.collection("Users").document(sharedUserID).updateData(["saved" : [""]])
             self.db.collection("Users").document(sharedUserID).updateData(["upvotes" : [""]])
             self.db.collection("Users").document(sharedUserID).updateData(["downvotes" : [""]])
+            self.db.collection("Users").document(sharedUserID).collection("discussions").document("0").setData(["conditionSelected": "", "yourDiscussionDate": "", "yourDiscussionTitle": ""])
+            self.db.collection("Users").document(sharedUserID).collection("savedDiscussions").document("0").setData(["conditionSelected": "", "savedDiscussionDate": "", "savedDiscussionSavedDate": "", "savedDiscussionTitle": ""])
             
             
 

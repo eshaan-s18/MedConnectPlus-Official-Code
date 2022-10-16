@@ -25,6 +25,7 @@ struct SavedDiscussionStruct {
 
 class HomeViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
+    var reps = 0
     
     var yourDiscussions = [YourDiscussionStruct]()
     
@@ -42,6 +43,12 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     @IBOutlet weak var savedScrollControl: UIPageControl!
     
+    @IBOutlet weak var yourDiscussionsView: UIView!
+    
+    @IBOutlet weak var savedDiscussionsView: UIView!
+    
+    
+    
     
     let refreshControl = UIRefreshControl()
     
@@ -51,6 +58,11 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var savedLoadingIndicator: UIActivityIndicatorView!
+    
+    
+    @IBOutlet weak var noCreatedDiscussions: UILabel!
+    
+    @IBOutlet weak var noSavedDiscussions: UILabel!
     
     var skippedDocs = 0
     
@@ -66,6 +78,9 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         authAndConfig()
+        
+        yourDiscussionsView.layer.cornerRadius = 25
+        savedDiscussionsView.layer.cornerRadius = 25
         
 
         navigationItem.title = "Home"
@@ -112,6 +127,7 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     }
     
     func getData() {
+        reps = 0
         currentIndex = 0
         
         savedCurrentIndex = 0
@@ -135,10 +151,16 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 for document in querySnapshot!.documents {
                     let documentID = document.documentID
                     
-                    if documentID == "0" {
+                    
+                    
+                  
+                    
+                    
+                    if documentID == "" {
                         print("skip")
                     }
                     else {
+                        
                         let docRef = self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("discussions").document(documentID)
                         
                         docRef.getDocument { (document, error) in
@@ -153,20 +175,49 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                                 if let discussion = discussion {
                                     // A `City` value was successfully initialized from the DocumentSnapshot.
                                     
-                                    if discussion.yourDiscussionTitle!.prefix(1) == " " {
+                                    if documentID != "0" {
+                                        if discussion.yourDiscussionTitle!.prefix(1) == " " {
                                         self.skippedDocs += 1
                                     }
                                     else {
                                         self.yourDiscussions.append(YourDiscussionStruct(yourDiscussionTitle: discussion.yourDiscussionTitle!, yourDiscussionDate: discussion.yourDiscussionDate!, conditionSelected: discussion.conditionSelected!))
                                     }
-                                        print(self.yourDiscussions)
-                                        print(discussionsCreatedDocumentCount)
-                                        if self.yourDiscussions.count == discussionsCreatedDocumentCount - 1 - self.skippedDocs {
+                                }
+                                    
+                                    print(self.skippedDocs)
+                                    print((querySnapshot?.documents.count)! - 1)
+                                            if self.skippedDocs == (querySnapshot?.documents.count)! - 1 {
+                                                self.yourDiscussionsCollectionView.isHidden = true
+                                                self.noCreatedDiscussions.isHidden = false
+                                                self.yourDiscussionsView.isHidden = false
+                                                self.loadingIndicator.stopAnimating()
+                                            }
+                                            else if self.skippedDocs < (querySnapshot?.documents.count)! - 1{
+                                                self.yourDiscussionsCollectionView.isHidden = false
+                                                self.noCreatedDiscussions.isHidden = true
+                                                self.yourDiscussionsView.isHidden = true
+                                            }
+                                            
+                                            
+                                            
+                                        
+                                        
+                                        
+                                    
+                                    print(self.yourDiscussions.count)
+                                        print(discussionsCreatedDocumentCount - 1 - self.skippedDocs)
+                                    self.reps += 1
+                                    print(self.reps)
+                                    print(discussionsCreatedDocumentCount)
+                                    
+                                            if self.yourDiscussions.count == discussionsCreatedDocumentCount - 1 - self.skippedDocs && self.reps == discussionsCreatedDocumentCount {
                                             
                                             self.yourDiscussions = self.yourDiscussions.sorted(by: {$0.yourDiscussionDate.compare($1.yourDiscussionDate) == .orderedDescending})
                                             
                                             print(self.yourDiscussions)
                                             print(self.yourDiscussions.map({$0.yourDiscussionTitle}))
+                                            
+                                            self.savedSkippedDocs = 0
                                             
                                             
                                             
@@ -179,10 +230,15 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                                                     for document in querySnapshot!.documents {
                                                         let savedDocumentID = document.documentID
                                                         
+                                                        print(savedDocumentID)
+                                                        
                                                         if savedDocumentID == "0" {
                                                             print("skip")
                                                         }
+                                                        
+                                                        
                                                         else {
+                                                            
                                                             let docRef2 = self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").document(savedDocumentID)
                                                             
                                                             docRef2.getDocument { (document, error) in
@@ -196,12 +252,31 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                                                                 case .success(let savedDiscussion):
                                                                     if let savedDiscussion = savedDiscussion {
                                                                         // A `City` value was successfully initialized from the DocumentSnapshot.
-                                                                        
+                                                                        print(savedDiscussion.savedDiscussionSavedDate)
+                                                                        print(savedDiscussion.savedDiscussionTitle!)
                                                                         if savedDiscussion.savedDiscussionTitle!.prefix(1) == " " {
                                                                             self.savedSkippedDocs += 1
+                                                                
+                                                                            
                                                                         }
                                                                         else {
                                                                             self.savedDiscussions.append(SavedDiscussionStruct(savedDiscussionTitle: savedDiscussion.savedDiscussionTitle!, savedDiscussionDate: savedDiscussion.savedDiscussionDate!, savedDiscussionSavedDate: savedDiscussion.savedDiscussionSavedDate!, conditionSelected: savedDiscussion.conditionSelected!))
+                                                                        }
+                                                                        
+                                                                        print(self.savedSkippedDocs)
+                                                                        print(querySnapshot?.documents.count)
+                                                                        
+                                                                        
+                                                                        if self.savedSkippedDocs == (querySnapshot?.documents.count)! - 1 {
+                                                                            self.savedDiscussionsCollectionView.isHidden = true
+                                                                            self.noSavedDiscussions.isHidden = false
+                                                                            self.savedDiscussionsView.isHidden = false
+                                                                            self.savedLoadingIndicator.stopAnimating()
+                                                                        }
+                                                                        else if self.savedSkippedDocs < (querySnapshot?.documents.count)! - 1{
+                                                                            self.savedDiscussionsCollectionView.isHidden = false
+                                                                            self.noSavedDiscussions.isHidden = true
+                                                                            self.savedDiscussionsView.isHidden = true
                                                                         }
                                                                             print(self.savedDiscussions.count)
                                                                             print(savedDiscussionsDocumentCount)
