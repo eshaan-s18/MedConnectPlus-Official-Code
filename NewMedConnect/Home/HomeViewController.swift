@@ -232,7 +232,7 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                                                         
                                                         print(savedDocumentID)
                                                         
-                                                        if savedDocumentID == "0" {
+                                                        if savedDocumentID == "" {
                                                             print("skip")
                                                         }
                                                         

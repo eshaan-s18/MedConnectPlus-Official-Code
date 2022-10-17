@@ -23,6 +23,7 @@
 		EE3D45A028587D0E00A2E0E6 /* ConditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D459F28587D0E00A2E0E6 /* ConditionTableViewCell.swift */; };
 		EE3D45A2285895A000A2E0E6 /* PinnedReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D45A1285895A000A2E0E6 /* PinnedReference.swift */; };
 		EE3D45A42858CBD700A2E0E6 /* PinnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D45A32858CBD700A2E0E6 /* PinnedTableViewCell.swift */; };
+		EE5B8E1428FC9A4300FA1F0A /* RequestConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */; };
 		EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */; };
 		EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740001289F4C0800C21FB0 /* UpvoteReference.swift */; };
 		EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740003289F4C4400C21FB0 /* DownvoteReference.swift */; };
@@ -110,6 +111,7 @@
 		EE3D459F28587D0E00A2E0E6 /* ConditionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionTableViewCell.swift; sourceTree = "<group>"; };
 		EE3D45A1285895A000A2E0E6 /* PinnedReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedReference.swift; sourceTree = "<group>"; };
 		EE3D45A32858CBD700A2E0E6 /* PinnedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedTableViewCell.swift; sourceTree = "<group>"; };
+		EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConditionViewController.swift; sourceTree = "<group>"; };
 		EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionResponseReplies.swift; sourceTree = "<group>"; };
 		EE740001289F4C0800C21FB0 /* UpvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteReference.swift; sourceTree = "<group>"; };
 		EE740003289F4C4400C21FB0 /* DownvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownvoteReference.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				EEB390132850D99C00050B18 /* CategoriesViewController.swift */,
 				EE9DF0C52854C07900A26D61 /* ConditionsViewController.swift */,
 				EECE6CC4286BFE6F00E4A04A /* SearchConditionCollectionViewCell.swift */,
+				EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				EE00DDDB28734D56005CD04A /* DiscussionPostViewController.swift in Sources */,
 				EECE51CB284145F800B5CC72 /* ViewController.swift in Sources */,
 				EE0F71B328F75D7C00626F95 /* ReportABugViewController.swift in Sources */,
+				EE5B8E1428FC9A4300FA1F0A /* RequestConditionViewController.swift in Sources */,
 				EE9DF0C62854C07900A26D61 /* ConditionsViewController.swift in Sources */,
 				EECE51C7284145F800B5CC72 /* AppDelegate.swift in Sources */,
 				EECE51C9284145F800B5CC72 /* SceneDelegate.swift in Sources */,

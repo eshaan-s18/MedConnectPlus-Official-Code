@@ -1,8 +1,8 @@
 //
-//  ReportABugViewController.swift
+//  RequestConditionViewController.swift
 //  NewMedConnect
 //
-//  Created by Eshaan Sharma on 10/12/22.
+//  Created by Eshaan Sharma on 10/16/22.
 //
 
 import UIKit
@@ -14,36 +14,35 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
-class ReportABugViewController: UIViewController, UITextViewDelegate {
-
+class RequestConditionViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var sendReportButton: UIBarButtonItem!
     
-    @IBOutlet weak var placeholderText: UILabel!
+    @IBOutlet weak var requestTextView: UITextView!
     
-    @IBOutlet weak var reportTextView: UITextView!
+    @IBOutlet weak var placeHolderText: UILabel!
     
     var db = Firestore.firestore()
     var documentsCount = 0
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        reportTextView.delegate = self
-        
+        requestTextView.delegate = self
         
     }
     
     func allowPost() {
-        if reportTextView.text!.count >= 1 {
+        if requestTextView.text!.count >= 1 {
             sendReportButton.isEnabled = true
-            placeholderText.isHidden = true
+            placeHolderText.isHidden = true
         }
         else {
             sendReportButton.isEnabled = false
-            placeholderText.isHidden = false
+            placeHolderText.isHidden = false
         }
     }
     
@@ -51,30 +50,14 @@ class ReportABugViewController: UIViewController, UITextViewDelegate {
         self.dismiss(animated: true)
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        allowPost()
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        placeholderText.isHidden = true
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        placeholderText.isHidden = true
-    }
-    
     @IBAction func sendReportButtonTapped(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
         let date = Date()
         
-        db.collection("REPORTED BUGS").getDocuments()
-        { [self]
-            (querySnapshot, err) in
-
-            if let err = err
-            {
-                print("Error getting documents: \(err)");
+        db.collection("REQUEST CONDITION").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
                 let alert = UIAlertController(title: "Error⚠️❌", message: "Please Connect to WiFi or Restart App", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                     switch action.style{
@@ -93,26 +76,13 @@ class ReportABugViewController: UIViewController, UITextViewDelegate {
                 }))
                 self.present(alert, animated: true, completion: nil)
                 
-            }
-            else
-            {
+                
+            } else {
                 self.documentsCount = (querySnapshot?.documents.count)!
-                print("Hello this is document count")
-                print(documentsCount)
                 
-                var delimeter = "-"
-                var commentTitle = reportedDiscussion
-                var newCommentTitle = commentTitle.components(separatedBy: delimeter)
-                print(newCommentTitle[0])
+                self.db.collection("REQUEST CONDITION").document("\(self.documentsCount)").setData(["conditionRequest" : self.requestTextView.text])
                 
-                db.collection("REPORTED BUGS").document("\(documentsCount)").setData(["bugReportDescription" : reportTextView.text])
-                
-                
-                
-//                let alert = Service.createAlertController(title: "Response Posted‼️✅", message: "Please Refresh Page")
-//                self.present(alert, animated: true, completion: nil)
-                
-                let alert = UIAlertController(title: "Report Sent🚩", message: "Successfully reported bug. Please give our team a couple days to review your report.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Request Sent💡", message: "Successfully sent request. Please give our team a couple days to review your request.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                     switch action.style{
                         case .default:
@@ -129,11 +99,25 @@ class ReportABugViewController: UIViewController, UITextViewDelegate {
                     }
                 }))
                 self.present(alert, animated: true, completion: nil)
-
+                
             }
         }
         
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        allowPost()
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        placeHolderText.isHidden = true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        placeHolderText.isHidden = true
+    }
+    
+    
     
     
     

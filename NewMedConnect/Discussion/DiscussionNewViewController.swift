@@ -313,12 +313,15 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
                                                                             
                                                                         }
                                                                         
+                                                                            self.discussionCollectionView.reloadData()
+                                                                            
+                                                                            self.discussionCollectionView.dataSource = self
+                                                                            self.discussionCollectionView.delegate = self
+                                                                        
+                                                                        
                                                                         
                                                             
-                                                                        self.discussionCollectionView.reloadData()
                                                                         
-                                                                        self.discussionCollectionView.dataSource = self
-                                                                        self.discussionCollectionView.delegate = self
                                                                         
                                                                         self.activityIndicator.stopAnimating()
                                                                     }
@@ -454,6 +457,8 @@ extension DiscussionNewViewController: UICollectionViewDelegate, UICollectionVie
                     
 //            var dateDisplayed:String = String(self.sortedDiscussions!.map({dateFormatter!.string(from:$0.discussionDates!)!}!)!)! ?? ""
             print(String(testString[..<testString.index(testString.startIndex, offsetBy:10)]))
+            print("CheckPoint: ************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************")
+            print(self.sortedDiscussions.map({$0.discussionsTitle}))
 
             cell?.discussionLabel.text = self.sortedDiscussions.map({$0.discussionsTitle})[indexPath.row]
             cell?.discussionNewDate.text = String(displayedDate[indexPath.row][..<displayedDate[indexPath.row].index(displayedDate[indexPath.row].startIndex, offsetBy:10)])
@@ -461,8 +466,7 @@ extension DiscussionNewViewController: UICollectionViewDelegate, UICollectionVie
             cell?.discussionNewViews.text = self.sortedDiscussions.map({String($0.discussionViews)})[indexPath.row] + " views"
             cell?.discussionNewComments.text = self.sortedDiscussions.map({String($0.discussionCommentCount)})[indexPath.row]
             
-            print(cell?.discussionLabel.text)
-            print(discussionSaved)
+            
             if self.discussionSaved.contains((cell?.discussionLabel.text)!) {
                 cell?.bookmarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
                 

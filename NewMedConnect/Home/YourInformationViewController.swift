@@ -11,6 +11,8 @@ import FirebaseAuth
 import FirebaseFirestore
 import MessageUI
 
+var deletedUser = false
+
 
 class YourInformationViewController: UIViewController {
     
@@ -726,18 +728,29 @@ class YourInformationViewController: UIViewController {
                     }
                     print("Signed In")
                     
+                    print(Auth.auth().currentUser!.uid)
+                    
+                    
                     let credential = EmailAuthProvider.credential(withEmail: self!.savedEmail, password: textField.text!)
                     Auth.auth().currentUser?.reauthenticate(with: credential)
                     
                     let user = Auth.auth().currentUser
                     
+                    deletedUser = true
+                    print(deletedUser)
+
+                    self!.db.collection("Users").document(Auth.auth().currentUser!.uid).delete()
                     
-                    self!.db.collection("Users").document(user!.uid).delete()
+                   // self!.db.collection("Users").document(Auth.auth().currentUser!.uid).setData(["deleted": "True"])
                     
-                    user?.delete()
+                    self!.performSegue(withIdentifier: "toLoginPageSegue", sender: self)
+
                     
                     
-                    self!.signOut()
+                   // self!.signOut()
+                    
+                    
+
                     
                     
                 })
@@ -766,6 +779,23 @@ class YourInformationViewController: UIViewController {
 //            fullScreenViewController.modalPresentationStyle = UIModalPresentationStyle.automatic
 //            fullScreenViewController.activePresentationController!.delegate = self
 //        }
+    }
+    
+    func deleteAccount() {
+        
+        do {
+            
+            try Auth.auth().signOut()
+            performSegue(withIdentifier: "toLoginPageSegue", sender: self)
+        } catch let error {
+            let alert = Service.createAlertController(title: "Error", message: error.localizedDescription)
+            self.present(alert, animated: true, completion: nil)
+            
+        
+        }
+        
+        
+
     }
     
     

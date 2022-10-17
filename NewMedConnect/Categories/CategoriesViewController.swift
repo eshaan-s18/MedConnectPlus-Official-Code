@@ -42,6 +42,11 @@ class CategoriesViewController: UIViewController{
     
     @IBOutlet weak var searchResultsCollectionView: UICollectionView!
     
+    @IBOutlet weak var sendRequestButton: UIButton!
+    
+    @IBOutlet weak var sendRequestMessage: UILabel!
+    
+    
     
     var favorites = [""]
     var count = 0
@@ -178,6 +183,8 @@ class CategoriesViewController: UIViewController{
 //        
         searchResultsCollectionView.delegate = self
         searchResultsCollectionView.dataSource = self
+        
+        sendRequestButton.layer.cornerRadius = 10
 
         searchBar.delegate = self
         
@@ -279,6 +286,18 @@ class CategoriesViewController: UIViewController{
     @objc private func hideKeyboard() {
         self.view.endEditing(true)
     }
+    
+    @IBAction func sendRequestButtonTapped(_ sender: Any) {
+        
+        var reportResponseVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RequestConditionViewController")
+        if let sheet = reportResponseVC.sheetPresentationController {
+            sheet.detents = [.large()]            
+        }
+
+        self.present(reportResponseVC, animated: true, completion: nil)
+        
+    }
+    
     
 
     /*
@@ -589,6 +608,8 @@ extension CategoriesViewController: UISearchBarDelegate {
         searchResultsCollectionView.reloadData()
         if searchBar.text == "" {
             searchResultsCollectionView.isHidden = true
+            sendRequestButton.isHidden = true
+            sendRequestMessage.isHidden = true
         }
 
     }
@@ -598,6 +619,9 @@ extension CategoriesViewController: UISearchBarDelegate {
         searchBar.text = ""
         searchResultsCollectionView.reloadData()
         searchResultsCollectionView.isHidden = true
+        sendRequestButton.isHidden = true
+        sendRequestMessage.isHidden = true
+        
     }
 }
 
@@ -615,7 +639,17 @@ extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if searchList.count == 0 && searchResultsCollectionView.isHidden == false {
+            sendRequestButton.isHidden = false
+            sendRequestMessage.isHidden = false
+        }
+        else if searchList.count != 0 && searchResultsCollectionView.isHidden == false{
+            sendRequestButton.isHidden = true
+            sendRequestMessage.isHidden = true
+        }
+        
         return searchList.count
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

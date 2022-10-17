@@ -25,9 +25,23 @@ class LoginViewController: UIViewController {
 
     
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if deletedUser == true {
+            do {
+                
+                try Auth.auth().currentUser?.delete()
+                deletedUser = false
+                print(deletedUser)
+            } catch let error {
+                let alert = Service.createAlertController(title: "Error", message: error.localizedDescription)
+                self.present(alert, animated: true, completion: nil)
+                
+            
+            }
+        }
         // Do any additional setup after loading the view.
         loginButton.layer.cornerRadius = 10.0
         signUpButton.layer.cornerRadius = 10.0
@@ -52,6 +66,8 @@ class LoginViewController: UIViewController {
         
 
         navigationItem.hidesBackButton = true
+        
+       
                 
     }
     
