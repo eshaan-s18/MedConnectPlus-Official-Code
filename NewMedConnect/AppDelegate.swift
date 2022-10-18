@@ -12,6 +12,8 @@ import FirebaseMessaging
 import UserNotifications
 
 
+var sharedToken = ""
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
@@ -21,16 +23,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
-        Messaging.messaging().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, _ in
-            guard success else {
-                return
-            }
+        if #available(iOS 10.0, *) {
+                    // For iOS 10 display notification (sent via APNS)
+                    UNUserNotificationCenter.current().delegate = self
+                    let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+                    UNUserNotificationCenter.current().requestAuthorization(
+                        options: authOptions,
+                        completionHandler: {_, _ in })
+                    // For iOS 10 data message (sent via FCM)
+                    Messaging.messaging().delegate = self
+                } else {
+                    let settings: UIUserNotificationSettings =
+                        UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+                    UIApplication.shared.registerUserNotificationSettings(settings)
+                }
+                UIApplication.shared.registerForRemoteNotifications()
             
-            print("Success in APNS registry")
-        }
-        
-        application.registerForRemoteNotifications()
+
         
         return true
         
@@ -42,6 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                 return
             }
             print("Token = \(token)")
+            sharedToken = token
+            
         }
     }
 

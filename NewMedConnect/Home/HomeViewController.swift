@@ -77,6 +77,10 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        
+        
+        
         authAndConfig()
         
         yourDiscussionsView.layer.cornerRadius = 25
@@ -446,7 +450,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell?.savedDiscussionTitle.text = savedDiscussions.map({$0.savedDiscussionTitle})[indexPath.row]
             let savedDisplayedDate = savedDiscussions.map({$0.savedDiscussionDate})
             
-            cell?.savedDiscussionDate.text = String(savedDisplayedDate[indexPath.row][..<savedDisplayedDate[indexPath.row].index(savedDisplayedDate[indexPath.row].startIndex, offsetBy:10)])
+            
+            cell?.savedDiscussionDate.text = savedDisplayedDate[indexPath.row]
+            
+            //String(savedDisplayedDate[indexPath.row][..<savedDisplayedDate[indexPath.row].index(savedDisplayedDate[indexPath.row].startIndex, offsetBy:10)])
             
             cell?.layer.cornerRadius = 25
             return cell!

@@ -412,6 +412,57 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                 
                                 self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").document("\(docCount2)").setData(["commentTitle" : originalDiscussionComment, "repliesTitle" : ("@User_" + sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row].prefix(12) + "... " + replyTextFieldVal2), "repliesDate": dateFormatter.string(from: date), "repliesDownvotes": 0, "repliesUpvotes": 0, "repliesUser": Auth.auth().currentUser!.uid, "gender": ["Male", "Female", "Other"], "genderUpvotes": [0,0,0], "race": ["White", "Black or African American", "American Indian or Alaska Native", "Asian", "Native Hawaiian or Other Pacific Islander"], "raceUpvotes": [0,0,0,0,0], "age": ["0-10","10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80+"], "ageUpvotes": [0,0,0,0,0,0,0,0,0], "country": [""], "countryUpvotes": [0]])
                                 
+                                let docRefFour = self.db.collection("Users").document(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyUsername})[indexPath.row])
+
+                                docRefFour.getDocument { (document, error) in
+
+                                    let result = Result {
+                                      try document?.data(as: DeviceTokenReference.self)
+
+                                    }
+                                    print(result)
+                                    switch result {
+                                    case .success(let deviceToken):
+                                        if let deviceToken = deviceToken {
+                                            // A `City` value was successfully initialized from the DocumentSnapshot.
+
+                                            let commentReply = cell?.responseReplyLabel.text
+                                            print(deviceToken.deviceToken!)
+                                            let sender = PushNotificationSender()
+                                            sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "💬 Someone replied to your response reply: \(commentReply!)")
+                                            
+                                            self.db.collection("Users").document(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyUsername})[indexPath.row]).collection("notifications").getDocuments() { (querySnapshot, err) in
+                                                    if let err = err {
+                                                        print("Error getting documents: \(err)")
+                                                    } else {
+                                                        let totalDocCount = querySnapshot!.documents.count
+                                                        
+                                                        let dateFormatter = DateFormatter()
+                                                        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+                                                        let date = Date()
+                                                        
+                                                        
+                                                        
+                                                        self.db.collection("Users").document(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyUsername})[indexPath.row]).collection("notifications").document("\(totalDocCount)").setData(["notificationTitle": "💬 New Reply to Reply", "notificationBody": "Someone replied to your response reply: \(commentReply!)", "notificationCondition": conditionSelected, "notificationDiscussion": selectedDiscussion, "notificationDate": dateFormatter.string(from: date)])
+                                                    }
+                                            }
+                                            
+                                            
+                                            //self.questionLabel.text = question.question
+                                            print("okay")
+                                        } else {
+                                            // A nil value was successfully initialized from the DocumentSnapshot,
+                                            // or the DocumentSnapshot was nil.
+                                            print("Document does not exist")
+                                        }
+                                    case .failure(let error):
+                                        // A `City` value could not be initialized from the DocumentSnapshot.
+                                        print("Error decoding question: \(error)")
+                                        }
+                                    }
+                                
+                                
+                                
                                 cell?.presentSuccess()
                             }}
                     }
@@ -988,6 +1039,53 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                             self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
                                                 "repliesUpvotes": (Int(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyUpvotes})[indexpath1.row]))
                                             ])
+                                            
+                                            let docRefFour = self.db.collection("Users").document(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyUsername})[indexpath1.row])
+
+                                            docRefFour.getDocument { (document, error) in
+
+                                                let result = Result {
+                                                  try document?.data(as: DeviceTokenReference.self)
+
+                                                }
+                                                print(result)
+                                                switch result {
+                                                case .success(let deviceToken):
+                                                    if let deviceToken = deviceToken {
+                                                        // A `City` value was successfully initialized from the DocumentSnapshot.
+                                                        
+                                                        print(deviceToken.deviceToken!)
+                                                        let sender = PushNotificationSender()
+                                                        sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "♥️⬆️ Someone upvoted your response reply: \(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row])")
+                                                        
+                                                        self.db.collection("Users").document(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyUsername})[indexpath1.row]).collection("notifications").getDocuments() { (querySnapshot, err) in
+                                                                if let err = err {
+                                                                    print("Error getting documents: \(err)")
+                                                                } else {
+                                                                    let totalDocCount = querySnapshot!.documents.count
+                                                                    
+                                                                    let dateFormatter = DateFormatter()
+                                                                    dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+                                                                    let date = Date()
+                                                                    
+                                                                    
+                                                                    
+                                                                    self.db.collection("Users").document(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyUsername})[indexpath1.row]).collection("notifications").document("\(totalDocCount)").setData(["notificationTitle": "♥️⬆️ New Upheart", "notificationBody": "Someone upvoted your response reply: \(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row])", "notificationCondition": conditionSelected, "notificationDiscussion": selectedDiscussion, "notificationDate": dateFormatter.string(from: date)])
+                                                                }
+                                                        }
+                                                        
+                                                        //self.questionLabel.text = question.question
+                                                        print("okay")
+                                                    } else {
+                                                        // A nil value was successfully initialized from the DocumentSnapshot,
+                                                        // or the DocumentSnapshot was nil.
+                                                        print("Document does not exist")
+                                                    }
+                                                case .failure(let error):
+                                                    // A `City` value could not be initialized from the DocumentSnapshot.
+                                                    print("Error decoding question: \(error)")
+                                                    }
+                                                }
                                             
                                             
                                             

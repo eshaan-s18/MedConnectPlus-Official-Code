@@ -129,6 +129,57 @@ class AddDiscussionCommentViewController: UIViewController, UITextViewDelegate {
                 
                 db.collection(conditionSelected).document(discussionDocument).collection("comments").document("\(documentsCount)").collection("replies").document("0").setData(["commentTitle" : "", "repliesTitle" : "", "repliesDate": "", "repliesDownvotes": 0, "repliesUpvotes": 0, "repliesUser": "", "gender": ["Male", "Female", "Other"], "genderUpvotes": [0,0,0], "race": ["White", "Black or African American", "American Indian or Alaska Native", "Asian", "Native Hawaiian or Other Pacific Islander"], "raceUpvotes": [0,0,0,0,0], "age": ["0-10","10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80+"], "ageUpvotes": [0,0,0,0,0,0,0,0,0], "country": [""], "countryUpvotes": [0]])
                 
+                
+                
+                
+                
+                let docRefFour = db.collection("Users").document(sharedDiscussionUser)
+
+                docRefFour.getDocument { (document, error) in
+
+                    let result = Result {
+                      try document?.data(as: DeviceTokenReference.self)
+
+                    }
+                    print(result)
+                    switch result {
+                    case .success(let deviceToken):
+                        if let deviceToken = deviceToken {
+                            // A `City` value was successfully initialized from the DocumentSnapshot.
+                            
+                            print(deviceToken.deviceToken!)
+                            let sender = PushNotificationSender()
+                            sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "💬 Someone responded to your discussion: \(selectedDiscussion)")
+                            
+                            self.db.collection("Users").document(sharedDiscussionUser).collection("notifications").getDocuments() { (querySnapshot, err) in
+                                    if let err = err {
+                                        print("Error getting documents: \(err)")
+                                    } else {
+                                        let totalDocCount = querySnapshot!.documents.count
+                                        
+                                        let dateFormatter = DateFormatter()
+                                        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+                                        let date = Date()
+                                        
+                                        
+                                        
+                                        self.db.collection("Users").document(sharedDiscussionUser).collection("notifications").document("\(totalDocCount)").setData(["notificationTitle": "💬 New Response", "notificationBody": "Someone responded to your discussion: \(selectedDiscussion)", "notificationCondition": conditionSelected, "notificationDiscussion": selectedDiscussion, "notificationDate": dateFormatter.string(from: date)])
+                                    }
+                            }
+                            
+                            //self.questionLabel.text = question.question
+                            print("okay")
+                        } else {
+                            // A nil value was successfully initialized from the DocumentSnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A `City` value could not be initialized from the DocumentSnapshot.
+                        print("Error decoding question: \(error)")
+                        }
+                    }
+                
 //                let alert = Service.createAlertController(title: "Response Posted‼️✅", message: "Please Refresh Page")
 //                self.present(alert, animated: true, completion: nil)
                 

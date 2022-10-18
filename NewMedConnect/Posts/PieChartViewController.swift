@@ -276,7 +276,15 @@ class PieChartViewController: UIViewController {
         }
         
         else if filter == "Country" {
-            let countryIndex = selectedCountry.firstIndex(of: sharedDiscussionCommentUserCountry)
+            var countryIndex = 0
+            if selectedCountry.contains(sharedDiscussionCommentUserCountry) {
+                countryIndex = selectedCountry.firstIndex(of: sharedDiscussionCommentUserCountry)!
+
+            }
+            
+            else {
+                countryIndex = selectedCountry.firstIndex(of: "")!
+            }
             
             var i = 0
             while i < selectedCountry.count {
@@ -284,7 +292,7 @@ class PieChartViewController: UIViewController {
                 i+=1
             }
             
-            colors[countryIndex!] = UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0)
+            colors[countryIndex] = UIColor(red: 0.056, green: 0.835, blue: 1.00, alpha: 1.0)
         }
         
         

@@ -290,7 +290,7 @@ class EnterInformationViewController: UIViewController {
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
         "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        "Other",
+        
         "🇺🇸  United States",
         "🇦🇨  Ascension Island",
         "🇦🇩  Andorra",
@@ -552,7 +552,7 @@ class EnterInformationViewController: UIViewController {
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
         "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        "Other"
+        
     ]
     
     override func viewDidLoad() {

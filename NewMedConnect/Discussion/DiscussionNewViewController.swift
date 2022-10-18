@@ -219,6 +219,8 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
                 if self.documentsCount == "1" {
                     self.noDataLabel.isHidden = false
                     self.discussionCollectionView.isHidden = true
+                    self.activityIndicator.stopAnimating()
+                    
                 }
                 else {
                     self.noDataLabel.isHidden = true

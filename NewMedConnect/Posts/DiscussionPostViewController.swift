@@ -16,6 +16,8 @@ import FirebaseDatabase
 import FirebaseFirestore
 import BLTNBoard
 
+var sharedDiscussionUser = ""
+
 var replyIndex = 0
 
 var countNum = -1
@@ -511,6 +513,9 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                     
                                     self.db.collection(conditionSelected).document(document!.documentID).updateData(["views": newViews])
                                     self.discussionViewCount.text = newViews + " views"
+                                    
+                                    sharedDiscussionUser = discussion.user!
+                                    
                                     self.discussionUsernameLabel.text = "User " + discussion.user!
                                     
                                     
@@ -1088,6 +1093,8 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
         
             }
     
+
+    
     
     
     
@@ -1469,6 +1476,64 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                     let replyTitle = cell?.replyTextField.text
                                         
                                     self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").document("\(docCount)").setData(["commentTitle" : discussionComment, "repliesTitle" : replyTextFieldVal, "repliesDate": dateFormatter.string(from: date), "repliesDownvotes": 0, "repliesUpvotes": 0, "repliesUser": Auth.auth().currentUser!.uid, "gender": ["Male", "Female", "Other"], "genderUpvotes": [0,0,0], "race": ["White", "Black or African American", "American Indian or Alaska Native", "Asian", "Native Hawaiian or Other Pacific Islander"], "raceUpvotes": [0,0,0,0,0], "age": ["0-10","10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80+"], "ageUpvotes": [0,0,0,0,0,0,0,0,0], "country": [""], "countryUpvotes": [0]])
+                                    
+                                    let docRefFour = self.db.collection("Users").document(self.sortedDiscussionComments.map({$0.discussionUsername})[indexPath.row])
+
+                                    docRefFour.getDocument { (document, error) in
+
+                                        let result = Result {
+                                          try document?.data(as: DeviceTokenReference.self)
+
+                                        }
+                                        print(result)
+                                        switch result {
+                                        case .success(let deviceToken):
+                                            if let deviceToken = deviceToken {
+                                                // A `City` value was successfully initialized from the DocumentSnapshot.
+                                                
+                                                print(deviceToken.deviceToken!)
+                                                let sender = PushNotificationSender()
+                                                let response = cell?.commentLabel!.text!
+                                            
+                                                sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "💬 Someone replied to your response: \(response!)")
+                                                
+                                                
+                                                var delimeter = " "
+                                                var user = cell?.cellUsername.text
+                                                var newUser = user!.components(separatedBy: delimeter)
+                                                print(newUser[1])
+                                                
+                                                print(cell?.cellUsername.text)
+                                                self.db.collection("Users").document(newUser[1]).collection("notifications").getDocuments() { (querySnapshot, err) in
+                                                        if let err = err {
+                                                            print("Error getting documents: \(err)")
+                                                        } else {
+                                                            let totalDocCount = querySnapshot!.documents.count
+                                                            
+                                                            let dateFormatter = DateFormatter()
+                                                            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+                                                            let date = Date()
+                                                            
+                                                            
+                                                            
+                                                            self.db.collection("Users").document(newUser[1]).collection("notifications").document("\(totalDocCount)").setData(["notificationTitle": "💬 New Reply", "notificationBody": "Someone replied to your response: \(response!)", "notificationCondition": conditionSelected, "notificationDiscussion": selectedDiscussion, "notificationDate": dateFormatter.string(from: date)])
+                                                        }
+                                                }
+                                                
+                                                
+                                                
+                                                //self.questionLabel.text = question.question
+                                                print("okay")
+                                            } else {
+                                                // A nil value was successfully initialized from the DocumentSnapshot,
+                                                // or the DocumentSnapshot was nil.
+                                                print("Document does not exist")
+                                            }
+                                        case .failure(let error):
+                                            // A `City` value could not be initialized from the DocumentSnapshot.
+                                            print("Error decoding question: \(error)")
+                                            }
+                                        }
                                     
                                     let alert = UIAlertController(title: "Success‼️✅", message: "Please Refresh", preferredStyle: .alert)
                                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -1936,6 +2001,8 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                 
                             ])
                             
+                            
+                            
                             if self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row].contains(self.discussionCommentUserCountry) {
                                 print(self.sortedDiscussionComments.map({$0.discussionCommentCountry})[indexpath1.row])
                                 
@@ -2102,6 +2169,60 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                             self.self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).updateData([
                                 "upvotes": (Int(self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexpath1.row]))
                             ])
+                            
+                            
+                            let docRefFour = self.db.collection("Users").document(self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row])
+
+                            docRefFour.getDocument { (document, error) in
+
+                                let result = Result {
+                                  try document?.data(as: DeviceTokenReference.self)
+
+                                }
+                                print(result)
+                                switch result {
+                                case .success(let deviceToken):
+                                    if let deviceToken = deviceToken {
+                                        // A `City` value was successfully initialized from the DocumentSnapshot.
+                                        
+                                        print(deviceToken.deviceToken!)
+                                        let sender = PushNotificationSender()
+                                        
+                                        var delimeter = "-"
+                                        var responseLabel = self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row]
+                                        let newResponseLabel = responseLabel.components(separatedBy: delimeter)
+                                        print(newResponseLabel[1])
+                                        sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "♥️⬆️ Someone upvoted your response: \(newResponseLabel[0])")
+                                        
+                                        self.db.collection("Users").document(self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row]).collection("notifications").getDocuments() { (querySnapshot, err) in
+                                                if let err = err {
+                                                    print("Error getting documents: \(err)")
+                                                } else {
+                                                    let totalDocCount = querySnapshot!.documents.count
+                                                    
+                                                    let dateFormatter = DateFormatter()
+                                                    dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+                                                    let date = Date()
+                                                    
+                                                    
+                                                    
+                                                    self.db.collection("Users").document(self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row]).collection("notifications").document("\(totalDocCount)").setData(["notificationTitle": "♥️⬆️ New Upheart", "notificationBody": "Someone upvoted your response: \(newResponseLabel[0])", "notificationCondition": conditionSelected, "notificationDiscussion": selectedDiscussion, "notificationDate": dateFormatter.string(from: date)])
+                                                }
+                                        }
+                                        
+                                        //self.questionLabel.text = question.question
+                                        print("okay")
+                                    } else {
+                                        // A nil value was successfully initialized from the DocumentSnapshot,
+                                        // or the DocumentSnapshot was nil.
+                                        print("Document does not exist")
+                                    }
+                                case .failure(let error):
+                                    // A `City` value could not be initialized from the DocumentSnapshot.
+                                    print("Error decoding question: \(error)")
+                                    }
+                                }
+                            
                             
                             
                             

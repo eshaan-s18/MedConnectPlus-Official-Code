@@ -24,6 +24,9 @@
 		EE3D45A2285895A000A2E0E6 /* PinnedReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D45A1285895A000A2E0E6 /* PinnedReference.swift */; };
 		EE3D45A42858CBD700A2E0E6 /* PinnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D45A32858CBD700A2E0E6 /* PinnedTableViewCell.swift */; };
 		EE5B8E1428FC9A4300FA1F0A /* RequestConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */; };
+		EE5B8E1628FF29E200FA1F0A /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */; };
+		EE5B8E1828FF370F00FA1F0A /* DeviceTokenReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */; };
+		EE5B8E1C28FF704500FA1F0A /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */; };
 		EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */; };
 		EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740001289F4C0800C21FB0 /* UpvoteReference.swift */; };
 		EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740003289F4C4400C21FB0 /* DownvoteReference.swift */; };
@@ -112,6 +115,9 @@
 		EE3D45A1285895A000A2E0E6 /* PinnedReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedReference.swift; sourceTree = "<group>"; };
 		EE3D45A32858CBD700A2E0E6 /* PinnedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedTableViewCell.swift; sourceTree = "<group>"; };
 		EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConditionViewController.swift; sourceTree = "<group>"; };
+		EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
+		EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenReference.swift; sourceTree = "<group>"; };
+		EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionResponseReplies.swift; sourceTree = "<group>"; };
 		EE740001289F4C0800C21FB0 /* UpvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteReference.swift; sourceTree = "<group>"; };
 		EE740003289F4C4400C21FB0 /* DownvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownvoteReference.swift; sourceTree = "<group>"; };
@@ -261,8 +267,17 @@
 				EEA759012848EFA9008CBC37 /* Models */,
 				EE340B322846462000E2798C /* HapticsManager.swift */,
 				EEA758FD2848D8CB008CBC37 /* Service.swift */,
+				EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		EE5B8E1A28FF6DC800FA1F0A /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */,
+			);
+			path = Activity;
 			sourceTree = "<group>";
 		};
 		EE7C5A242854792E000A32EA /* fonts */ = {
@@ -299,6 +314,7 @@
 				EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */,
 				EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */,
 				EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */,
+				EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -364,6 +380,7 @@
 		EECE51C5284145F800B5CC72 /* NewMedConnect */ = {
 			isa = PBXGroup;
 			children = (
+				EE5B8E1A28FF6DC800FA1F0A /* Activity */,
 				EE93827E28F1354000CCB9F6 /* NewMedConnect.entitlements */,
 				EE00DDD928734D41005CD04A /* Posts */,
 				EE00DDD628734AA2005CD04A /* Storyboard */,
@@ -590,6 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE93828428F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift in Sources */,
+				EE5B8E1628FF29E200FA1F0A /* PushNotificationSender.swift in Sources */,
 				EE340B332846462100E2798C /* HapticsManager.swift in Sources */,
 				EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */,
 				EEA758FC2848C3D6008CBC37 /* PasswordResetViewController.swift in Sources */,
@@ -609,10 +627,12 @@
 				EE00DDDB28734D56005CD04A /* DiscussionPostViewController.swift in Sources */,
 				EECE51CB284145F800B5CC72 /* ViewController.swift in Sources */,
 				EE0F71B328F75D7C00626F95 /* ReportABugViewController.swift in Sources */,
+				EE5B8E1828FF370F00FA1F0A /* DeviceTokenReference.swift in Sources */,
 				EE5B8E1428FC9A4300FA1F0A /* RequestConditionViewController.swift in Sources */,
 				EE9DF0C62854C07900A26D61 /* ConditionsViewController.swift in Sources */,
 				EECE51C7284145F800B5CC72 /* AppDelegate.swift in Sources */,
 				EECE51C9284145F800B5CC72 /* SceneDelegate.swift in Sources */,
+				EE5B8E1C28FF704500FA1F0A /* ActivityViewController.swift in Sources */,
 				EEB3900F284B880300050B18 /* RaceReference.swift in Sources */,
 				EEB3900B284B879D00050B18 /* BirthdayReference.swift in Sources */,
 				EEBC3BE028663A7900715395 /* DiscussionNewViewController.swift in Sources */,

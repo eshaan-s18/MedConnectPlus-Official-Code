@@ -6,7 +6,14 @@
 //
 
 import UIKit
+import SwiftUI
 import FirebaseAuth
+import CloudKit
+import Firebase
+import FirebaseAnalytics
+import FirebaseDatabase
+import FirebaseFirestore
+import BLTNBoard
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
@@ -23,7 +30,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
 
-    
+    var db = Firestore.firestore()
 
 
     override func viewDidLoad() {
@@ -119,6 +126,9 @@ class LoginViewController: UIViewController {
             }
             print("Signed In")
             print(Auth.auth().currentUser!.uid)
+            
+            self!.db.collection("Users").document(Auth.auth().currentUser!.uid).updateData(["deviceToken" : sharedToken])
+
             
             self!.performSegue(withIdentifier: "loginSegue", sender: self)
             self!.activityIndicator.stopAnimating()

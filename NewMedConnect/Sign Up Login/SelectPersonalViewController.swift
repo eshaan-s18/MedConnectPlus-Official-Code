@@ -369,10 +369,12 @@ class SelectPersonalViewController: UIViewController {
             self.db.collection("Users").document(sharedUserID).updateData(["country" : sharedCountry])
             self.db.collection("Users").document(sharedUserID).updateData(["race" : self.selectedRace])
             self.db.collection("Users").document(sharedUserID).updateData(["gender" : self.selectedGender])
+            self.db.collection("Users").document(sharedUserID).updateData(["deviceToken" : sharedToken])
             self.db.collection("Users").document(sharedUserID).updateData(["pinned" : [""]])
             self.db.collection("Users").document(sharedUserID).updateData(["saved" : [""]])
             self.db.collection("Users").document(sharedUserID).updateData(["upvotes" : [""]])
             self.db.collection("Users").document(sharedUserID).updateData(["downvotes" : [""]])
+            self.db.collection("Users").document(sharedUserID).collection("notifications").document("0").setData(["notificationTitle": "", "notificationBody": "", "notificationCondition": "", "notificationDiscussion": "", "notificationDate": ""])
             self.db.collection("Users").document(sharedUserID).collection("discussions").document("0").setData(["conditionSelected": "", "yourDiscussionDate": "", "yourDiscussionTitle": ""])
             self.db.collection("Users").document(sharedUserID).collection("savedDiscussions").document("0").setData(["conditionSelected": "", "savedDiscussionDate": "", "savedDiscussionSavedDate": "", "savedDiscussionTitle": ""])
             
