@@ -818,7 +818,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 986PBCGC56;
+				DEVELOPMENT_TEAM = KK6V8C52YD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewMedConnect/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MedConnect;
@@ -854,7 +854,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 986PBCGC56;
+				DEVELOPMENT_TEAM = KK6V8C52YD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewMedConnect/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MedConnect;
