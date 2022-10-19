@@ -315,6 +315,12 @@ class DiscussionNewViewController: UIViewController, UIPopoverPresentationContro
                                                                             
                                                                         }
                                                                         
+                                                                        if self.sortedDiscussions.count == 0 {
+                                                                            self.noDataLabel.isHidden = false
+                                                                            self.discussionCollectionView.isHidden = true
+                                                                            self.activityIndicator.stopAnimating()
+                                                                        }
+                                                                        
                                                                             self.discussionCollectionView.reloadData()
                                                                             
                                                                             self.discussionCollectionView.dataSource = self

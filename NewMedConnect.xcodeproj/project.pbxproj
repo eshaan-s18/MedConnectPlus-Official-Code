@@ -27,6 +27,8 @@
 		EE5B8E1628FF29E200FA1F0A /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */; };
 		EE5B8E1828FF370F00FA1F0A /* DeviceTokenReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */; };
 		EE5B8E1C28FF704500FA1F0A /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */; };
+		EE5B8E1E28FF76AE00FA1F0A /* NotificationReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */; };
+		EE5B8E2028FF8BF100FA1F0A /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */; };
 		EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */; };
 		EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740001289F4C0800C21FB0 /* UpvoteReference.swift */; };
 		EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740003289F4C4400C21FB0 /* DownvoteReference.swift */; };
@@ -118,6 +120,8 @@
 		EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenReference.swift; sourceTree = "<group>"; };
 		EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReference.swift; sourceTree = "<group>"; };
+		EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
 		EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionResponseReplies.swift; sourceTree = "<group>"; };
 		EE740001289F4C0800C21FB0 /* UpvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteReference.swift; sourceTree = "<group>"; };
 		EE740003289F4C4400C21FB0 /* DownvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownvoteReference.swift; sourceTree = "<group>"; };
@@ -276,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */,
+				EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 				EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */,
 				EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */,
 				EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */,
+				EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -643,6 +649,7 @@
 				EE98997B28B5CB6200D74F8F /* ResponseCommentsCollectionViewCell.swift in Sources */,
 				EEB39011284B884900050B18 /* GenderReference.swift in Sources */,
 				EEB89B69287BBA7700801388 /* DiscussionComments.swift in Sources */,
+				EE5B8E2028FF8BF100FA1F0A /* ActivityTableViewCell.swift in Sources */,
 				EEB39009284B877400050B18 /* UIDReference.swift in Sources */,
 				EEB390142850D99C00050B18 /* CategoriesViewController.swift in Sources */,
 				EEB89B6B287BC2F700801388 /* AddDiscussionCommentViewController.swift in Sources */,
@@ -652,6 +659,7 @@
 				EE313F0D28433B240084994E /* SignUpViewController.swift in Sources */,
 				EE93828228F25CBF00CCB9F6 /* YourDiscussionReference.swift in Sources */,
 				EE93827D28EBB9CC00CCB9F6 /* UserReference.swift in Sources */,
+				EE5B8E1E28FF76AE00FA1F0A /* NotificationReference.swift in Sources */,
 				EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */,
 				EEBFD9472870BE4E001834DB /* SavedReference.swift in Sources */,
 				EE3D45A42858CBD700A2E0E6 /* PinnedTableViewCell.swift in Sources */,

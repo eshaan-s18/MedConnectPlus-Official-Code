@@ -290,7 +290,7 @@ class EnterInformationViewController: UIViewController {
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
         "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        
+        "--",
         "🇺🇸  United States",
         "🇦🇨  Ascension Island",
         "🇦🇩  Andorra",
@@ -617,8 +617,9 @@ class EnterInformationViewController: UIViewController {
     @IBAction func nextButtonTapped(_ sender: Any) {
        
 
-        if selectCountry.titleLabel!.text == "Select Country" {
+        if selectCountry.titleLabel!.text == "Select Country" || selectCountry.titleLabel!.text == "--" {
             errorMessage.isHidden = false
+            
             errorVibration()
         }
         else {

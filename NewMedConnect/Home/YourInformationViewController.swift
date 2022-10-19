@@ -343,7 +343,7 @@ class YourInformationViewController: UIViewController {
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
         "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        "Other",
+        
         "🇺🇸  United States",
         "🇦🇨  Ascension Island",
         "🇦🇩  Andorra",
@@ -605,7 +605,7 @@ class YourInformationViewController: UIViewController {
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
         "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        "Other"
+        
     ]
     
 

@@ -29,12 +29,16 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var scrollView: UIScrollView!
-
+    
+    @IBOutlet weak var medConnectLogo: UIImageView!
+    
     var db = Firestore.firestore()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        medConnectLogo.image = UIImage(named:"outline_diversity_1_black_48pt")?.withTintColor(UIColor.black)
 
         if deletedUser == true {
             do {

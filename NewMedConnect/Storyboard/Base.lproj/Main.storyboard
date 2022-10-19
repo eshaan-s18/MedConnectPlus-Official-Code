@@ -12,6 +12,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Manrope-Bold.ttf">
+            <string>Manrope-Bold</string>
+        </array>
         <array key="Manrope-Regular.ttf">
             <string>Manrope-Regular</string>
         </array>
@@ -68,8 +71,9 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HvD-ks-lZ8">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MedConnectIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2xm-Hy-ctc">
-                                                <rect key="frame" x="120.5" y="0.0" width="173" height="173"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2xm-Hy-ctc">
+                                                <rect key="frame" x="120.5" y="-1" width="173" height="174"/>
+                                                <color key="tintColor" systemColor="systemRedColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="2xm-Hy-ctc" secondAttribute="height" multiplier="1:1" id="76L-Hk-HKl"/>
                                                 </constraints>
@@ -248,6 +252,7 @@
                         <outlet property="errorMessage" destination="Z90-Na-o7U" id="li6-bw-NG7"/>
                         <outlet property="loginButton" destination="AJ2-pG-vBC" id="kee-HT-nVW"/>
                         <outlet property="loginTextField" destination="Fvd-6I-cyb" id="qfe-aY-RdY"/>
+                        <outlet property="medConnectLogo" destination="2xm-Hy-ctc" id="6NK-7a-cQ8"/>
                         <outlet property="passwordTextField" destination="e6g-mm-Re7" id="283-4K-NWB"/>
                         <outlet property="scrollView" destination="8qi-TE-MQE" id="s06-HX-aEl"/>
                         <outlet property="signUpButton" destination="w6D-VY-n7o" id="Eak-ij-g40"/>
@@ -761,6 +766,16 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No pinned conditions. 📌" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zK7-dc-HQt">
+                                <rect key="frame" x="70" y="216.5" width="274" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="ZWC-gN-X7s"/>
+                                    <constraint firstAttribute="width" constant="274" id="fhb-cn-kfF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="18"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rectangle.3.group.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EeO-QI-rEp">
                                 <rect key="frame" x="32" y="321.5" width="40" height="37.5"/>
                                 <color key="tintColor" systemColor="systemYellowColor"/>
@@ -905,6 +920,7 @@
                             <constraint firstItem="rBY-wA-eHu" firstAttribute="trailing" secondItem="BFO-mP-Xn3" secondAttribute="trailing" id="3q1-mh-GX1"/>
                             <constraint firstItem="ZjO-l4-BZG" firstAttribute="centerX" secondItem="LQF-Hj-tlQ" secondAttribute="centerX" id="7Jb-Y2-Obn"/>
                             <constraint firstItem="nHt-cT-YKM" firstAttribute="leading" secondItem="LQF-Hj-tlQ" secondAttribute="leading" id="A4V-m3-Fco"/>
+                            <constraint firstItem="zK7-dc-HQt" firstAttribute="centerY" secondItem="LQF-Hj-tlQ" secondAttribute="centerY" id="DWE-7o-c7O"/>
                             <constraint firstItem="LQF-Hj-tlQ" firstAttribute="centerX" secondItem="BFO-mP-Xn3" secondAttribute="centerX" id="EaG-cE-Cj0"/>
                             <constraint firstItem="VG7-V4-sUv" firstAttribute="top" secondItem="rBY-wA-eHu" secondAttribute="bottom" constant="30" id="GCp-ZE-qdH"/>
                             <constraint firstItem="18P-4x-n6N" firstAttribute="leading" secondItem="BFO-mP-Xn3" secondAttribute="leading" id="Go8-cp-qL3"/>
@@ -913,6 +929,7 @@
                             <constraint firstItem="nHt-cT-YKM" firstAttribute="centerY" secondItem="9gR-tW-leg" secondAttribute="centerY" id="LCn-oU-9lA"/>
                             <constraint firstItem="VG7-V4-sUv" firstAttribute="centerX" secondItem="18P-4x-n6N" secondAttribute="centerX" id="OOY-3J-48R"/>
                             <constraint firstItem="Yb4-yY-1iK" firstAttribute="centerX" secondItem="LQF-Hj-tlQ" secondAttribute="centerX" id="QX8-MN-otr"/>
+                            <constraint firstItem="zK7-dc-HQt" firstAttribute="centerX" secondItem="LQF-Hj-tlQ" secondAttribute="centerX" id="R0X-kV-amH"/>
                             <constraint firstItem="18P-4x-n6N" firstAttribute="top" secondItem="rBY-wA-eHu" secondAttribute="bottom" id="ScY-cG-GT5"/>
                             <constraint firstItem="XpI-8E-qYg" firstAttribute="leading" secondItem="EeO-QI-rEp" secondAttribute="trailing" constant="5" id="Slz-Ea-SEc"/>
                             <constraint firstItem="9gR-tW-leg" firstAttribute="leading" secondItem="nHt-cT-YKM" secondAttribute="trailing" constant="5" id="Zbu-ws-UEP"/>
@@ -936,6 +953,7 @@
                         <outlet property="categoriesTableView" destination="ZjO-l4-BZG" id="gMQ-pg-ctJ"/>
                         <outlet property="favoritesTableView" destination="LQF-Hj-tlQ" id="brX-Vp-DuU"/>
                         <outlet property="loading" destination="Yb4-yY-1iK" id="uk5-Sb-aJu"/>
+                        <outlet property="noPinnedMessage" destination="zK7-dc-HQt" id="WJE-Zb-Nzb"/>
                         <outlet property="searchBar" destination="rBY-wA-eHu" id="4Z3-TV-o8c"/>
                         <outlet property="searchResultsCollectionView" destination="18P-4x-n6N" id="CBK-hD-xCm"/>
                         <outlet property="sendRequestButton" destination="966-yR-puc" id="ujU-Ha-w0I"/>
@@ -3025,7 +3043,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZJF-r8-y5g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-855" y="1028"/>
+            <point key="canvasLocation" x="-12" y="914"/>
         </scene>
         <!--Privacy Policy View Controller-->
         <scene sceneID="SeD-jF-w3c">
@@ -3341,7 +3359,7 @@ MedConnect only retains personal data for the necessary processes of the app suc
         <scene sceneID="KER-ai-afd">
             <objects>
                 <navigationController id="92B-zj-wtX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="heart.fill" catalog="system" id="9iQ-J1-pTc"/>
+                    <tabBarItem key="tabBarItem" title="" image="heart.fill" catalog="system" badgeValue=" " id="9iQ-J1-pTc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Rfz-ZE-KNw">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3362,67 +3380,112 @@ MedConnect only retains personal data for the necessary processes of the app suc
         <!--Activity-->
         <scene sceneID="NjV-tq-7Ug">
             <objects>
-                <viewController id="706-5q-5rn" customClass="ActivityViewController" customModule="NewMedConnect" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ActivityViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="706-5q-5rn" customClass="ActivityViewController" customModule="NewMedConnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="53H-hE-47T">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="aHC-fP-aWc">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="aHC-fP-aWc">
                                 <rect key="frame" x="0.0" y="92" width="414" height="804"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="70" id="KRM-5r-11j">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ActivityTableViewCell" rowHeight="70" id="KRM-5r-11j" customClass="ActivityTableViewCell" customModule="NewMedConnect" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KRM-5r-11j" id="5mh-Mx-Klw">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqR-jy-5XT">
-                                                    <rect key="frame" x="8" y="8" width="274.5" height="17"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqR-jy-5XT">
+                                                    <rect key="frame" x="8" y="8" width="305" height="19.5"/>
+                                                    <fontDescription key="fontDescription" name="Manrope-Bold" family="Manrope" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3H-Hj-uwb">
-                                                    <rect key="frame" x="8" y="30" width="367.5" height="32"/>
+                                                    <rect key="frame" x="15" y="32.5" width="375" height="29.5"/>
                                                     <string key="text">Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22/22/2222" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZ7-5y-vIz">
-                                                    <rect key="frame" x="290.5" y="8" width="85" height="17"/>
+                                                    <rect key="frame" x="321" y="8" width="85" height="19.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="85" id="jwf-XY-WT0"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="Manrope-Bold" family="Manrope" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gZn-ST-jA6">
+                                                    <rect key="frame" x="395" y="29.5" width="15" height="11.5"/>
+                                                    <color key="tintColor" systemColor="systemBlueColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="15" id="G71-mB-mHo"/>
+                                                        <constraint firstAttribute="height" constant="15" id="W8K-US-7yx"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="nqR-jy-5XT" firstAttribute="leading" secondItem="5mh-Mx-Klw" secondAttribute="leading" constant="8" id="7Om-Fr-wd2"/>
-                                                <constraint firstAttribute="trailing" secondItem="TZ7-5y-vIz" secondAttribute="trailing" constant="8" id="7dZ-l8-U5o"/>
                                                 <constraint firstItem="nqR-jy-5XT" firstAttribute="centerY" secondItem="TZ7-5y-vIz" secondAttribute="centerY" id="F71-qM-2BZ"/>
+                                                <constraint firstItem="gZn-ST-jA6" firstAttribute="centerY" secondItem="5mh-Mx-Klw" secondAttribute="centerY" id="GxQ-xw-ai4"/>
                                                 <constraint firstAttribute="bottom" secondItem="F3H-Hj-uwb" secondAttribute="bottom" constant="8" id="Ju6-5i-Nqj"/>
                                                 <constraint firstItem="TZ7-5y-vIz" firstAttribute="leading" secondItem="nqR-jy-5XT" secondAttribute="trailing" constant="8" id="LfT-ol-cVa"/>
+                                                <constraint firstAttribute="trailing" secondItem="gZn-ST-jA6" secondAttribute="trailing" constant="4" id="Qtr-fW-xaG"/>
                                                 <constraint firstItem="F3H-Hj-uwb" firstAttribute="top" secondItem="nqR-jy-5XT" secondAttribute="bottom" constant="5" id="QyS-g3-psl"/>
-                                                <constraint firstItem="F3H-Hj-uwb" firstAttribute="leading" secondItem="5mh-Mx-Klw" secondAttribute="leading" constant="8" id="RqI-HW-tVm"/>
+                                                <constraint firstItem="F3H-Hj-uwb" firstAttribute="leading" secondItem="5mh-Mx-Klw" secondAttribute="leading" constant="15" id="RqI-HW-tVm"/>
                                                 <constraint firstItem="nqR-jy-5XT" firstAttribute="top" secondItem="5mh-Mx-Klw" secondAttribute="top" constant="8" id="bNB-ZK-BZm"/>
+                                                <constraint firstItem="gZn-ST-jA6" firstAttribute="leading" secondItem="F3H-Hj-uwb" secondAttribute="trailing" constant="5" id="jGE-tk-FtF"/>
                                                 <constraint firstItem="TZ7-5y-vIz" firstAttribute="top" secondItem="5mh-Mx-Klw" secondAttribute="top" constant="8" id="m8p-YW-7qi"/>
-                                                <constraint firstAttribute="trailing" secondItem="F3H-Hj-uwb" secondAttribute="trailing" constant="8" id="xvY-wp-E7j"/>
+                                                <constraint firstAttribute="trailing" secondItem="TZ7-5y-vIz" secondAttribute="trailing" constant="8" id="nwH-AX-h57"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.86558412330000001" green="0.96841138599999999" blue="0.43813461100000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="disclosureIndicatorImage" destination="gZn-ST-jA6" id="QzC-4r-ijU"/>
+                                            <outlet property="notificationBodyLabel" destination="F3H-Hj-uwb" id="fwp-8O-cKU"/>
+                                            <outlet property="notificationDateLabel" destination="TZ7-5y-vIz" id="477-WJ-5SC"/>
+                                            <outlet property="notificationTitleLabel" destination="nqR-jy-5XT" id="lKw-sE-CO8"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="j3C-Nt-Fto">
+                                <rect key="frame" x="197" y="442.5" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="☀️ Welcome to MedConnect! All your notifications will appear here!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWy-7u-Wrm">
+                                <rect key="frame" x="20" y="92" width="374" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="ZUl-6L-lOu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2zY-2o-IYc"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstItem="UWy-7u-Wrm" firstAttribute="leading" secondItem="2zY-2o-IYc" secondAttribute="leading" constant="20" id="1oy-py-BSS"/>
+                            <constraint firstAttribute="bottom" secondItem="aHC-fP-aWc" secondAttribute="bottom" id="4DH-mC-RaW"/>
+                            <constraint firstItem="j3C-Nt-Fto" firstAttribute="centerX" secondItem="2zY-2o-IYc" secondAttribute="centerX" id="GAj-6o-eqe"/>
+                            <constraint firstItem="aHC-fP-aWc" firstAttribute="trailing" secondItem="2zY-2o-IYc" secondAttribute="trailing" id="KTR-Tj-ig6"/>
+                            <constraint firstAttribute="trailing" secondItem="UWy-7u-Wrm" secondAttribute="trailing" constant="20" id="Kx4-FT-M3u"/>
+                            <constraint firstItem="UWy-7u-Wrm" firstAttribute="top" secondItem="2zY-2o-IYc" secondAttribute="top" id="S2T-eM-u3h"/>
+                            <constraint firstItem="j3C-Nt-Fto" firstAttribute="centerY" secondItem="2zY-2o-IYc" secondAttribute="centerY" id="bUH-qR-cM0"/>
+                            <constraint firstItem="aHC-fP-aWc" firstAttribute="top" secondItem="2zY-2o-IYc" secondAttribute="top" id="cWl-Fg-eLu"/>
+                            <constraint firstItem="aHC-fP-aWc" firstAttribute="leading" secondItem="2zY-2o-IYc" secondAttribute="leading" id="kut-ER-YEc"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Activity" id="ywS-Bf-8Hy"/>
+                    <connections>
+                        <outlet property="activityTableView" destination="aHC-fP-aWc" id="loc-mi-rnw"/>
+                        <outlet property="loading" destination="j3C-Nt-Fto" id="rdY-aN-chU"/>
+                        <outlet property="noNotiLabel" destination="UWy-7u-Wrm" id="Fqi-KO-a0c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Pw-jK-D5l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3648,7 +3711,7 @@ MedConnect only retains personal data for the necessary processes of the app suc
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lightbulb" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="TIi-TM-hsw">
-                                <rect key="frame" x="20" y="63" width="30" height="31.5"/>
+                                <rect key="frame" x="20" y="64" width="30" height="30"/>
                                 <color key="tintColor" systemColor="systemYellowColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="2Mb-2c-eAl"/>
@@ -3727,12 +3790,11 @@ MedConnect only retains personal data for the necessary processes of the app suc
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="v9z-Tm-olM"/>
+        <segue reference="doH-vT-xU6"/>
         <segue reference="GBo-Is-a3n"/>
         <segue reference="Ss8-ks-B5S"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="MedConnectIcon" width="60" height="60"/>
         <image name="bookmark" catalog="system" width="110" height="128"/>
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
         <image name="bubble.left.fill" catalog="system" width="128" height="110"/>
@@ -3752,12 +3814,16 @@ MedConnect only retains personal data for the necessary processes of the app suc
         <image name="rectangle.3.group.bubble.left" catalog="system" width="128" height="110"/>
         <image name="rectangle.3.group.fill" catalog="system" width="128" height="81"/>
         <image name="rectangle.portrait.and.arrow.forward" catalog="system" width="128" height="109"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="sun.min.fill" catalog="system" width="128" height="123"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemCyanColor">
             <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

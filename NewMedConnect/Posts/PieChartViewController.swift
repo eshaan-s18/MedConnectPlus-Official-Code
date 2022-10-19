@@ -138,7 +138,7 @@ class PieChartViewController: UIViewController {
             thirtyToFourtyDataEntry.label = "Ages 31-40"
             
             fourtyToFiftyDataEntry.value = Double(selectedAgeVotes[4])
-            fourtyToFiftyDataEntry.label = "Ages 41-0"
+            fourtyToFiftyDataEntry.label = "Ages 41-50"
             
             fiftyToSixtyDataEntry.value = Double(selectedAgeVotes[5])
             fiftyToSixtyDataEntry.label = "Ages 51-60"

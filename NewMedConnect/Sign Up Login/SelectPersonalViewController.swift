@@ -270,7 +270,7 @@ class SelectPersonalViewController: UIViewController {
             }
             
             
-            let alert = UIAlertController(title: "Confirm Sign up", message: "By clicking sign up you are giving MedConnect consent for the collection and sharing of the data you have inputted. You will remain completely anonymous while using MedConnect. Please reference our Privacy Policy for more information.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Confirm Sign up", message: "By clicking sign up you are giving MedConnect consent for the collection and sharing of the data you have entered. You will remain completely anonymous while using MedConnect. Please reference our Privacy Policy for more information.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .default) { (action) in
                 alert.dismiss(animated: true, completion: nil)
@@ -374,7 +374,13 @@ class SelectPersonalViewController: UIViewController {
             self.db.collection("Users").document(sharedUserID).updateData(["saved" : [""]])
             self.db.collection("Users").document(sharedUserID).updateData(["upvotes" : [""]])
             self.db.collection("Users").document(sharedUserID).updateData(["downvotes" : [""]])
-            self.db.collection("Users").document(sharedUserID).collection("notifications").document("0").setData(["notificationTitle": "", "notificationBody": "", "notificationCondition": "", "notificationDiscussion": "", "notificationDate": ""])
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+            let date = Date()
+            
+            self.db.collection("Users").document(sharedUserID).collection("notifications").document("0").setData(["notificationTitle": "☀️ WELCOME TO MEDCONNECT", "notificationBody": "On this page, you will see all your notifications.", "notificationCondition": "", "notificationDiscussion": "", "notificationDate": dateFormatter.string(from: date)])
+            
+            
             self.db.collection("Users").document(sharedUserID).collection("discussions").document("0").setData(["conditionSelected": "", "yourDiscussionDate": "", "yourDiscussionTitle": ""])
             self.db.collection("Users").document(sharedUserID).collection("savedDiscussions").document("0").setData(["conditionSelected": "", "savedDiscussionDate": "", "savedDiscussionSavedDate": "", "savedDiscussionTitle": ""])
             

@@ -90,12 +90,13 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         navigationItem.title = "Home"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.backgroundColor = UIColor.systemGray6
         
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
         navigationItem.hidesBackButton = true
         
-        navigationController?.navigationBar.backgroundColor = UIColor.systemGray6
+        
 
         tabBarController?.tabBar.isHidden = false
         
@@ -222,6 +223,19 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                                             print(self.yourDiscussions.map({$0.yourDiscussionTitle}))
                                             
                                             self.savedSkippedDocs = 0
+                                                
+                                        
+                                            
+                                                
+                                                      
+                                                      self.yourDiscussionsCollectionView.reloadData()
+                                                      self.yourDiscussionsCollectionView.delegate = self
+                                                      self.yourDiscussionsCollectionView.dataSource = self
+                                                      
+                                                      self.scrollControl.numberOfPages = self.yourDiscussions.count
+                                                      self.loadingIndicator.stopAnimating()
+                                                      self.scrollControl.isHidden = false
+                                            
                                             
                                             
                                             
@@ -291,14 +305,6 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                                                                                 self.savedDiscussions = self.savedDiscussions.sorted(by: {$0.savedDiscussionSavedDate.compare($1.savedDiscussionSavedDate) == .orderedDescending})
                                                                                 
                                                                           
-                                                                                
-                                                                                self.yourDiscussionsCollectionView.reloadData()
-                                                                                self.yourDiscussionsCollectionView.delegate = self
-                                                                                self.yourDiscussionsCollectionView.dataSource = self
-                                                                                
-                                                                                self.scrollControl.numberOfPages = self.yourDiscussions.count
-                                                                                self.loadingIndicator.stopAnimating()
-                                                                                self.scrollControl.isHidden = false
                                                                                 
                                                                                 self.savedDiscussionsCollectionView.reloadData()
                                                                                 self.savedDiscussionsCollectionView.delegate = self
@@ -422,6 +428,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case yourDiscussionsCollectionView:
+            print(yourDiscussions.count)
             return yourDiscussions.count
         case savedDiscussionsCollectionView:
             return savedDiscussions.count

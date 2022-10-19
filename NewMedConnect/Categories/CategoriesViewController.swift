@@ -46,6 +46,9 @@ class CategoriesViewController: UIViewController{
     
     @IBOutlet weak var sendRequestMessage: UILabel!
     
+    @IBOutlet weak var noPinnedMessage: UILabel!
+    
+    
     
     
     var favorites = [""]
@@ -135,6 +138,8 @@ class CategoriesViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "Communities"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        navigationController?.navigationBar.backgroundColor = UIColor.systemGray6
 //        navigationItem.largeTitleDisplayMode = .always
         
         
@@ -158,6 +163,8 @@ class CategoriesViewController: UIViewController{
                     self.reload()
                     self.loading.stopAnimating()
                     //self.questionLabel.text = question.question
+                    
+                    
                     print("okay")
                     
                 } else {
@@ -321,6 +328,14 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
         switch tableView {
         case favoritesTableView:
             numberOfRow = favorites.count - 1
+            
+            if self.favorites.count == 1 {
+                self.noPinnedMessage.isHidden = false
+            }
+            else {
+                self.noPinnedMessage.isHidden = true
+            }
+            
         case categoriesTableView:
              numberOfRow = categories.count
         default:
