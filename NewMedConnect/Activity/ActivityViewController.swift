@@ -108,7 +108,6 @@ class ActivityViewController: UIViewController {
                                     
                                     
                                     
-                                    //self.questionLabel.text = question.question
                                     print("okay")
                                 } else {
                                     // A nil value was successfully initialized from the DocumentSnapshot,

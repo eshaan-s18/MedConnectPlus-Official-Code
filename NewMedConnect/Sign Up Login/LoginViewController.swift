@@ -13,9 +13,10 @@ import Firebase
 import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
-import BLTNBoard
 
+// MARK: - Login Page
 class LoginViewController: UIViewController {
+    
     @IBOutlet weak var loginButton: UIButton!
     
     @IBOutlet weak var signUpButton: UIButton!
@@ -33,36 +34,29 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var medConnectLogo: UIImageView!
     
     var db = Firestore.firestore()
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         medConnectLogo.image = UIImage(named:"outline_diversity_1_black_48pt")?.withTintColor(UIColor.black)
-
+        
         if deletedUser == true {
             do {
                 
                 try Auth.auth().currentUser?.delete()
                 deletedUser = false
-                print(deletedUser)
             } catch let error {
                 let alert = Service.createAlertController(title: "Error", message: error.localizedDescription)
                 self.present(alert, animated: true, completion: nil)
-                
-            
             }
         }
         // Do any additional setup after loading the view.
         loginButton.layer.cornerRadius = 10.0
         signUpButton.layer.cornerRadius = 10.0
-//
-        //navigationController?.navigationBar.barTintColor = UIColor.blue
         
         navigationController?.navigationBar.isHidden = false
-        
         navigationController?.navigationBar.backgroundColor = UIColor.white
-        
         tabBarController?.tabBar.isHidden = true
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
@@ -70,30 +64,23 @@ class LoginViewController: UIViewController {
         loginTextField.addTarget(self, action: #selector(enableLogin), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(enableLogin), for: .editingChanged)
         
-        
         activityIndicator.hidesWhenStopped = true
         navigationController?.navigationBar.prefersLargeTitles = false
         
-        
-
         navigationItem.hidesBackButton = true
         
-       
-                
     }
-    
- 
     
     @objc private func enableLogin() {
         
         if loginTextField.text!.count >= 1 && passwordTextField.text!.count >= 1 {
-                loginButton.isEnabled = true
-                loginButton.backgroundColor = UIColor.red
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = UIColor.red
         } else {
             loginButton.isEnabled = false
             loginButton.backgroundColor = UIColor.lightGray
         }
-    
+        
     }
     
     @objc private func errorVibration() {
@@ -109,11 +96,11 @@ class LoginViewController: UIViewController {
         performSegue(withIdentifier: "toPasswordReset", sender: self)
     }
     
-
+    
     @IBAction func loginButtonTapped(_ sender: Any) {
         guard let email = loginTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
-            print("not enough info")
+            print("Not enough information")
             return
         }
         errorMessage.isHidden = true
@@ -132,15 +119,12 @@ class LoginViewController: UIViewController {
             print(Auth.auth().currentUser!.uid)
             
             self!.db.collection("Users").document(Auth.auth().currentUser!.uid).updateData(["deviceToken" : sharedToken])
-
+            
             
             self!.performSegue(withIdentifier: "loginSegue", sender: self)
             self!.activityIndicator.stopAnimating()
         })
-        
-                
     }
-    
     
     func showCreateAccount() {
         errorVibration()
@@ -149,17 +133,4 @@ class LoginViewController: UIViewController {
         errorMessage.text = "Login failed. Please try again."
         
     }
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

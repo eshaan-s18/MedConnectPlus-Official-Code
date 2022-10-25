@@ -38,11 +38,8 @@ class AddDiscussionCommentViewController: UIViewController, UITextViewDelegate {
         
         allowPost()
         
-//        postButton.isEnabled = false
         // Do any additional setup after loading the view.
-//        discussionTextField.becomeFirstResponder()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
-//        discussionTextField.addTarget(self, action: #selector(allowPost), for: .editingChanged)
     }
     
     @objc private func allowPost() {
@@ -149,7 +146,7 @@ class AddDiscussionCommentViewController: UIViewController, UITextViewDelegate {
                             
                             print(deviceToken.deviceToken!)
                             let sender = PushNotificationSender()
-                            sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "💬 Someone responded to your discussion: \(selectedDiscussion)")
+                            sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect+", body: "💬 Someone responded to your discussion: \(selectedDiscussion)")
                             
                             self.db.collection("Users").document(sharedDiscussionUser).collection("notifications").getDocuments() { (querySnapshot, err) in
                                     if let err = err {
@@ -167,7 +164,6 @@ class AddDiscussionCommentViewController: UIViewController, UITextViewDelegate {
                                     }
                             }
                             
-                            //self.questionLabel.text = question.question
                             print("okay")
                         } else {
                             // A nil value was successfully initialized from the DocumentSnapshot,
@@ -179,9 +175,6 @@ class AddDiscussionCommentViewController: UIViewController, UITextViewDelegate {
                         print("Error decoding question: \(error)")
                         }
                     }
-                
-//                let alert = Service.createAlertController(title: "Response Posted‼️✅", message: "Please Refresh Page")
-//                self.present(alert, animated: true, completion: nil)
                 
                 let alert = UIAlertController(title: "Response Posted‼️✅", message: "Please Refresh Page", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in

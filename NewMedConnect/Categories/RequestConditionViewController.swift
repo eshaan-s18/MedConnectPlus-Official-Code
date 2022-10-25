@@ -14,6 +14,7 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
+// MARK: - Request Condition Page
 class RequestConditionViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var sendReportButton: UIBarButtonItem!
@@ -24,15 +25,12 @@ class RequestConditionViewController: UIViewController, UITextViewDelegate {
     
     var db = Firestore.firestore()
     var documentsCount = 0
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
         requestTextView.delegate = self
-        
+    
     }
     
     func allowPost() {
@@ -117,21 +115,5 @@ class RequestConditionViewController: UIViewController, UITextViewDelegate {
         placeHolderText.isHidden = true
     }
     
-    
-    
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

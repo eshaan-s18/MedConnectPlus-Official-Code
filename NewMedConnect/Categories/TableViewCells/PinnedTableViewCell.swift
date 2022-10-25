@@ -7,10 +7,10 @@
 
 import UIKit
 
+// MARK: - Pinned Condition TableView Cell
 class PinnedTableViewCell: UITableViewCell {
 
     @IBOutlet weak var pinnedTitle: UILabel!
-    
     
     @IBOutlet weak var pinnedIcon: UIImageView!
     

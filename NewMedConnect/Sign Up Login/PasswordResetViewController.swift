@@ -13,6 +13,7 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
+// MARK: - Reset Password Page
 class PasswordResetViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
@@ -52,7 +53,6 @@ class PasswordResetViewController: UIViewController {
         self.errorMessage.frame.origin.y = UIScreen.main.fixedCoordinateSpace.bounds.height - 215
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight = keyboardFrame.cgRectValue.height
-            //let bottomSpace = self.view.frame.height - (nextButton.frame.origin.y + nextButton.frame.height)
             
             self.resetButton.frame.origin.y -= keyboardHeight
             self.errorMessage.frame.origin.y -= keyboardHeight
@@ -120,14 +120,4 @@ class PasswordResetViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

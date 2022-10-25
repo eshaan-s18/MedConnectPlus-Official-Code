@@ -14,44 +14,33 @@ import Firebase
 import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
-import BLTNBoard
 
 var sharedDiscussionUser = ""
 
-var replyIndex = 0
+var discussionRepliesIndicator = -1
 
-var countNum = -1
+var textFieldIndicator = ""
 
-var whichTextField = ""
-
+// Reported Post Fields
 var reportedPost = "Nil"
 var reportedDiscussion = ""
 var reportedDiscussionReply = ""
 
 var discussionDocument = ""
-var discussionCommentDocument = ""
 
 var discussionCommentTitlesList = [String]()
-var discussionCommentReplyReferenceComment = ""
 var discussionCommentRepliesIndexPath = 0
 
 var selectedTextFieldCount = 0
 
-var repliesCollectionHeight = 0
-
 var replyTextFieldVal = ""
 
+//Shared to Pie Chart Page
 var sharedDiscussionCommentUserRace:String = ""
 var sharedDiscussionCommentUserBirthday:String = ""
 var sharedDiscussionCommentUserCountry:String = ""
 var sharedDiscussionCommentUserGender:String = ""
 var sharedDiscussionCommentUserAge:Int = 0
-
-
-
-
-
-
 
 var pointX:CGFloat = 0.00
 var pointY:CGFloat = 0.00
@@ -104,7 +93,7 @@ var sentIndex = 0
 
 var mutatedTitle = NSMutableAttributedString()
 
-
+// MARK: - Discussion Post Page
 class DiscussionPostViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     var q = 0
     var filterVals = [DiscussionCommentReply]()
@@ -252,16 +241,12 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
         discussionTitleLabel.sizeToFit()
         
         print(responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
-        
-//        self.viewInScrollViewHeightConstraint.constant = 220
-//        self.viewInScrollView.layoutIfNeeded()
-//
+
                 
         navigationItem.title = "Posts"
         
         setPopupButton()
         
-//        responsesCollectionViewHeightConstraint.constant = responsesCollectionView.collectionViewLayout.collectionViewContentSize.height
         
         
         deleteOrFlag.showsMenuAsPrimaryAction = true
@@ -301,20 +286,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
 
         self.view.endEditing(true)
         
-      
-//        self.viewInScrollViewHeightConstraint.constant += 50
-        //self.scrollView.contentOffset.y = 200
-//        self.view.frame.origin.y = -256
-//        print(viewInScrollView.frame.height)
-//        let initial = -(self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
-//        print(self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
-//        print((selectedTextFieldCount * 115) - totalScroll)
-//        scrollView.setContentOffset(CGPoint(x: 0, y:initial + (13 * 115) - 31), animated: true)
 
-        
-        
-//        self.viewInScrollViewHeightConstraint.constant = self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height
-//        self.view.frame.origin.y = 0
     }
     
     
@@ -327,45 +299,12 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                 }
         
         cancelKeyboardIndicator = true
-        
-//        self.viewInScrollViewHeightConstraint.constant += 50
-        //self.scrollView.contentOffset.y = 200
-//        self.view.frame.origin.y = -256
-//        print(viewInScrollView.frame.height)
-//        let initial = -(self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
-//        print(self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
-//        print((selectedTextFieldCount * 115) - totalScroll)
-//        scrollView.setContentOffset(CGPoint(x: 0, y:initial + (13 * 115) - 31), animated: true)
+ 
 
         print(keyboardHeight)
         
         self.viewInScrollViewHeightConstraint.constant += keyboardHeight
         
-        
-//        //UNCOMMENT THIS
-//        if whichTextField == "comment" {
-//
-//            let totalHeight = (viewInScrollView.window?.windowScene?.screen.bounds.height)!
-//            let navHeight = navigationController?.navigationBar.frame.size.height
-//            print(pointY)
-//            scrollView.setContentOffset(CGPoint(x: 0, y: pointY - 375), animated: true)
-//            print(viewInScrollView.window?.windowScene?.screen.bounds.height)
-//            print(keyboardHeight)        }
-//        else if whichTextField == "commentReply" {
-//            let commentDisplacement = 140 * (replyIndex + 1)
-//            var offset = 0
-//            if replyIndex+1 != 1{
-//                offset = 20 * (replyIndex+1)
-//            }
-//            scrollView.setContentOffset(CGPoint(x: 0, y: Int(pointY) - 375 + commentDisplacement + 30 - offset), animated: true)
-//
-
-
-            
-            //scrollView.setContentOffset(CGPoint(x: 0, y: pointY), animated: true)
-
-
-
 
         
         
@@ -716,7 +655,6 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                 if replyDocument != "0" {
                                                                                                     let newDateTwo = self.dateFormatter.date(from: reply.repliesDate!)
                                                                                                     self.unsortedDiscussionCommentReplies.append(DiscussionCommentReply.init(discussCommentTitle: reply.commentTitle!, discussionCommentReplyTitle: reply.repliesTitle!, discussionCommentReplyDate: newDateTwo!, discussionCommentReplyDownvotes: reply.repliesDownvotes!, discussionCommentReplyUpvotes: reply.repliesUpvotes!, discussionReplyUsername: reply.repliesUser!, discussionReplyButtonTapped: false, discussionReplyCancelorPost: "", discussionReplyGenderUpvotes: reply.genderUpvotes!, discussionReplyAgeUpvotes: reply.ageUpvotes!, discussionReplyRaceUpvotes: reply.raceUpvotes!, discussionReplyCountry: reply.country!, discussionReplyCountryUpvotes: reply.countryUpvotes!))
-                                                                                                        //self.questionLabel.text = question.question
                                                                                                     print("okay")
                                                                                                     print(unsortedDiscussionCommentReplies)
                                                                                                                                                                                                         
@@ -768,11 +706,9 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                     
                                                                                                     print(sortedDiscussionCommentReplies)
                                                                                                     print(unsortedDiscussionComments)
-                                                                                                //self.questionLabel.text = question.question
                                                                                                     print(unsortedDiscussionComments.count)
                                                                                                     print(self.documentsCount)
                                                                                                 
-                            //                                                                    if self.unsortedDiscussionComments.count == self.documentsCount - 1 {
                                                                                                 
                                                                                                 if self.currentFilter == "Popularity" {
                                                                                                     
@@ -787,7 +723,6 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                 
                                                                                                 
 
-                                                                                                //+ responsesCollectionView.collectionViewLayout.collectionViewContentSize.height
                                                                                                 self.viewInScrollView.layoutIfNeeded()
                                                                                                 
                                                                                                 print(discussionCommentID)
@@ -800,13 +735,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                     num+=1
                                                                         
                                                                                                 }
-                                                                                                
-//                                                                                                var total2 = 0
-//                                                                                                var num2 = 0
-//                                                                                                while num2<unsortedDiscussionComments.count {
-//                                                                                                    total2 += self.unsortedDiscussionComment
-//                                                                                                }
-//
+  
                                                                                                 print(total)
                                                                                                 print(commentsCount - (documentsCount - 1))
                                                                                                 print(unsortedDiscussionComments.count)
@@ -819,7 +748,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                     var i = 0
 
                                                                                                     
-                                                                                                    countNum = -1
+                                                                                                    discussionRepliesIndicator = -1
                                                                                                     print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle}))
                                                                                                     while i < (self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count) {
                                                                                                         print(i)
@@ -871,14 +800,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                 
                                                                                                 
                                                                                                     
-                                                                                                    
-//                                                                                                if unsortedDiscussionComments.count == documentsCount - 1 {
-//                                                                                                    print(sortedDiscussionComments)
-//
-//                                                                                                    self.view.layoutIfNeeded()
-
-//
-//                                                                                                }
+               
                                                                                                 
                                                                                             } else {
                                                                                                 // A nil value was successfully initialized from the DocumentSnapshot,
@@ -962,7 +884,6 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                                         sharedDiscussionCommentUserAge = discussionCommentUserAge
                                                                                                         sharedDiscussionCommentUserCountry = discussionCommentUserCountry
                                                                                                         sharedDiscussionCommentUserGender = discussionCommentUserGender
-                                                                                                        //self.questionLabel.text = question.question
                                                                                                         print("okay")
                                                                                                     } else {
                                                                                                         // A nil value was successfully initialized from the DocumentSnapshot,
@@ -985,17 +906,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                             }
                                                                                                                                                                                         
                                                                                             print(responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
-                                                                                            
-//                                                                                            self.viewInScrollViewHeightConstraint.constant = 220 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height
-//                                                                                            self.viewInScrollView.layoutIfNeeded()
-//
-//
-//
-//                                                                                            self.responsesCollectionView.reloadData()
-//                                                                                            self.responsesCollectionView.dataSource = self
-//                                                                                            self.responsesCollectionView.delegate = self
-                                                                                            
-                                                                                            //self.questionLabel.text = question.question
+                                            
                                                                                             print("okay")
                                                                                         } else {
                                                                                             // A nil value was successfully initialized from the DocumentSnapshot,
@@ -1010,7 +921,6 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                                 
                                                                                 
                                                                                 
-                                                                                //self.questionLabel.text = question.question
                                                                                 print("okay")
                                                                             } else {
                                                                                 // A nil value was successfully initialized from the DocumentSnapshot,
@@ -1024,13 +934,7 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                         }
                                                                     
                                                                     
-                                                                    
-                                                    
-                                                                    
-//                                                                    self.discussionCommentCount.text = String(self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count)
-                                                                    
-                                                                    
-                                                                    
+                                  
                                                                     
                                                                     
                                                                     
@@ -1042,7 +946,6 @@ class DiscussionPostViewController: UIViewController, UIPopoverPresentationContr
                                                                    
                                                                         print("okay")
                                                                     
-//                                                                }
                                                                 }
                                                             } else {
                                                                 // A nil value was successfully initialized from the DocumentSnapshot,
@@ -1112,24 +1015,13 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         return CGSize(width: 350, height: 105)
         
         }
-//
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "responsesCell", for: indexPath) as? DiscussionCommentsCollectionViewCell{
-//
-//        }
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         sharedComments = sortedDiscussionComments
         print(sharedComments)
 
-//        if iCount == 0 {
-//            print(self.sortedDiscussionComments)
-//            print(self.sortedDiscussionComments.count)
-//            self.viewInScrollViewHeightConstraint.constant = self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + CGFloat((115*self.sortedDiscussionComments.count)) + 35
-//            iCount+=1
-//        }
+
         print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count)
         return (self.sortedDiscussionComments.map({$0.discussionsCommentTitle}).count)
         
@@ -1145,8 +1037,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "responsesCell", for: indexPath) as? DiscussionCommentsCollectionViewCell
         
-        //self.viewInScrollViewHeightConstraint.constant = self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + responsesCollectionView.collectionViewLayout.collectionViewContentSize.height + 35
-
+ 
         
         print(responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
         
@@ -1167,6 +1058,13 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         var commentTitle = self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row]
         var newCommentTitle = commentTitle.components(separatedBy: delimeter)
         cell?.commentLabel.text = newCommentTitle[0]
+        
+        var count = cell?.commentLabel.text?.count
+
+        while count! > 35 {
+                self.viewInScrollViewHeightConstraint.constant += 50
+            count! -= 35
+            }
 
         
         cell?.commentLabel.sizeToFit()
@@ -1303,19 +1201,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         sentCommentTitle = self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row]
         
         
-        //
-//        if cell?.commentLabel.text == "Hello" {
-//            cell!.responseCommentsCollectionView.tag = 2
-//
-//        }
-//        else {
-//            cell!.responseCommentsCollectionView.tag = 0
-//
-//        }
-//
-        
-//        discussionCommentRepliesFilterList.insert(contentsOf: filteredStruct, at: indexPath.row - 1)
-        
+
         
 
         
@@ -1328,8 +1214,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
             
             print(cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)
-            whichTextField = "comment"
-            //
+            textFieldIndicator = "comment"
      
             
 
@@ -1357,6 +1242,12 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
 
 
                 }
+               
+
+              
+
+
+                
                 
                 self.viewInScrollViewHeightConstraint.constant += (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
                 
@@ -1390,34 +1281,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
             
             if (cell?.responseCommentsViewHeightConstraint.constant)! == (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65{
-                
-                //TEMPORARY SOLUTION NEED TO FIX
-                //*********************************
-                
-//                cell?.responseCommentsViewHeightConstraint.constant -= (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
-//
-//                self.viewInScrollViewHeightConstraint.constant -= (cell?.responseCommentsCollectionView.collectionViewLayout.collectionViewContentSize.height)! + 65
-//
-//                for reply in sortedDiscussionComments.map({$0.commentReplies})[indexPath.row].map({$0.discussionCommentReplyTitle}) {
-//
-//                    var count = reply.count
-//
-//                    while count > 35 {
-//                        cell?.responseCommentsViewHeightConstraint.constant -= 25
-//                        self.viewInScrollViewHeightConstraint.constant -= 25
-//                        count -= 35
-//                    }
-//
-//
-//                }
-//
-//                cell?.responseCommentsView.layoutIfNeeded()
-//
-//                print(cell?.responseCommentsViewHeightConstraint.constant)
-//
-//                print(viewInScrollViewHeightConstraint.constant)
-//
-//                closeRepliesView = false
+
 
             }
             
@@ -1495,7 +1359,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                                 let sender = PushNotificationSender()
                                                 let response = cell?.commentLabel!.text!
                                             
-                                                sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "💬 Someone replied to your response: \(response!)")
+                                                sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect+", body: "💬 Someone replied to your response: \(response!)")
                                                 
                                                 
                                                 var delimeter = " "
@@ -1522,7 +1386,6 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                                 
                                                 
                                                 
-                                                //self.questionLabel.text = question.question
                                                 print("okay")
                                             } else {
                                                 // A nil value was successfully initialized from the DocumentSnapshot,
@@ -1560,16 +1423,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             }
             
             
-            
-//
-//                    cell?.postReplyViewHeightConstraint.constant = 0.0
-//                    cell?.postReplyView.layoutIfNeeded()
-//
-//                    cell?.replyTextField.isHidden = true
-//
-//                    cell?.replyCancelSendButton.isHidden = true
-//                    cell?.replyCancelSendButton.isEnabled = false
-                    
+
                     
                 }
             }
@@ -1578,7 +1432,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             if self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexPath.row] == true {
                 self.viewInScrollView.layoutIfNeeded()
 
-                whichTextField = "comment"
+                textFieldIndicator = "comment"
                 cell?.replyTextField.text = ""
                 cell?.replyTextField.isHidden = false
 
@@ -1610,22 +1464,10 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
         
         
-//
-//
-//        cell?.downHeartLabel.text = String(self.sortedDiscussionComments.map({$0.discussionCommentDownvotes})[indexPath.row])
-//
-//       var displayedDate = sortedDiscussionComments.map({dateFormatter.string(from:$0.discussionCommentDate)})
-//
-//        cell?.commentDateLabel.text = String(displayedDate[indexPath.row][..<displayedDate[indexPath.row].index(displayedDate[indexPath.row].startIndex, offsetBy:10)])
-//
-//        cell?.upHeartLabel.text = String(self.sortedDiscussionComments.map({$0.discussionCommentUpvotes})[indexPath.row])
-        
-                
-//            var dateDisplayed:String = String(self.sortedDiscussions!.map({dateFormatter!.string(from:$0.discussionDates!)!}!)!)! ?? ""
 
         cell?.commentDateLabel.text = String(displayedDate[indexPath.row][..<displayedDate[indexPath.row].index(displayedDate[indexPath.row].startIndex, offsetBy:10)])
         
-//
+
         cell?.corneredView.layer.cornerRadius = 10
         cell?.upHeartView.layer.cornerRadius = 10
         cell?.downHeartView.layer.cornerRadius = 10
@@ -1658,7 +1500,6 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         }
         
 
-//        cell?.replyTextField.addTarget(self, action: #selector(replyTextFieldEditingBegin(sender:)), for: .editingDidBegin)
         
         cell?.replyCancelSendButton.addTarget(self, action: #selector(sendOrCancelButton(sender:)), for: .touchUpInside)
         cell?.repliesButton.addTarget(self, action: #selector(repliesButtonTapped(sender:)), for: .touchUpInside)
@@ -1671,17 +1512,10 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         cell?.downHeartButton.addTarget(self, action: #selector(downheartTapped(sender:)), for: .touchUpInside)
         
         
-     //   cell?.pieChartButton.addTarget(self, action: #selector(pieChartButtonTapped(sender:)), for: .touchUpInside)
         
         cell?.pieChartButton.addTarget(self, action: #selector(pieChartButtonTapped(sender:)), for: .touchUpInside)
 
-//        UIAction(title: "Report Post",image: UIImage(systemName: "flag"), handler: { action in
-//            reportedDiscussion = (self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexPath.row])
-//            reportedDiscussionReply = "Nil"
-//
-//            self.reportCommentButtonTapped()
-//
-//        })
+
         cell?.pieChartButton.tag = indexPath.row
         cell?.replyCancelSendButton.tag = indexPath.row
         cell?.replyTextField.tag = indexPath.row
@@ -1697,44 +1531,23 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
         cell?.replyButton.layer.cornerRadius = 10
 
         
-//        cell?.replyTextField.layer.cornerRadius = 10
-//        cell?.replyTextField.layer.borderColor = UIColor.clear.cgColor
-    
         
        cell?.replyTextFieldHeightConstraint.constant = 31
         
         cell?.backgroundColor = UIColor.white
         cell?.layer.cornerRadius = 10
         
-//        print(cell?.replyTextField.)
         print(cell?.frame.origin)
         
         print(cell?.convert((cell?.replyTextField.frame)!, to: self.view))
         
         
-        
-//        cell?.postCommentReplyView.layer.borderColor = UIColor.systemGray5.cgColor
-//        cell?.postCommentReplyView.layer.borderWidth = 1
-//        cell?.postCommentReplyView.layer.cornerRadius = 10
-//        cell?.postCommentReplyViewHeightConstraint.constant = 0
  
         return cell!
     
     }
     
-//    @objc func reportCommentButtonTapped() {
-//        var reportResponseVC = UIStoryboard(name: "Discussion", bundle: nil).instantiateViewController(withIdentifier: "ReportResponseViewController")
-//        if let sheet = reportResponseVC.sheetPresentationController {
-//            sheet.detents = [.medium()]
-//            sheet.prefersGrabberVisible = true
-//            sheet.preferredCornerRadius = 25
-//
-//        }
-//
-//        self.present(reportResponseVC, animated: true, completion: nil)
-//
-//    }
-    
+
     
     @objc func pieChartButtonTapped(sender:UIButton) {
         let indexpath = IndexPath(row: sender.tag, section: 0)
@@ -1833,7 +1646,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
     
     
     @objc func replyButtonTapped(sender:UIButton) {
-        countNum = -1
+        discussionRepliesIndicator = -1
         let indexPath3 = IndexPath(row: sender.tag, section: 0)
         
         if self.sortedDiscussionComments.map({$0.discussionReplyButtonTapped})[indexPath3.row] == false {
@@ -1860,7 +1673,6 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             }
             
             print(collapseRepliesSubtract)
-//            self.viewInScrollViewHeightConstraint.constant -= CGFloat(110 * collapseRepliesSubtract)
             self.responsesCollectionView.layoutIfNeeded()
             self.responsesCollectionView.reloadData()
             self.responsesCollectionView.dataSource = self
@@ -1893,7 +1705,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
             sentIndex = indexPath2.row
 
-            countNum = -1
+            discussionRepliesIndicator = -1
             
             var i = 0
             var totalCommentsSubtract = 0
@@ -1924,9 +1736,6 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
             print(viewInScrollViewHeightConstraint.constant)
             print(commentRepliesCountAdd)
-//            self.viewInScrollViewHeightConstraint.constant -= CGFloat(110 * totalCommentsSubtract) + 60
-//
-//            self.viewInScrollViewHeightConstraint.constant += CGFloat(110 * commentRepliesCountAdd) + 60
             print(viewInScrollViewHeightConstraint.constant)
             
             closeRepliesView = true
@@ -1938,9 +1747,6 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             
             self.responsesCollectionView.reloadData()
             
-            
-//            self.responsesCollectionView.dataSource = self
-//            self.responsesCollectionView.delegate = self
             
             print(responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
             discussionCommentsViewHeight += 100
@@ -1961,7 +1767,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             self.sortedDiscussionComments.remove(at: indexPath2.row + 1)
             print(self.sortedDiscussionComments)
             print(indexPath2.row)
-            countNum = -1
+            discussionRepliesIndicator = -1
             
 
             self.responsesCollectionView.reloadData()
@@ -1970,8 +1776,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
             print(responsesCollectionView.collectionViewLayout.collectionViewContentSize.height)
             var commentRepliesCountSubtract = 0
             commentRepliesCountSubtract = self.sortedDiscussionComments.map({$0.commentReplies})[indexPath2.row].count
-//
-            //self.viewInScrollViewHeightConstraint.constant = self.discussionView.bounds.size.height + self.informationView.bounds.size.height + 84 + CGFloat((115*self.sortedDiscussionComments.count)) + 35
+
             self.viewInScrollView.layoutIfNeeded()
             sentComment = [DiscussionComment]()
             
@@ -2192,7 +1997,7 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                         var responseLabel = self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row]
                                         let newResponseLabel = responseLabel.components(separatedBy: delimeter)
                                         print(newResponseLabel[1])
-                                        sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect", body: "♥️⬆️ Someone upvoted your response: \(newResponseLabel[0])")
+                                        sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect+", body: "♥️⬆️ Someone upvoted your response: \(newResponseLabel[0])")
                                         
                                         self.db.collection("Users").document(self.sortedDiscussionComments.map({$0.discussionUsername})[indexpath1.row]).collection("notifications").getDocuments() { (querySnapshot, err) in
                                                 if let err = err {
@@ -2210,7 +2015,6 @@ extension DiscussionPostViewController: UICollectionViewDelegate, UICollectionVi
                                                 }
                                         }
                                         
-                                        //self.questionLabel.text = question.question
                                         print("okay")
                                     } else {
                                         // A nil value was successfully initialized from the DocumentSnapshot,

@@ -13,9 +13,8 @@ import MessageUI
 
 var deletedUser = false
 
-
+// MARK: - Your Information Page
 class YourInformationViewController: UIViewController {
-    
     
     @IBOutlet weak var borderView: UIView!
     
@@ -46,12 +45,11 @@ class YourInformationViewController: UIViewController {
     
     @IBOutlet weak var genderPicker: UIPickerView!
     
-    
     @IBOutlet weak var logOutButton: UIButton!
     
     @IBOutlet weak var deleteButton: UIButton!
     
-    
+    @IBOutlet weak var navBar: UINavigationBar!
     
     var savedEmail = ""
     var savedCountry = ""
@@ -60,13 +58,7 @@ class YourInformationViewController: UIViewController {
     var savedRace = ""
     
     var db = Firestore.firestore()
-    
-    @IBOutlet weak var navBar: UINavigationBar!
-    
-    var appliedList = ["test"]
-    
-    var selectedOption = ""
-    
+        
     var genderList = [
         "Female",
         "Male",
@@ -343,7 +335,6 @@ class YourInformationViewController: UIViewController {
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
         "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        
         "🇺🇸  United States",
         "🇦🇨  Ascension Island",
         "🇦🇩  Andorra",
@@ -604,8 +595,7 @@ class YourInformationViewController: UIViewController {
         "🇿🇼  Zimbabwe",
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
-        "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        
+        "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales"
     ]
     
 
@@ -621,13 +611,7 @@ class YourInformationViewController: UIViewController {
         
         logOutButton.layer.cornerRadius = 25
         
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
-//            self.loading.stopAnimating()
-//        }
-        
         datePicker.backgroundColor = UIColor.systemGray6
-        
-
         datePicker.addTarget(self, action: #selector(datePickerValueChange(sender:)), for: UIControl.Event.valueChanged)
 
         countryPicker.tag = 1
@@ -640,7 +624,6 @@ class YourInformationViewController: UIViewController {
         genderPicker.delegate = self
         genderPicker.dataSource = self
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideOtherPicker)))
-//        UIButton.appearance().adjustsImageSizeForAccessibilityContentSizeCategory = false
         self.countryPicker.selectRow(countryList.count / 2, inComponent: 0, animated: false)
         self.racePicker.selectRow(raceList.count / 2, inComponent: 0, animated: false)
         self.genderPicker.selectRow(genderList.count / 2, inComponent: 0, animated: false)
@@ -651,21 +634,18 @@ class YourInformationViewController: UIViewController {
         components.month = 12
         let maxDate = calendar.date(byAdding: components, to: currentDate)!
         datePicker.maximumDate = currentDate
+        
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hidePicker)))
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
         borderView.backgroundColor = UIColor.white
         borderView.layer.borderColor = UIColor.white.cgColor
         borderView.layer.borderWidth = 1
         borderView.layer.cornerRadius = 10
-             // Do any additional setup after loading the view.
+
         navBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navBar.shadowImage = UIImage()
         
-        
-
-       
     }
-    
     
     
     @IBAction func logOutButtonTapped(_ sender: Any) {
@@ -688,8 +668,8 @@ class YourInformationViewController: UIViewController {
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
         composer.setToRecipients(["contact.medconnect@gmail.com"])
-        composer.setSubject("MedConnect App Support")
-        composer.setMessageBody("Please describe your reason to contact MedConnect support:\n--> ", isHTML: false)
+        composer.setSubject("MedConnect+ App Support")
+        composer.setMessageBody("Please describe your reason to contact MedConnect+ support:\n--> ", isHTML: false)
         
         present(composer, animated: true)
         
@@ -728,31 +708,17 @@ class YourInformationViewController: UIViewController {
                     }
                     print("Signed In")
                     
-                    print(Auth.auth().currentUser!.uid)
-                    
-                    
                     let credential = EmailAuthProvider.credential(withEmail: self!.savedEmail, password: textField.text!)
                     Auth.auth().currentUser?.reauthenticate(with: credential)
                     
                     let user = Auth.auth().currentUser
                     
                     deletedUser = true
-                    print(deletedUser)
 
                     self!.db.collection("Users").document(Auth.auth().currentUser!.uid).delete()
-                    
-                   // self!.db.collection("Users").document(Auth.auth().currentUser!.uid).setData(["deleted": "True"])
-                    
+                                        
                     self!.performSegue(withIdentifier: "toLoginPageSegue", sender: self)
 
-                    
-                    
-                   // self!.signOut()
-                    
-                    
-
-                    
-                    
                 })
             }
             alert.addTextField { (textField) in
@@ -764,23 +730,6 @@ class YourInformationViewController: UIViewController {
             self.present(alert, animated:true, completion: nil)
         }
     
-    
-        
-        
-        
-        
-        
-        
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "toLoginPageSegue" {
-//            let fullScreenViewController = segue.destination
-//            fullScreenViewController.modalPresentationStyle = UIModalPresentationStyle.automatic
-//            fullScreenViewController.activePresentationController!.delegate = self
-//        }
-    }
-    
     func deleteAccount() {
         
         do {
@@ -790,17 +739,9 @@ class YourInformationViewController: UIViewController {
         } catch let error {
             let alert = Service.createAlertController(title: "Error", message: error.localizedDescription)
             self.present(alert, animated: true, completion: nil)
-            
-        
         }
         
-        
-
     }
-    
-    
-    
-    
     
     @objc func handleSignOut() {
         let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: .alert)
@@ -820,9 +761,6 @@ class YourInformationViewController: UIViewController {
             
         }
     }
-    
-    
-    
     
     @objc private func errorVibration() {
         HapticsManager.shared.vibrate(for: .error)
@@ -857,9 +795,6 @@ class YourInformationViewController: UIViewController {
             UIView.animate(withDuration: 0.3) {
 
             }}
-        else {
-            print("no")
-        }
 
         }
 
@@ -880,9 +815,7 @@ class YourInformationViewController: UIViewController {
             UIView.animate(withDuration: 0.3) {
             }
         }
-        else {
-            print("no")
-        }
+
     }
     @objc func datePickerValueChange(sender: UIDatePicker) {
         birthdayButton.setTitle("\(formatDate(date: datePicker.date))", for: .normal)
@@ -960,7 +893,6 @@ class YourInformationViewController: UIViewController {
             genderPicker.isHidden = true
             emailTextField.textColor = UIColor.darkGray
             emailTextField.isEnabled = false
-            print(savedEmail)
             if emailTextField.text != savedEmail {
                 if isValidEmailAddress(emailAddressString: emailTextField.text!){
                     let alert = UIAlertController(title: "User Reauthentication", message: "Please type in your password to change your email login.", preferredStyle: UIAlertController.Style.alert)
@@ -1028,13 +960,11 @@ class YourInformationViewController: UIViewController {
             countryButton.isEnabled = false
             db.collection("Users").document(Auth.auth().currentUser!.uid).updateData(["country" : countryButton.titleLabel?.text])
             savedCountry = (countryButton.titleLabel?.text)!
-            print(savedCountry)
         }
     }
     
     
     @IBAction func textFieldTapped(_ sender: Any) {
-        print("Testig")
         countryPicker.isHidden = true
         genderPicker.isHidden = true
         racePicker.isHidden = true
@@ -1086,7 +1016,6 @@ class YourInformationViewController: UIViewController {
     @IBAction func genderTapped(_ sender: Any) {
         racePicker.isHidden = true
         countryPicker.isHidden = true
-        print(appliedList)
         datePicker.isHidden = true
         hideKeyboard()
         if genderPicker.isHidden == true {
@@ -1113,18 +1042,12 @@ class YourInformationViewController: UIViewController {
             switch result {
             case .success(let email):
                 if let email = email {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     self.emailTextField.text = email.email
                     self.savedEmail = email.email!
-                    //self.questionLabel.text = question.question
-                    print("okay")
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
                 }
             }
@@ -1141,17 +1064,11 @@ class YourInformationViewController: UIViewController {
             switch result {
             case .success(let userID):
                 if let userID = userID {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     self.userIDTextField.text = userID.userID
-                    //self.questionLabel.text = question.question
-                    print("okay")
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
                 }
             }
@@ -1168,18 +1085,12 @@ class YourInformationViewController: UIViewController {
             switch result {
             case .success(let birthday):
                 if let birthday = birthday {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     self.birthdayButton.setTitle(birthday.birthday, for: .normal)
                     self.savedBirthday = birthday.birthday!
-                    //self.questionLabel.text = question.question
-                    print("okay")
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
                 }
             }
@@ -1196,18 +1107,12 @@ class YourInformationViewController: UIViewController {
             switch result {
             case .success(let country):
                 if let country = country {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     self.countryButton.setTitle(country.country, for: .normal)
                     self.savedCountry = country.country!
-                    //self.questionLabel.text = question.question
-                    print("okay")
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
                 }
             }
@@ -1224,18 +1129,12 @@ class YourInformationViewController: UIViewController {
             switch result {
             case .success(let race):
                 if let race = race {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     self.raceButton.setTitle(race.race, for: .normal)
                     self.savedRace = race.race!
-                    //self.questionLabel.text = question.question
-                    print("okay")
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
                 }
             }
@@ -1253,40 +1152,24 @@ class YourInformationViewController: UIViewController {
                 switch result {
                 case .success(let gender):
                     if let gender = gender {
-                        // A `City` value was successfully initialized from the DocumentSnapshot.
                         self.genderButton.setTitle(gender.gender, for: .normal)
                         self.savedGender = gender.gender!
                         
                         self.loading.stopAnimating()
 
-
-                        //self.questionLabel.text = question.question
-                        print("okay")
                     } else {
-                        // A nil value was successfully initialized from the DocumentSnapshot,
-                        // or the DocumentSnapshot was nil.
                         print("Document does not exist")
                     }
                 case .failure(let error):
-                    // A `City` value could not be initialized from the DocumentSnapshot.
                     print("Error decoding question: \(error)")
                     }
                 }
             
             }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+// MARK: - Various Information PickerViews
 extension YourInformationViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -1342,6 +1225,7 @@ extension YourInformationViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
 
 }
+
 
 extension YourInformationViewController:MFMailComposeViewControllerDelegate {
     

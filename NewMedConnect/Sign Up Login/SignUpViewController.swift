@@ -15,11 +15,11 @@ import FirebaseFirestore
 
 var sharedEmail = ""
 var sharedPassword = ""
-
 var sharedUserID = ""
 
+// MARK: - Sign Up Page
 class SignUpViewController: UIViewController {
-
+    
     @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -30,18 +30,20 @@ class SignUpViewController: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     
-    var tempNextLocation = 0.0
+    @IBOutlet weak var loading: UIActivityIndicatorView!
     
     let db = Firestore.firestore()
     
-    @IBOutlet weak var loading: UIActivityIndicatorView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tempNextLocation = self.nextButton.frame.origin.y
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
         // Do any additional setup after loading the view.
         nextButton.layer.cornerRadius = 10.0
+        emailTextField.autocorrectionType = .no
+        loading.hidesWhenStopped = true
+        
+        
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -49,53 +51,47 @@ class SignUpViewController: UIViewController {
         emailTextField.addTarget(self, action: #selector(removePasswordError), for: .editingDidBegin)
         
         
-        emailTextField.autocorrectionType = .no
-        
-        loading.hidesWhenStopped = true
-        
-        let alert = UIAlertController(title: "Reminder", message: "Signing up for an account involves using a valid email. MedConnect allows you to remain completely anonymous while using the app. Your email will only be used for logging in and only be visible to you.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Reminder", message: "Signing up for an account involves using a valid email. MedConnect+ allows you to remain completely anonymous while using the app. Your email will only be used for logging in and only be visible to you.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style{
-                case .default:
+            case .default:
                 print("default")
-
-
-                case .cancel:
+                
+                
+            case .cancel:
                 print("cancel")
-
-                case .destructive:
+                
+            case .destructive:
                 print("destructive")
-
+                
             }
         }))
         self.present(alert, animated: true, completion: nil)
         
-        
-        
     }
     
     func isValidEmailAddress(emailAddressString: String) -> Bool {
-      
-      var returnValue = true
-      let emailRegEx = "[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}"
-      
-      do {
-          let regex = try NSRegularExpression(pattern: emailRegEx)
-          let nsString = emailAddressString as NSString
-          let results = regex.matches(in: emailAddressString, range: NSRange(location: 0, length: nsString.length))
-          
-          if results.count == 0
-          {
-              returnValue = false
-          }
-          
-      } catch let error as NSError {
-          print("invalid regex: \(error.localizedDescription)")
-          returnValue = false
-      }
-      
-      return  returnValue
-  }
+        
+        var returnValue = true
+        let emailRegEx = "[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}"
+        
+        do {
+            let regex = try NSRegularExpression(pattern: emailRegEx)
+            let nsString = emailAddressString as NSString
+            let results = regex.matches(in: emailAddressString, range: NSRange(location: 0, length: nsString.length))
+            
+            if results.count == 0
+            {
+                returnValue = false
+            }
+            
+        } catch let error as NSError {
+            print("invalid regex: \(error.localizedDescription)")
+            returnValue = false
+        }
+        
+        return  returnValue
+    }
     
     @objc private func removePasswordError() {
         passwordError.isHidden = true
@@ -124,7 +120,6 @@ class SignUpViewController: UIViewController {
         self.finalError.frame.origin.y = UIScreen.main.fixedCoordinateSpace.bounds.height - 215
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight = keyboardFrame.cgRectValue.height
-            //let bottomSpace = self.view.frame.height - (nextButton.frame.origin.y + nextButton.frame.height)
             
             self.nextButton.frame.origin.y -= keyboardHeight
             self.finalError.frame.origin.y -= keyboardHeight
@@ -153,12 +148,9 @@ class SignUpViewController: UIViewController {
                     completion(true)
                 }
                 
-                
             }
         }
     }
-    
-    
     
     @IBAction func nextButtonTapped(_ sender: Any) {
         if emailTextField.text!.count == 0 && passwordTextField.text!.count == 0 {
@@ -194,15 +186,15 @@ class SignUpViewController: UIViewController {
                         }
                     }
                     
-                    }
+                }
                 else {
                     finalError.text = "Please create a password that is at least 8 characters."
                     finalError.isHidden = false
                     errorVibration()
                 }
             }
-        
-        else {
+            
+            else {
                 finalError.text = "Please enter a valid email."
                 finalError.isHidden = false
                 errorVibration()
@@ -218,63 +210,6 @@ class SignUpViewController: UIViewController {
         sharedPassword = password
         
         self.performSegue(withIdentifier: "fromSignUpSegue", sender: self)
-
-        
-        //createUser(withEmail: email, password: password)
     }
-    
-    
-    func createUser(withEmail email: String, password: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            
-            if let error = error {
-                let alert = Service.createAlertController(title: "Error", message: error.localizedDescription)
-                self.present(alert, animated: true, completion: nil)
-                print("failed sign up")
-                return
-            }
-            
-            
-            let emailValues = ["email": email]
-            let uidValues = ["userID": sharedUserID]
-            
-            guard let uid = result?.user.uid else { return }
-            
-            sharedUserID = uid
-            
-            print(uid)
-            
-            self.db.collection("Users").document(sharedUserID).setData(emailValues)
-            self.db.collection("Users").document(sharedUserID).setData(uidValues)
-            
-
-//            Database.database().reference().child("Users").child(uid).updateChildValues(values, withCompletionBlock: { (error, ref) in
-//                if let error = error {
-//                    print("failed sign up")
-//                    return
-//                }
-//
-//                print("success")
-//            })
-            
-            
-        }
-    }
-    
-    
-    
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-
+}
 

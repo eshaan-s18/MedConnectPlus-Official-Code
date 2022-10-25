@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Searched Conditions CollectionView Cell
 class SearchConditionCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var searchedConditionName: UILabel!

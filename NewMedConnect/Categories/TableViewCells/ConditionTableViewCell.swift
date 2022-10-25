@@ -7,14 +7,12 @@
 
 import UIKit
 
+// MARK: - Condition TableView Cell
 class ConditionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var subtitleLabel: UILabel!
-    
+        
     @IBOutlet weak var pinImage: UIImageView!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

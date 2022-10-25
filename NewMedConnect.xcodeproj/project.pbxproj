@@ -29,6 +29,7 @@
 		EE5B8E1C28FF704500FA1F0A /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */; };
 		EE5B8E1E28FF76AE00FA1F0A /* NotificationReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */; };
 		EE5B8E2028FF8BF100FA1F0A /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */; };
+		EE5B8E222900D2E200FA1F0A /* HowToUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E212900D2E100FA1F0A /* HowToUseViewController.swift */; };
 		EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */; };
 		EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740001289F4C0800C21FB0 /* UpvoteReference.swift */; };
 		EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740003289F4C4400C21FB0 /* DownvoteReference.swift */; };
@@ -122,6 +123,7 @@
 		EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReference.swift; sourceTree = "<group>"; };
 		EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
+		EE5B8E212900D2E100FA1F0A /* HowToUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseViewController.swift; sourceTree = "<group>"; };
 		EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionResponseReplies.swift; sourceTree = "<group>"; };
 		EE740001289F4C0800C21FB0 /* UpvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteReference.swift; sourceTree = "<group>"; };
 		EE740003289F4C4400C21FB0 /* DownvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownvoteReference.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */,
 				EE0F71B228F75D7C00626F95 /* ReportABugViewController.swift */,
 				EE0F71B428FA38B900626F95 /* PrivacyPolicyViewController.swift */,
+				EE5B8E212900D2E100FA1F0A /* HowToUseViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				EEBFD9472870BE4E001834DB /* SavedReference.swift in Sources */,
 				EE3D45A42858CBD700A2E0E6 /* PinnedTableViewCell.swift in Sources */,
 				EE1CF51F285A39AD00089CF9 /* ConditionReference.swift in Sources */,
+				EE5B8E222900D2E200FA1F0A /* HowToUseViewController.swift in Sources */,
 				EEA759032848EFC8008CBC37 /* EmailReference.swift in Sources */,
 				EEA759002848E200008CBC37 /* HomeViewController.swift in Sources */,
 				EEA5A7112867E3FE00F0DE6F /* AddDiscussionViewController.swift in Sources */,
@@ -849,7 +853,8 @@
 				DEVELOPMENT_TEAM = KK6V8C52YD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewMedConnect/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MedConnect;
+				INFOPLIST_KEY_CFBundleDisplayName = "MedConnect+";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -885,7 +890,8 @@
 				DEVELOPMENT_TEAM = KK6V8C52YD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewMedConnect/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MedConnect;
+				INFOPLIST_KEY_CFBundleDisplayName = "MedConnect+";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

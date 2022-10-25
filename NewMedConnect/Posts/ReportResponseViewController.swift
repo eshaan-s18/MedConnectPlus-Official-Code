@@ -150,9 +150,6 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
                 
                 
                 
-//                let alert = Service.createAlertController(title: "Response Posted‼️✅", message: "Please Refresh Page")
-//                self.present(alert, animated: true, completion: nil)
-                
                 let alert = UIAlertController(title: "Report Sent🚩", message: "Successfully reported post. Please give our team a couple days to review your report.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                     switch action.style{

@@ -7,7 +7,7 @@
 
 import UIKit
 
+// MARK: - Search Discussions CollectionView Cell
 class SearchDiscussionCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var discussionLabel: UILabel!
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Your Discussions CollectionView Cell
 class YourDiscussionsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var yourDiscussionTitle: UILabel!

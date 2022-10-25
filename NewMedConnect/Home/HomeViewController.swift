@@ -23,14 +23,17 @@ struct SavedDiscussionStruct {
     var conditionSelected:String
 }
 
+// MARK: - Home Page
 class HomeViewController: UIViewController, UIPopoverPresentationControllerDelegate {
-
-    var reps = 0
+    
+    var createdDiscussionsCollected = 0
+    
+    let refreshControl = UIRefreshControl()
     
     var yourDiscussions = [YourDiscussionStruct]()
     
     var savedDiscussions = [SavedDiscussionStruct]()
-
+    
     @IBOutlet weak var greeting: UILabel!
     
     @IBOutlet weak var welcomeView: UIView!
@@ -47,106 +50,96 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     @IBOutlet weak var savedDiscussionsView: UIView!
     
-    
-    
-    
-    let refreshControl = UIRefreshControl()
-    
-    
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var savedLoadingIndicator: UIActivityIndicatorView!
     
-    
     @IBOutlet weak var noCreatedDiscussions: UILabel!
     
     @IBOutlet weak var noSavedDiscussions: UILabel!
     
     var skippedDocs = 0
-    
     var savedSkippedDocs = 0
-    
     
     var currentIndex = 0
     var savedCurrentIndex = 0
-
     
     let db = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        
-        
-        
         authAndConfig()
         
         yourDiscussionsView.layer.cornerRadius = 25
         savedDiscussionsView.layer.cornerRadius = 25
         
-
         navigationItem.title = "Home"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.backgroundColor = UIColor.systemGray6
-        
+        navigationItem.hidesBackButton = true
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backBarButtonItem
+        navigationItem.backButtonDisplayMode = .minimal
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
-        navigationItem.hidesBackButton = true
-        
-        
-
         tabBarController?.tabBar.isHidden = false
         
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        
         scrollView.refreshControl = refreshControl
-
+        
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.startAnimating()
         
         savedLoadingIndicator.hidesWhenStopped = true
         savedLoadingIndicator.startAnimating()
         
-        
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backBarButtonItem
-        
-        navigationItem.backButtonDisplayMode = .minimal
-        
         welcomeView.layer.cornerRadius = 25
-
+        
         scrollControl.isHidden = true
         savedScrollControl.isHidden = true
-      
         
     }
     
     @objc func refresh() {
         getData()
         self.scrollView.refreshControl?.endRefreshing()
-
         
     }
     
+    @IBAction func acknowledgementsTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "Acknowledgements", message: "Special thanks to Daniel Cohen Gindi & Philipp Jahoda for Charts | Special thanks to Firebase", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                print("default")
+                self.dismiss(animated: true)
+                
+                
+            case .cancel:
+                print("cancel")
+                
+            case .destructive:
+                print("destructive")
+                
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func getData() {
-        reps = 0
+        createdDiscussionsCollected = 0
         currentIndex = 0
-        
         savedCurrentIndex = 0
-        
         yourDiscussions = [YourDiscussionStruct]()
-        
         skippedDocs = 0
-        
         savedSkippedDocs = 0
-        
         savedDiscussions = [SavedDiscussionStruct]()
         
         
-        print(Auth.auth().currentUser!.uid)
         db.collection("Users").document(Auth.auth().currentUser!.uid).collection("discussions").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -155,11 +148,6 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 
                 for document in querySnapshot!.documents {
                     let documentID = document.documentID
-                    
-                    
-                    
-                  
-                    
                     
                     if documentID == "" {
                         print("skip")
@@ -178,175 +166,129 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
                             switch result {
                             case .success(let discussion):
                                 if let discussion = discussion {
-                                    // A `City` value was successfully initialized from the DocumentSnapshot.
                                     
                                     if documentID != "0" {
                                         if discussion.yourDiscussionTitle!.prefix(1) == " " {
-                                        self.skippedDocs += 1
+                                            self.skippedDocs += 1
+                                        }
+                                        else {
+                                            self.yourDiscussions.append(YourDiscussionStruct(yourDiscussionTitle: discussion.yourDiscussionTitle!, yourDiscussionDate: discussion.yourDiscussionDate!, conditionSelected: discussion.conditionSelected!))
+                                        }
                                     }
-                                    else {
-                                        self.yourDiscussions.append(YourDiscussionStruct(yourDiscussionTitle: discussion.yourDiscussionTitle!, yourDiscussionDate: discussion.yourDiscussionDate!, conditionSelected: discussion.conditionSelected!))
+                                    
+                                    if self.skippedDocs == (querySnapshot?.documents.count)! - 1 {
+                                        self.yourDiscussionsCollectionView.isHidden = true
+                                        self.noCreatedDiscussions.isHidden = false
+                                        self.yourDiscussionsView.isHidden = false
+                                        self.loadingIndicator.stopAnimating()
                                     }
-                                }
+                                    else if self.skippedDocs < (querySnapshot?.documents.count)! - 1{
+                                        self.yourDiscussionsCollectionView.isHidden = false
+                                        self.noCreatedDiscussions.isHidden = true
+                                        self.yourDiscussionsView.isHidden = true
+                                    }
                                     
-                                    print(self.skippedDocs)
-                                    print((querySnapshot?.documents.count)! - 1)
-                                            if self.skippedDocs == (querySnapshot?.documents.count)! - 1 {
-                                                self.yourDiscussionsCollectionView.isHidden = true
-                                                self.noCreatedDiscussions.isHidden = false
-                                                self.yourDiscussionsView.isHidden = false
-                                                self.loadingIndicator.stopAnimating()
-                                            }
-                                            else if self.skippedDocs < (querySnapshot?.documents.count)! - 1{
-                                                self.yourDiscussionsCollectionView.isHidden = false
-                                                self.noCreatedDiscussions.isHidden = true
-                                                self.yourDiscussionsView.isHidden = true
-                                            }
-                                            
-                                            
-                                            
+                                    self.createdDiscussionsCollected += 1
+                                    if self.yourDiscussions.count == discussionsCreatedDocumentCount - 1 - self.skippedDocs && self.createdDiscussionsCollected == discussionsCreatedDocumentCount {
                                         
+                                        self.yourDiscussions = self.yourDiscussions.sorted(by: {$0.yourDiscussionDate.compare($1.yourDiscussionDate) == .orderedDescending})
                                         
+                                        self.savedSkippedDocs = 0
                                         
-                                    
-                                    print(self.yourDiscussions.count)
-                                        print(discussionsCreatedDocumentCount - 1 - self.skippedDocs)
-                                    self.reps += 1
-                                    print(self.reps)
-                                    print(discussionsCreatedDocumentCount)
-                                    
-                                            if self.yourDiscussions.count == discussionsCreatedDocumentCount - 1 - self.skippedDocs && self.reps == discussionsCreatedDocumentCount {
-                                            
-                                            self.yourDiscussions = self.yourDiscussions.sorted(by: {$0.yourDiscussionDate.compare($1.yourDiscussionDate) == .orderedDescending})
-                                            
-                                            print(self.yourDiscussions)
-                                            print(self.yourDiscussions.map({$0.yourDiscussionTitle}))
-                                            
-                                            self.savedSkippedDocs = 0
+                                        self.yourDiscussionsCollectionView.reloadData()
+                                        self.yourDiscussionsCollectionView.delegate = self
+                                        self.yourDiscussionsCollectionView.dataSource = self
+                                        
+                                        self.scrollControl.numberOfPages = self.yourDiscussions.count
+                                        self.loadingIndicator.stopAnimating()
+                                        self.scrollControl.isHidden = false
+                                        
+                                        self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").getDocuments() { (querySnapshot, err) in
+                                            if let err = err {
+                                                print("Error getting documents: \(err)")
+                                            } else {
+                                                let savedDiscussionsDocumentCount = querySnapshot!.documents.count
                                                 
-                                        
-                                            
-                                                
-                                                      
-                                                      self.yourDiscussionsCollectionView.reloadData()
-                                                      self.yourDiscussionsCollectionView.delegate = self
-                                                      self.yourDiscussionsCollectionView.dataSource = self
-                                                      
-                                                      self.scrollControl.numberOfPages = self.yourDiscussions.count
-                                                      self.loadingIndicator.stopAnimating()
-                                                      self.scrollControl.isHidden = false
-                                            
-                                            
-                                            
-                                            
-                                            self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").getDocuments() { (querySnapshot, err) in
-                                                if let err = err {
-                                                    print("Error getting documents: \(err)")
-                                                } else {
-                                                    let savedDiscussionsDocumentCount = querySnapshot!.documents.count
+                                                for document in querySnapshot!.documents {
+                                                    let savedDocumentID = document.documentID
+                                                                                                        
+                                                    if savedDocumentID == "" {
+                                                        print("skip")
+                                                    }
                                                     
-                                                    for document in querySnapshot!.documents {
-                                                        let savedDocumentID = document.documentID
+                                                    
+                                                    else {
                                                         
-                                                        print(savedDocumentID)
+                                                        let docRef2 = self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").document(savedDocumentID)
                                                         
-                                                        if savedDocumentID == "" {
-                                                            print("skip")
-                                                        }
-                                                        
-                                                        
-                                                        else {
+                                                        docRef2.getDocument { (document, error) in
                                                             
-                                                            let docRef2 = self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("savedDiscussions").document(savedDocumentID)
-                                                            
-                                                            docRef2.getDocument { (document, error) in
+                                                            let result = Result {
+                                                                try document?.data(as: SavedDiscussionReference.self)
                                                                 
-                                                                let result = Result {
-                                                                    try document?.data(as: SavedDiscussionReference.self)
-                                                                    
-                                                                }
-                                                                print(result)
-                                                                switch result {
-                                                                case .success(let savedDiscussion):
-                                                                    if let savedDiscussion = savedDiscussion {
-                                                                        // A `City` value was successfully initialized from the DocumentSnapshot.
-                                                                        print(savedDiscussion.savedDiscussionSavedDate)
-                                                                        print(savedDiscussion.savedDiscussionTitle!)
-                                                                        if savedDiscussion.savedDiscussionTitle!.prefix(1) == " " {
-                                                                            self.savedSkippedDocs += 1
-                                                                
-                                                                            
-                                                                        }
-                                                                        else {
-                                                                            self.savedDiscussions.append(SavedDiscussionStruct(savedDiscussionTitle: savedDiscussion.savedDiscussionTitle!, savedDiscussionDate: savedDiscussion.savedDiscussionDate!, savedDiscussionSavedDate: savedDiscussion.savedDiscussionSavedDate!, conditionSelected: savedDiscussion.conditionSelected!))
-                                                                        }
+                                                            }
+                                                            print(result)
+                                                            switch result {
+                                                            case .success(let savedDiscussion):
+                                                                if let savedDiscussion = savedDiscussion {
+                                                                    if savedDiscussion.savedDiscussionTitle!.prefix(1) == " " {
+                                                                        self.savedSkippedDocs += 1
                                                                         
-                                                                        print(self.savedSkippedDocs)
-                                                                        print(querySnapshot?.documents.count)
-                                                                        
-                                                                        
-                                                                        if self.savedSkippedDocs == (querySnapshot?.documents.count)! - 1 {
-                                                                            self.savedDiscussionsCollectionView.isHidden = true
-                                                                            self.noSavedDiscussions.isHidden = false
-                                                                            self.savedDiscussionsView.isHidden = false
-                                                                            self.savedLoadingIndicator.stopAnimating()
-                                                                        }
-                                                                        else if self.savedSkippedDocs < (querySnapshot?.documents.count)! - 1{
-                                                                            self.savedDiscussionsCollectionView.isHidden = false
-                                                                            self.noSavedDiscussions.isHidden = true
-                                                                            self.savedDiscussionsView.isHidden = true
-                                                                        }
-                                                                            print(self.savedDiscussions.count)
-                                                                            print(savedDiscussionsDocumentCount)
-                                                                            print(self.savedSkippedDocs)
-                                                                            print(savedDiscussionsDocumentCount - 1 - self.savedSkippedDocs)
-                                                                            if self.savedDiscussions.count == savedDiscussionsDocumentCount - 1 - self.savedSkippedDocs {
-                                                                                
-                                                                                self.savedDiscussions = self.savedDiscussions.sorted(by: {$0.savedDiscussionSavedDate.compare($1.savedDiscussionSavedDate) == .orderedDescending})
-                                                                                
-                                                                          
-                                                                                
-                                                                                self.savedDiscussionsCollectionView.reloadData()
-                                                                                self.savedDiscussionsCollectionView.delegate = self
-                                                                                self.savedDiscussionsCollectionView.dataSource = self
-                                                                                
-                                                                                self.savedScrollControl.numberOfPages = self.savedDiscussions.count
-                                                                                self.savedLoadingIndicator.stopAnimating()
-                                                                                self.savedScrollControl.isHidden = false
-                                                                                
-                                                                            }
-                                                                        
-                                                                        
-                                                                        //self.questionLabel.text = question.question
-                                                                        print("okay")
-                                                                    } else {
-                                                                        // A nil value was successfully initialized from the DocumentSnapshot,
-                                                                        // or the DocumentSnapshot was nil.
-                                                                        print("Document does not exist")
                                                                     }
-                                                                case .failure(let error):
-                                                                    // A `City` value could not be initialized from the DocumentSnapshot.
-                                                                    print("Error decoding question: \(error)")
+                                                                    else {
+                                                                        self.savedDiscussions.append(SavedDiscussionStruct(savedDiscussionTitle: savedDiscussion.savedDiscussionTitle!, savedDiscussionDate: savedDiscussion.savedDiscussionDate!, savedDiscussionSavedDate: savedDiscussion.savedDiscussionSavedDate!, conditionSelected: savedDiscussion.conditionSelected!))
+                                                                    }
+                                                                    
+                                                                    if self.savedSkippedDocs == (querySnapshot?.documents.count)! - 1 {
+                                                                        self.savedDiscussionsCollectionView.isHidden = true
+                                                                        self.noSavedDiscussions.isHidden = false
+                                                                        self.savedDiscussionsView.isHidden = false
+                                                                        self.savedLoadingIndicator.stopAnimating()
+                                                                    }
+                                                                    else if self.savedSkippedDocs < (querySnapshot?.documents.count)! - 1{
+                                                                        self.savedDiscussionsCollectionView.isHidden = false
+                                                                        self.noSavedDiscussions.isHidden = true
+                                                                        self.savedDiscussionsView.isHidden = true
+                                                                    }
+                                                                    if self.savedDiscussions.count == savedDiscussionsDocumentCount - 1 - self.savedSkippedDocs {
+                                                                        
+                                                                        self.savedDiscussions = self.savedDiscussions.sorted(by: {$0.savedDiscussionSavedDate.compare($1.savedDiscussionSavedDate) == .orderedDescending})
+                                                                        
+                                                                        
+                                                                        
+                                                                        self.savedDiscussionsCollectionView.reloadData()
+                                                                        self.savedDiscussionsCollectionView.delegate = self
+                                                                        self.savedDiscussionsCollectionView.dataSource = self
+                                                                        
+                                                                        self.savedScrollControl.numberOfPages = self.savedDiscussions.count
+                                                                        self.savedLoadingIndicator.stopAnimating()
+                                                                        self.savedScrollControl.isHidden = false
+                                                                        
+                                                                    }
+                                                                    
+                                                                    
+                                                                    print("okay")
+                                                                } else {
+                                                                    print("Document does not exist")
                                                                 }
+                                                            case .failure(let error):
+                                                                print("Error decoding question: \(error)")
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
-                                            
-                                            
                                         }
+                                        
+                                        
+                                    }
                                     
                                     
-                                    //self.questionLabel.text = question.question
                                     print("okay")
                                 } else {
-                                    // A nil value was successfully initialized from the DocumentSnapshot,
-                                    // or the DocumentSnapshot was nil.
                                     print("Document does not exist")
                                 }
                             case .failure(let error):
-                                // A `City` value could not be initialized from the DocumentSnapshot.
                                 print("Error decoding question: \(error)")
                             }
                         }
@@ -355,20 +297,27 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
             }
         }
         
-        
-        
-
-    }
-    override func viewWillAppear(_ animated: Bool) {
     }
     
-     func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-            if segue.identifier == "popoverSegue" {
-                let popoverViewController = segue.destination
-                popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
-                popoverViewController.popoverPresentationController!.delegate = self
-            }
+    @IBAction func howToUseButtonTapped(_ sender: Any) {
+        var howToUseVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HowToUseViewController")
+        if let sheet = howToUseVC.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 10
+            
         }
+        
+        self.present(howToUseVC, animated: true, completion: nil)
+    }
+    
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "popoverSegue" {
+            let popoverViewController = segue.destination
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+    }
     
     @objc func handleSignOut() {
         let alert = Service.createAlertController(title: "Log Out", message: "Are you sure you want to log out?")
@@ -398,37 +347,28 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         }
         else{
             getData()
-
+            
         }
     }
     
     
     @IBAction func logOutTapped(_ sender: Any) {
         handleSignOut()
-
+        
     }
     
     @IBAction func yourInformationTapped(_ sender: Any) {
         
         performSegue(withIdentifier: "popoverSegue", sender: self)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
 
+// MARK: - Your Discussions and Saved Discussions CollectionView
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case yourDiscussionsCollectionView:
-            print(yourDiscussions.count)
             return yourDiscussions.count
         case savedDiscussionsCollectionView:
             return savedDiscussions.count
@@ -442,12 +382,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case yourDiscussionsCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourDiscussionsCell", for: indexPath) as? YourDiscussionsCollectionViewCell
             
-            print(yourDiscussions.map({$0.yourDiscussionTitle}))
             cell?.yourDiscussionTitle.text = yourDiscussions.map({$0.yourDiscussionTitle})[indexPath.row]
             let displayedDate = yourDiscussions.map({$0.yourDiscussionDate})
-
+            
             cell?.yourDiscussionDate.text = String(displayedDate[indexPath.row][..<displayedDate[indexPath.row].index(displayedDate[indexPath.row].startIndex, offsetBy:10)])
-
+            
             
             cell?.layer.cornerRadius = 25
             return cell!
@@ -460,7 +399,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             cell?.savedDiscussionDate.text = savedDisplayedDate[indexPath.row]
             
-            //String(savedDisplayedDate[indexPath.row][..<savedDisplayedDate[indexPath.row].index(savedDisplayedDate[indexPath.row].startIndex, offsetBy:10)])
             
             cell?.layer.cornerRadius = 25
             return cell!
@@ -474,12 +412,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        print(collectionView.frame.width)
-        print(collectionView.frame.height)
-//        return CGSize(width: 350, height: 300)
-        return CGSize(width: collectionView.frame.width-40, height: collectionView.frame.height)
-        //return CGSize(width: 50, height: 20)
         
+        return CGSize(width: collectionView.frame.width-40, height: collectionView.frame.height)
+
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -496,7 +431,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 sheet.prefersGrabberVisible = true
                 
             }
-
+            
             self.present(discussionPostVC, animated: true, completion: nil)
         case savedDiscussionsCollectionView:
             conditionSelected = savedDiscussions.map({$0.conditionSelected})[indexPath.row]
@@ -509,7 +444,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 sheet.prefersGrabberVisible = true
                 
             }
-
+            
             self.present(discussionPostVC, animated: true, completion: nil)
         default:
             print("error")
@@ -528,7 +463,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         default:
             print("error")
         }
-    
+        
         
         
     }

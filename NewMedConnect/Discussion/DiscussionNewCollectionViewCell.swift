@@ -7,9 +7,8 @@
 
 import UIKit
 
-
+// MARK: - Discussion CollectionView Cell
 class DiscussionNewCollectionViewCell: UICollectionViewCell {
-    
     
     @IBOutlet weak var discussionLabel: UILabel!
     
@@ -21,7 +20,5 @@ class DiscussionNewCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var bookmarkButton: UIButton!
 
-    
-    
 }
 

@@ -14,24 +14,14 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
-//class ConditionsData {
-//    var conditionGroup:String?
-//    var conditionsNames:[String]?
-//    var conditionsSubtitles:[String]?
-//
-//    init(conditionGroup: String, conditionsNames: [String], conditionsSubtitles: [String]) {
-//        self.conditionGroup = conditionGroup
-//        self.conditionsNames = conditionsNames
-//        self.conditionsSubtitles = conditionsSubtitles
-//    }
-
-var sectionCount = 0
 var conditionsNames = [String]()
 var categorySelected = ""
 
-
+// MARK: - Communities Page
+// Changed from Categories to Communities
+// Favorites changed to Pinned
 class CategoriesViewController: UIViewController{
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var favoritesTableView: UITableView!
@@ -48,17 +38,12 @@ class CategoriesViewController: UIViewController{
     
     @IBOutlet weak var noPinnedMessage: UILabel!
     
-    
-    
-    
     var favorites = [""]
-    var count = 0
+    var pinnedInitializer = 0
     
     let db = Firestore.firestore()
     
-    
     var conditionsData = [Condition]()
-    
     
     var categories = ["Blood and Lymph",
                       "Brain, Nerves, and Spinal Cord",
@@ -131,75 +116,61 @@ class CategoriesViewController: UIViewController{
     var combinedList = [String]()
     var alphSortedList = [String]()
     var searchList = [String]()
-    var searching = false
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "Communities"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
         navigationController?.navigationBar.backgroundColor = UIColor.systemGray6
-//        navigationItem.largeTitleDisplayMode = .always
-        
         
         loading.startAnimating()
         loading.hidesWhenStopped = true
         
         let docRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
-
+        
         docRef.getDocument { (document, error) in
-
+            
             let result = Result {
-              try document?.data(as: PinnedReference.self)
-
+                try document?.data(as: PinnedReference.self)
+                
             }
             print(result)
             switch result {
             case .success(let pinned):
                 if let pinned = pinned {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     self.favorites = pinned.pinned!
                     self.reload()
                     self.loading.stopAnimating()
-                    //self.questionLabel.text = question.question
-                    
-                    
-                    print("okay")
+
                     
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
-                }
             }
+        }
         
         
     }
     
     
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.backgroundImage = UIImage()
-        // Do any additional setup after loading the view.
-//        
+
         searchResultsCollectionView.delegate = self
         searchResultsCollectionView.dataSource = self
         
         sendRequestButton.layer.cornerRadius = 10
-
+        
         searchBar.delegate = self
         
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-
+        
         
         combinedList.append(contentsOf: bloodAndLymphConditions)
         combinedList.append(contentsOf: brainNervesSpinalConditions)
@@ -225,17 +196,14 @@ class CategoriesViewController: UIViewController{
         combinedList.append(contentsOf: stomachLiverGastrointestinalConditions)
         
         alphSortedList = combinedList.sorted(by: {$0 < $1})
-        print(alphSortedList)
         
-        //searchResultsCollectionView.isHidden = true
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButtonItem
         
         navigationItem.backButtonDisplayMode = .minimal
-    
+        
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
-        
         
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
@@ -246,18 +214,17 @@ class CategoriesViewController: UIViewController{
         self.favoritesTableView.reloadData()
         
         let docRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
-
+        
         docRef.getDocument { (document, error) in
-
+            
             let result = Result {
-              try document?.data(as: PinnedReference.self)
-
+                try document?.data(as: PinnedReference.self)
+                
             }
             print(result)
             switch result {
             case .success(let pinned):
                 if let pinned = pinned {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     self.favorites = pinned.pinned!
                     self.reload()
                     self.loading.stopAnimating()
@@ -265,15 +232,12 @@ class CategoriesViewController: UIViewController{
                     print("okay")
                     
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
-                }
             }
+        }
     }
     
     
@@ -284,9 +248,9 @@ class CategoriesViewController: UIViewController{
     }
     
     @objc func reload() {
-        if count < 1 {
+        if pinnedInitializer < 1 {
             self.favoritesTableView.reloadData()
-            count = count + 1
+            pinnedInitializer = pinnedInitializer + 1
         }
     }
     
@@ -298,27 +262,17 @@ class CategoriesViewController: UIViewController{
         
         var reportResponseVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RequestConditionViewController")
         if let sheet = reportResponseVC.sheetPresentationController {
-            sheet.detents = [.large()]            
+            sheet.detents = [.large()]
         }
-
+        
         self.present(reportResponseVC, animated: true, completion: nil)
         
     }
     
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+// MARK: - Pinned TableView and Groups TableView Setup
 extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -337,17 +291,17 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
         case categoriesTableView:
-             numberOfRow = categories.count
+            numberOfRow = categories.count
         default:
             print("error")
             
         }
         return numberOfRow
     }
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         switch tableView {
         case favoritesTableView:
             let cell = tableView.dequeueReusableCell(withIdentifier: "favoritesCell", for: indexPath) as! PinnedTableViewCell
@@ -381,167 +335,145 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
             conditionSelected = favorites[indexPath.row + 1]
             performSegue(withIdentifier: "toDiscussionFromCategories", sender: self)
             self.favoritesTableView.deselectRow(at: indexPath, animated: false)
-
+            
             
             
         case categoriesTableView:
             categorySelected = categories[indexPath.row]
             if categories[indexPath.row] == "Blood and Lymph"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = bloodAndLymphConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Brain, Nerves, and Spinal Cord"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = brainNervesSpinalConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Cancer"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = cancerConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Chromosomal Conditions"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = chromosomalConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Diabetes"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = diabetesConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Ears, Nose, and Throat"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = earsNoseThroatConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Eyes"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = eyesConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Glands"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = glandsConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Heart and Blood Vessels"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = heartBloodVesselsConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Immune System"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = immuneSystemConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Infections and Poisoning"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = infectionsPoisoningConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Injuries"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = injuriesConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Kidneys, Bladder, and Prostate"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = kidneysBladderProstateConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Lungs and Airways"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = lungsAirwaysConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Mental Health"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = mentalHealthConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Mouth"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = mouthConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Muscle, Bone, and Joints"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = muscleBoneJointsConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Nutritional"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = nutritionalConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Pregnancy and Childbirth"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = pregnancyChildbirthConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Sexual and Reproductive"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = sexualReproductiveConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Skin, Hair, and Nails"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = skinHairNailsConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
             else if categories[indexPath.row] == "Stomach, Liver, and Gastrointestinal Tract"{
-//                conditionsArray = bloodCategory
-//                conditionsSubtitlesArray = bloodConditions
+                
                 performSegue(withIdentifier: "toConditionsSegue", sender: self)
                 conditionsNames = stomachLiverGastrointestinalConditions
                 self.categoriesTableView.deselectRow(at: indexPath, animated: false)
             }
-        
+            
             
         default:
             print("error")
@@ -555,44 +487,35 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
         case favoritesTableView:
             let unpin = UIContextualAction(style: .destructive, title: "Pin") { action, _, _ in
                 
-
+                
                 
                 let docRef = self.db.collection("Users").document(Auth.auth().currentUser!.uid)
-
+                
                 docRef.getDocument { (document, error) in
-
+                    
                     let result = Result {
-                      try document?.data(as: PinnedReference.self)
-
+                        try document?.data(as: PinnedReference.self)
+                        
                     }
                     print(result)
                     switch result {
                     case .success(let pinned):
                         if let pinned = pinned {
-                            // A `City` value was successfully initialized from the DocumentSnapshot.
-                       
+                            
                             self.db.collection("Users").document(Auth.auth().currentUser!.uid).updateData([
                                 "pinned": FieldValue.arrayRemove([self.favorites[indexPath.row + 1]])
                             ])
                             self.favorites.remove(at: indexPath.row)
                             tableView.deleteRows(at: [indexPath], with: .automatic)
                             tableView.reloadRows(at: [indexPath], with: .automatic)
-
-                            
-                            
-
-                            //self.questionLabel.text = question.question
-                            print("okay")
+ 
                         } else {
-                            // A nil value was successfully initialized from the DocumentSnapshot,
-                            // or the DocumentSnapshot was nil.
                             print("Document does not exist")
                         }
                     case .failure(let error):
-                        // A `City` value could not be initialized from the DocumentSnapshot.
                         print("Error decoding question: \(error)")
-                        }
                     }
+                }
                 print("success")
                 
             }
@@ -607,11 +530,11 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
             return swipeConfiguration
             
         }
-    
+        
     }
-   
     
-
+    
+    
 }
 
 extension CategoriesViewController: UISearchBarDelegate {
@@ -619,16 +542,16 @@ extension CategoriesViewController: UISearchBarDelegate {
         searchList = alphSortedList.flatMap({ $0 }).filter ({
             $0.lowercased().contains(searchText.lowercased())})
         searchResultsCollectionView.isHidden = false
- 
+        
         searchResultsCollectionView.reloadData()
         if searchBar.text == "" {
             searchResultsCollectionView.isHidden = true
             sendRequestButton.isHidden = true
             sendRequestMessage.isHidden = true
         }
-
+        
     }
-
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         hideKeyboard()
         searchBar.text = ""
@@ -640,19 +563,20 @@ extension CategoriesViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - Search Conditions CollectionView Setup
 extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 350, height: 100)
     }
-
-
-
-
+    
+    
+    
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         hideKeyboard()
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if searchList.count == 0 && searchResultsCollectionView.isHidden == false {
             sendRequestButton.isHidden = false
@@ -666,12 +590,12 @@ extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDa
         return searchList.count
         
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchConditionCell", for: indexPath) as? SearchConditionCollectionViewCell
-
+        
         cell?.searchedConditionName.text = searchList[indexPath.row]
-
+        
         if bloodAndLymphConditions.contains(searchList[indexPath.row]){
             cell?.searchedCategoryName.text = "Blood and Lymph"
         }
@@ -738,25 +662,20 @@ extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDa
         else if stomachLiverGastrointestinalConditions.contains(searchList[indexPath.row]){
             cell?.searchedCategoryName.text = "Stomach, Liver, and Gastrointestinal Tract"
         }
-
-
+        
         cell?.backgroundColor = UIColor.white
-
         cell?.layer.cornerRadius = 10
-
-
-
-
+        
         return cell!
-
+        
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         conditionSelected = searchList[indexPath.row]
         performSegue(withIdentifier: "toDiscussionFromCategories", sender: self)
         self.favoritesTableView.deselectRow(at: indexPath, animated: false)
     }
-
-
-
+    
+    
+    
 }

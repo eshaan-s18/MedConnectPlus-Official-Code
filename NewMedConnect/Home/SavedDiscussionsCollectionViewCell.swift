@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Saved Discussions CollectionView Cell
 class SavedDiscussionsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var savedDiscussionDate: UILabel!

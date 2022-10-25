@@ -61,7 +61,6 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
         
         
  
-        //        replyTextField.delegate = self
         postCommentReplyTextField.delegate = self
         
     }
@@ -88,7 +87,6 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
         }))
         
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
-//        self.viewController?.present(alert, animated: true, completion: nil)
     }
     
     @objc func presentReport() {
@@ -114,20 +112,12 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
         }))
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
 
-//        self.viewController?.present(alert, animated: true, completion: nil)
     }
     
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("TEst")
-//        selectedTextFieldCount = textField.tag + 1
-//
-//        selectedTextFieldCount3 =
-//
-//        selectedTextFieldCount2 = sharedComments.map({$0.commentReplies})[textField.tag].count
-//
-//        whichTextField = "commentReply"
+
 
         
     }

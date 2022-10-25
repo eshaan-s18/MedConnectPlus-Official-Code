@@ -15,9 +15,9 @@ import FirebaseFirestore
 
 var sharedCountry = ""
 
+// MARK: - Select Country Page
 class EnterInformationViewController: UIViewController {
-
-
+    
     @IBOutlet weak var countryPicker: UIPickerView!
     
     @IBOutlet weak var selectCountry: UIButton!
@@ -551,8 +551,7 @@ class EnterInformationViewController: UIViewController {
         "🇿🇼  Zimbabwe",
         "🏴󠁧󠁢󠁥󠁮󠁧󠁿  England",
         "🏴󠁧󠁢󠁳󠁣󠁴󠁿  Scotland",
-        "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales",
-        
+        "🏴󠁧󠁢󠁷󠁬󠁳󠁿  Wales"
     ]
     
     override func viewDidLoad() {
@@ -564,11 +563,10 @@ class EnterInformationViewController: UIViewController {
         selectCountry.layer.cornerRadius = 5
         selectCountry.layer.borderWidth = 1
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hidePicker)))
-//        UIButton.appearance().adjustsImageSizeForAccessibilityContentSizeCategory = false
         self.countryPicker.selectRow(countryList.count / 2, inComponent: 0, animated: false)
         nextButton.layer.cornerRadius = 10
         
-    
+        
         selectCountry.titleLabel?.adjustsFontForContentSizeCategory = false
         
     }
@@ -584,13 +582,10 @@ class EnterInformationViewController: UIViewController {
                 self.nextButton.frame.origin.y += 265
                 self.errorMessage.frame.origin.y += 267
             }
-        
-        }
-        else {
-            print("no")
+            
         }
         
-        }
+    }
     @IBAction func selectCountrySelected(_ sender: Any) {
         if countryPicker.isHidden {
             UIView.animate(withDuration: 0.3) {
@@ -609,14 +604,10 @@ class EnterInformationViewController: UIViewController {
                 self.errorMessage.frame.origin.y += 267
             }
             
-            
-            
         }
     }
     
     @IBAction func nextButtonTapped(_ sender: Any) {
-       
-
         if selectCountry.titleLabel!.text == "Select Country" || selectCountry.titleLabel!.text == "--" {
             errorMessage.isHidden = false
             
@@ -627,7 +618,6 @@ class EnterInformationViewController: UIViewController {
             fixedCountry!.removeFirst()
             fixedCountry!.removeFirst()
             fixedCountry!.removeFirst()
-            print(fixedCountry!)
             sharedCountry = fixedCountry!
             errorMessage.isHidden = true
             performSegue(withIdentifier: "fromCountrySegue", sender: self)
@@ -647,9 +637,9 @@ class EnterInformationViewController: UIViewController {
             }
         }
     }
-   
+    
 }
-
+// MARK: - Select Country PickerView 
 extension EnterInformationViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

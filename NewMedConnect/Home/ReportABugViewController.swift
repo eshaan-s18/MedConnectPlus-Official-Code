@@ -14,9 +14,9 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
+// MARK: - Report A Bug Page
 class ReportABugViewController: UIViewController, UITextViewDelegate {
 
-    
     @IBOutlet weak var sendReportButton: UIBarButtonItem!
     
     @IBOutlet weak var placeholderText: UILabel!
@@ -28,12 +28,7 @@ class ReportABugViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
         reportTextView.delegate = self
-        
-        
     }
     
     func allowPost() {
@@ -97,21 +92,14 @@ class ReportABugViewController: UIViewController, UITextViewDelegate {
             else
             {
                 self.documentsCount = (querySnapshot?.documents.count)!
-                print("Hello this is document count")
-                print(documentsCount)
-                
+
                 var delimeter = "-"
                 var commentTitle = reportedDiscussion
                 var newCommentTitle = commentTitle.components(separatedBy: delimeter)
-                print(newCommentTitle[0])
                 
                 db.collection("REPORTED BUGS").document("\(documentsCount)").setData(["bugReportDescription" : reportTextView.text])
                 
-                
-                
-//                let alert = Service.createAlertController(title: "Response Posted‼️✅", message: "Please Refresh Page")
-//                self.present(alert, animated: true, completion: nil)
-                
+           
                 let alert = UIAlertController(title: "Report Sent🚩", message: "Successfully reported bug. Please give our team a couple days to review your report.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                     switch action.style{
@@ -134,20 +122,5 @@ class ReportABugViewController: UIViewController, UITextViewDelegate {
         }
         
     }
-    
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
