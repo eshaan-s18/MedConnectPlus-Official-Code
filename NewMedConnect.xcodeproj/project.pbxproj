@@ -1,0 +1,1035 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BB9E36E62908698C007CB5DA /* Manrope-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9E36DF2908698A007CB5DA /* Manrope-Light.ttf */; };
+		BB9E36E72908698C007CB5DA /* Manrope-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9E36E02908698B007CB5DA /* Manrope-Regular.ttf */; };
+		BB9E36E82908698C007CB5DA /* Manrope-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9E36E12908698B007CB5DA /* Manrope-ExtraLight.ttf */; };
+		BB9E36E92908698C007CB5DA /* Manrope-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9E36E22908698B007CB5DA /* Manrope-ExtraBold.ttf */; };
+		BB9E36EA2908698C007CB5DA /* Manrope-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9E36E32908698B007CB5DA /* Manrope-SemiBold.ttf */; };
+		BB9E36EB2908698C007CB5DA /* Manrope-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9E36E42908698C007CB5DA /* Manrope-Medium.ttf */; };
+		BB9E36EC2908698C007CB5DA /* Manrope-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9E36E52908698C007CB5DA /* Manrope-Bold.ttf */; };
+		EE00DDD828734AE2005CD04A /* Discussion.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE00DDD728734AE2005CD04A /* Discussion.storyboard */; };
+		EE00DDDB28734D56005CD04A /* DiscussionPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE00DDDA28734D56005CD04A /* DiscussionPostViewController.swift */; };
+		EE0F71B328F75D7C00626F95 /* ReportABugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0F71B228F75D7C00626F95 /* ReportABugViewController.swift */; };
+		EE0F71B528FA38B900626F95 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0F71B428FA38B900626F95 /* PrivacyPolicyViewController.swift */; };
+		EE1CF51F285A39AD00089CF9 /* ConditionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1CF51E285A39AD00089CF9 /* ConditionReference.swift */; };
+		EE313F0B28433AF00084994E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE313F0A28433AEF0084994E /* LoginViewController.swift */; };
+		EE313F0D28433B240084994E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE313F0C28433B240084994E /* SignUpViewController.swift */; };
+		EE313F0F2843AA850084994E /* EnterInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE313F0E2843AA850084994E /* EnterInformationViewController.swift */; };
+		EE340B2F2845D5B600E2798C /* SelectAgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE340B2E2845D5B600E2798C /* SelectAgeViewController.swift */; };
+		EE340B312845FDD400E2798C /* SelectPersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE340B302845FDD400E2798C /* SelectPersonalViewController.swift */; };
+		EE340B332846462100E2798C /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE340B322846462000E2798C /* HapticsManager.swift */; };
+		EE340B702847731C00E2798C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE340B6F2847731C00E2798C /* GoogleService-Info.plist */; };
+		EE340BA82847A23200E2798C /* Pods_NewMedConnect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1B0B71C1D51B4DB822EDC5 /* Pods_NewMedConnect.framework */; };
+		EE3D45A028587D0E00A2E0E6 /* ConditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D459F28587D0E00A2E0E6 /* ConditionTableViewCell.swift */; };
+		EE3D45A2285895A000A2E0E6 /* PinnedReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D45A1285895A000A2E0E6 /* PinnedReference.swift */; };
+		EE3D45A42858CBD700A2E0E6 /* PinnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3D45A32858CBD700A2E0E6 /* PinnedTableViewCell.swift */; };
+		EE5B8E1428FC9A4300FA1F0A /* RequestConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */; };
+		EE5B8E1628FF29E200FA1F0A /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */; };
+		EE5B8E1828FF370F00FA1F0A /* DeviceTokenReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */; };
+		EE5B8E1C28FF704500FA1F0A /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */; };
+		EE5B8E1E28FF76AE00FA1F0A /* NotificationReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */; };
+		EE5B8E2028FF8BF100FA1F0A /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */; };
+		EE5B8E222900D2E200FA1F0A /* HowToUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B8E212900D2E100FA1F0A /* HowToUseViewController.swift */; };
+		EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */; };
+		EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740001289F4C0800C21FB0 /* UpvoteReference.swift */; };
+		EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE740003289F4C4400C21FB0 /* DownvoteReference.swift */; };
+		EE93827928E8E6B700CCB9F6 /* ReportResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */; };
+		EE93827B28EB8BC600CCB9F6 /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */; };
+		EE93827D28EBB9CC00CCB9F6 /* UserReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */; };
+		EE93828028F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93827F28F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift */; };
+		EE93828228F25CBF00CCB9F6 /* YourDiscussionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */; };
+		EE93828428F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */; };
+		EE93828628F28AFB00CCB9F6 /* SavedDiscussionReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */; };
+		EE98997B28B5CB6200D74F8F /* ResponseCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */; };
+		EE9DF0C62854C07900A26D61 /* ConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DF0C52854C07900A26D61 /* ConditionsViewController.swift */; };
+		EEA5A70F2867B35C00F0DE6F /* Discussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA5A70E2867B35C00F0DE6F /* Discussion.swift */; };
+		EEA5A7112867E3FE00F0DE6F /* AddDiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA5A7102867E3FD00F0DE6F /* AddDiscussionViewController.swift */; };
+		EEA758FC2848C3D6008CBC37 /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA758FB2848C3D6008CBC37 /* PasswordResetViewController.swift */; };
+		EEA758FE2848D8CB008CBC37 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA758FD2848D8CB008CBC37 /* Service.swift */; };
+		EEA759002848E200008CBC37 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA758FF2848E200008CBC37 /* HomeViewController.swift */; };
+		EEA759032848EFC8008CBC37 /* EmailReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA759022848EFC8008CBC37 /* EmailReference.swift */; };
+		EEA75907284A2313008CBC37 /* YourInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA75906284A2311008CBC37 /* YourInformationViewController.swift */; };
+		EEB39009284B877400050B18 /* UIDReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB39008284B877400050B18 /* UIDReference.swift */; };
+		EEB3900B284B879D00050B18 /* BirthdayReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3900A284B879D00050B18 /* BirthdayReference.swift */; };
+		EEB3900D284B87E300050B18 /* CountryReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3900C284B87E300050B18 /* CountryReference.swift */; };
+		EEB3900F284B880300050B18 /* RaceReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3900E284B880300050B18 /* RaceReference.swift */; };
+		EEB39011284B884900050B18 /* GenderReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB39010284B884900050B18 /* GenderReference.swift */; };
+		EEB390142850D99C00050B18 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB390132850D99C00050B18 /* CategoriesViewController.swift */; };
+		EEB89B69287BBA7700801388 /* DiscussionComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB89B68287BBA7700801388 /* DiscussionComments.swift */; };
+		EEB89B6B287BC2F700801388 /* AddDiscussionCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB89B6A287BC2F700801388 /* AddDiscussionCommentViewController.swift */; };
+		EEBC3BE028663A7900715395 /* DiscussionNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC3BDF28663A7900715395 /* DiscussionNewViewController.swift */; };
+		EEBC3BE228663BD600715395 /* DiscussionNewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC3BE128663BD600715395 /* DiscussionNewCollectionViewCell.swift */; };
+		EEBFD9472870BE4E001834DB /* SavedReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBFD9462870BE4E001834DB /* SavedReference.swift */; };
+		EEBFD94928723470001834DB /* SearchDiscussionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBFD94828723470001834DB /* SearchDiscussionCollectionViewCell.swift */; };
+		EECE51C7284145F800B5CC72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECE51C6284145F800B5CC72 /* AppDelegate.swift */; };
+		EECE51C9284145F800B5CC72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECE51C8284145F800B5CC72 /* SceneDelegate.swift */; };
+		EECE51CB284145F800B5CC72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECE51CA284145F800B5CC72 /* ViewController.swift */; };
+		EECE51CE284145F800B5CC72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EECE51CC284145F800B5CC72 /* Main.storyboard */; };
+		EECE51D0284145FB00B5CC72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EECE51CF284145FB00B5CC72 /* Assets.xcassets */; };
+		EECE51D3284145FB00B5CC72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EECE51D1284145FB00B5CC72 /* LaunchScreen.storyboard */; };
+		EECE51DE284145FB00B5CC72 /* NewMedConnectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECE51DD284145FB00B5CC72 /* NewMedConnectTests.swift */; };
+		EECE51E8284145FB00B5CC72 /* NewMedConnectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECE51E7284145FB00B5CC72 /* NewMedConnectUITests.swift */; };
+		EECE51EA284145FB00B5CC72 /* NewMedConnectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECE51E9284145FB00B5CC72 /* NewMedConnectUITestsLaunchTests.swift */; };
+		EECE6CC5286BFE6F00E4A04A /* SearchConditionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECE6CC4286BFE6F00E4A04A /* SearchConditionCollectionViewCell.swift */; };
+		EEF9F6C12879118400FDB1D4 /* DiscussionCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF9F6C02879118400FDB1D4 /* DiscussionCommentsCollectionViewCell.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EECE51DA284145FB00B5CC72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EECE51BB284145F800B5CC72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EECE51C2284145F800B5CC72;
+			remoteInfo = NewMedConnect;
+		};
+		EECE51E4284145FB00B5CC72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EECE51BB284145F800B5CC72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EECE51C2284145F800B5CC72;
+			remoteInfo = NewMedConnect;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3D1B0B71C1D51B4DB822EDC5 /* Pods_NewMedConnect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NewMedConnect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C01C24E6608D4EE1068CA1B /* Pods-NewMedConnect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewMedConnect.release.xcconfig"; path = "Target Support Files/Pods-NewMedConnect/Pods-NewMedConnect.release.xcconfig"; sourceTree = "<group>"; };
+		95DCE37A2BAE4AB66FB2C343 /* Pods-NewMedConnect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewMedConnect.debug.xcconfig"; path = "Target Support Files/Pods-NewMedConnect/Pods-NewMedConnect.debug.xcconfig"; sourceTree = "<group>"; };
+		BB9E36DF2908698A007CB5DA /* Manrope-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Light.ttf"; path = "../../../../Downloads/Manrope/static/Manrope-Light.ttf"; sourceTree = "<group>"; };
+		BB9E36E02908698B007CB5DA /* Manrope-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Regular.ttf"; path = "../../../../Downloads/Manrope/static/Manrope-Regular.ttf"; sourceTree = "<group>"; };
+		BB9E36E12908698B007CB5DA /* Manrope-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-ExtraLight.ttf"; path = "../../../../Downloads/Manrope/static/Manrope-ExtraLight.ttf"; sourceTree = "<group>"; };
+		BB9E36E22908698B007CB5DA /* Manrope-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-ExtraBold.ttf"; path = "../../../../Downloads/Manrope/static/Manrope-ExtraBold.ttf"; sourceTree = "<group>"; };
+		BB9E36E32908698B007CB5DA /* Manrope-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-SemiBold.ttf"; path = "../../../../Downloads/Manrope/static/Manrope-SemiBold.ttf"; sourceTree = "<group>"; };
+		BB9E36E42908698C007CB5DA /* Manrope-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Medium.ttf"; path = "../../../../Downloads/Manrope/static/Manrope-Medium.ttf"; sourceTree = "<group>"; };
+		BB9E36E52908698C007CB5DA /* Manrope-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Bold.ttf"; path = "../../../../Downloads/Manrope/static/Manrope-Bold.ttf"; sourceTree = "<group>"; };
+		EE00DDD728734AE2005CD04A /* Discussion.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discussion.storyboard; sourceTree = "<group>"; };
+		EE00DDDA28734D56005CD04A /* DiscussionPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionPostViewController.swift; sourceTree = "<group>"; };
+		EE0F71B228F75D7C00626F95 /* ReportABugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugViewController.swift; sourceTree = "<group>"; };
+		EE0F71B428FA38B900626F95 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		EE1CF51E285A39AD00089CF9 /* ConditionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionReference.swift; sourceTree = "<group>"; };
+		EE313F0A28433AEF0084994E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		EE313F0C28433B240084994E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		EE313F0E2843AA850084994E /* EnterInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterInformationViewController.swift; sourceTree = "<group>"; };
+		EE340B2E2845D5B600E2798C /* SelectAgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAgeViewController.swift; sourceTree = "<group>"; };
+		EE340B302845FDD400E2798C /* SelectPersonalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPersonalViewController.swift; sourceTree = "<group>"; };
+		EE340B322846462000E2798C /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		EE340B6F2847731C00E2798C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EE3D459F28587D0E00A2E0E6 /* ConditionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionTableViewCell.swift; sourceTree = "<group>"; };
+		EE3D45A1285895A000A2E0E6 /* PinnedReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedReference.swift; sourceTree = "<group>"; };
+		EE3D45A32858CBD700A2E0E6 /* PinnedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedTableViewCell.swift; sourceTree = "<group>"; };
+		EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConditionViewController.swift; sourceTree = "<group>"; };
+		EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
+		EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenReference.swift; sourceTree = "<group>"; };
+		EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReference.swift; sourceTree = "<group>"; };
+		EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
+		EE5B8E212900D2E100FA1F0A /* HowToUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseViewController.swift; sourceTree = "<group>"; };
+		EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionResponseReplies.swift; sourceTree = "<group>"; };
+		EE740001289F4C0800C21FB0 /* UpvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpvoteReference.swift; sourceTree = "<group>"; };
+		EE740003289F4C4400C21FB0 /* DownvoteReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownvoteReference.swift; sourceTree = "<group>"; };
+		EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportResponseViewController.swift; sourceTree = "<group>"; };
+		EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
+		EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReference.swift; sourceTree = "<group>"; };
+		EE93827E28F1354000CCB9F6 /* NewMedConnect.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NewMedConnect.entitlements; sourceTree = "<group>"; };
+		EE93827F28F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDiscussionsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDiscussionReference.swift; sourceTree = "<group>"; };
+		EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDiscussionsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDiscussionReference.swift; sourceTree = "<group>"; };
+		EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EE9DF0C52854C07900A26D61 /* ConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionsViewController.swift; sourceTree = "<group>"; };
+		EEA5A70E2867B35C00F0DE6F /* Discussion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discussion.swift; sourceTree = "<group>"; };
+		EEA5A7102867E3FD00F0DE6F /* AddDiscussionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiscussionViewController.swift; sourceTree = "<group>"; };
+		EEA758FB2848C3D6008CBC37 /* PasswordResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewController.swift; sourceTree = "<group>"; };
+		EEA758FD2848D8CB008CBC37 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		EEA758FF2848E200008CBC37 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		EEA759022848EFC8008CBC37 /* EmailReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailReference.swift; sourceTree = "<group>"; };
+		EEA75906284A2311008CBC37 /* YourInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourInformationViewController.swift; sourceTree = "<group>"; };
+		EEB39008284B877400050B18 /* UIDReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDReference.swift; sourceTree = "<group>"; };
+		EEB3900A284B879D00050B18 /* BirthdayReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayReference.swift; sourceTree = "<group>"; };
+		EEB3900C284B87E300050B18 /* CountryReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryReference.swift; sourceTree = "<group>"; };
+		EEB3900E284B880300050B18 /* RaceReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceReference.swift; sourceTree = "<group>"; };
+		EEB39010284B884900050B18 /* GenderReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderReference.swift; sourceTree = "<group>"; };
+		EEB390132850D99C00050B18 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		EEB89B68287BBA7700801388 /* DiscussionComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionComments.swift; sourceTree = "<group>"; };
+		EEB89B6A287BC2F700801388 /* AddDiscussionCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiscussionCommentViewController.swift; sourceTree = "<group>"; };
+		EEBC3BDF28663A7900715395 /* DiscussionNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionNewViewController.swift; sourceTree = "<group>"; };
+		EEBC3BE128663BD600715395 /* DiscussionNewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionNewCollectionViewCell.swift; sourceTree = "<group>"; };
+		EEBFD9462870BE4E001834DB /* SavedReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedReference.swift; sourceTree = "<group>"; };
+		EEBFD94828723470001834DB /* SearchDiscussionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDiscussionCollectionViewCell.swift; sourceTree = "<group>"; };
+		EECE51C3284145F800B5CC72 /* NewMedConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewMedConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EECE51C6284145F800B5CC72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EECE51C8284145F800B5CC72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EECE51CA284145F800B5CC72 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EECE51CD284145F800B5CC72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EECE51CF284145FB00B5CC72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EECE51D2284145FB00B5CC72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EECE51D4284145FB00B5CC72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EECE51D9284145FB00B5CC72 /* NewMedConnectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewMedConnectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EECE51DD284145FB00B5CC72 /* NewMedConnectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedConnectTests.swift; sourceTree = "<group>"; };
+		EECE51E3284145FB00B5CC72 /* NewMedConnectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewMedConnectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EECE51E7284145FB00B5CC72 /* NewMedConnectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedConnectUITests.swift; sourceTree = "<group>"; };
+		EECE51E9284145FB00B5CC72 /* NewMedConnectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedConnectUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EECE6CC4286BFE6F00E4A04A /* SearchConditionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConditionCollectionViewCell.swift; sourceTree = "<group>"; };
+		EEF9F6C02879118400FDB1D4 /* DiscussionCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EECE51C0284145F800B5CC72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE340BA82847A23200E2798C /* Pods_NewMedConnect.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EECE51D6284145FB00B5CC72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EECE51E0284145FB00B5CC72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9E6AD0A8C80B2C5474D9F479 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D1B0B71C1D51B4DB822EDC5 /* Pods_NewMedConnect.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D19A4A872CC4E1F8AFC30E3C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				95DCE37A2BAE4AB66FB2C343 /* Pods-NewMedConnect.debug.xcconfig */,
+				4C01C24E6608D4EE1068CA1B /* Pods-NewMedConnect.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EE00DDD628734AA2005CD04A /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				EECE51CC284145F800B5CC72 /* Main.storyboard */,
+				EE00DDD728734AE2005CD04A /* Discussion.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		EE00DDD928734D41005CD04A /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				EE00DDDA28734D56005CD04A /* DiscussionPostViewController.swift */,
+				EEF9F6C02879118400FDB1D4 /* DiscussionCommentsCollectionViewCell.swift */,
+				EEB89B6A287BC2F700801388 /* AddDiscussionCommentViewController.swift */,
+				EE98997A28B5CB6100D74F8F /* ResponseCommentsCollectionViewCell.swift */,
+				EE93827828E8E6B700CCB9F6 /* ReportResponseViewController.swift */,
+				EE93827A28EB8BC500CCB9F6 /* PieChartViewController.swift */,
+			);
+			path = Posts;
+			sourceTree = "<group>";
+		};
+		EE1CF51D285A303A00089CF9 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				EE3D459F28587D0E00A2E0E6 /* ConditionTableViewCell.swift */,
+				EE3D45A32858CBD700A2E0E6 /* PinnedTableViewCell.swift */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		EE340B3628476A9400E2798C /* Sign Up Login */ = {
+			isa = PBXGroup;
+			children = (
+				EE313F0A28433AEF0084994E /* LoginViewController.swift */,
+				EE313F0C28433B240084994E /* SignUpViewController.swift */,
+				EE340B2E2845D5B600E2798C /* SelectAgeViewController.swift */,
+				EE313F0E2843AA850084994E /* EnterInformationViewController.swift */,
+				EE340B302845FDD400E2798C /* SelectPersonalViewController.swift */,
+				EEA758FB2848C3D6008CBC37 /* PasswordResetViewController.swift */,
+			);
+			path = "Sign Up Login";
+			sourceTree = "<group>";
+		};
+		EE340B3728476AC600E2798C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EEA759012848EFA9008CBC37 /* Models */,
+				EE340B322846462000E2798C /* HapticsManager.swift */,
+				EEA758FD2848D8CB008CBC37 /* Service.swift */,
+				EE5B8E1528FF29E200FA1F0A /* PushNotificationSender.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EE5B8E1A28FF6DC800FA1F0A /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				EE5B8E1B28FF704500FA1F0A /* ActivityViewController.swift */,
+				EE5B8E1F28FF8BF100FA1F0A /* ActivityTableViewCell.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
+		EE7C5A242854792E000A32EA /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				BB9E36E52908698C007CB5DA /* Manrope-Bold.ttf */,
+				BB9E36E22908698B007CB5DA /* Manrope-ExtraBold.ttf */,
+				BB9E36E12908698B007CB5DA /* Manrope-ExtraLight.ttf */,
+				BB9E36DF2908698A007CB5DA /* Manrope-Light.ttf */,
+				BB9E36E42908698C007CB5DA /* Manrope-Medium.ttf */,
+				BB9E36E02908698B007CB5DA /* Manrope-Regular.ttf */,
+				BB9E36E32908698B007CB5DA /* Manrope-SemiBold.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		EEA759012848EFA9008CBC37 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EEA759022848EFC8008CBC37 /* EmailReference.swift */,
+				EE740003289F4C4400C21FB0 /* DownvoteReference.swift */,
+				EE740001289F4C0800C21FB0 /* UpvoteReference.swift */,
+				EEB39008284B877400050B18 /* UIDReference.swift */,
+				EEB3900A284B879D00050B18 /* BirthdayReference.swift */,
+				EEB3900C284B87E300050B18 /* CountryReference.swift */,
+				EEB3900E284B880300050B18 /* RaceReference.swift */,
+				EEB39010284B884900050B18 /* GenderReference.swift */,
+				EE3D45A1285895A000A2E0E6 /* PinnedReference.swift */,
+				EE1CF51E285A39AD00089CF9 /* ConditionReference.swift */,
+				EEA5A70E2867B35C00F0DE6F /* Discussion.swift */,
+				EEBFD9462870BE4E001834DB /* SavedReference.swift */,
+				EEB89B68287BBA7700801388 /* DiscussionComments.swift */,
+				EE61085D28B841BD005EC9EB /* DiscussionResponseReplies.swift */,
+				EE93827C28EBB9CC00CCB9F6 /* UserReference.swift */,
+				EE93828128F25CBF00CCB9F6 /* YourDiscussionReference.swift */,
+				EE93828528F28AFB00CCB9F6 /* SavedDiscussionReference.swift */,
+				EE5B8E1728FF370F00FA1F0A /* DeviceTokenReference.swift */,
+				EE5B8E1D28FF76AE00FA1F0A /* NotificationReference.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EEA75905284A228C008CBC37 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				EEA758FF2848E200008CBC37 /* HomeViewController.swift */,
+				EE93827F28F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift */,
+				EEA75906284A2311008CBC37 /* YourInformationViewController.swift */,
+				EE93828328F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift */,
+				EE0F71B228F75D7C00626F95 /* ReportABugViewController.swift */,
+				EE0F71B428FA38B900626F95 /* PrivacyPolicyViewController.swift */,
+				EE5B8E212900D2E100FA1F0A /* HowToUseViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		EEB390122850D98400050B18 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				EE1CF51D285A303A00089CF9 /* TableViewCells */,
+				EEB390132850D99C00050B18 /* CategoriesViewController.swift */,
+				EE9DF0C52854C07900A26D61 /* ConditionsViewController.swift */,
+				EECE6CC4286BFE6F00E4A04A /* SearchConditionCollectionViewCell.swift */,
+				EE5B8E1328FC9A4300FA1F0A /* RequestConditionViewController.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		EEBC3BDE28663A5C00715395 /* Discussion */ = {
+			isa = PBXGroup;
+			children = (
+				EEBC3BDF28663A7900715395 /* DiscussionNewViewController.swift */,
+				EEBC3BE128663BD600715395 /* DiscussionNewCollectionViewCell.swift */,
+				EEA5A7102867E3FD00F0DE6F /* AddDiscussionViewController.swift */,
+				EEBFD94828723470001834DB /* SearchDiscussionCollectionViewCell.swift */,
+			);
+			path = Discussion;
+			sourceTree = "<group>";
+		};
+		EECE51BA284145F800B5CC72 = {
+			isa = PBXGroup;
+			children = (
+				EECE51C5284145F800B5CC72 /* NewMedConnect */,
+				EECE51DC284145FB00B5CC72 /* NewMedConnectTests */,
+				EECE51E6284145FB00B5CC72 /* NewMedConnectUITests */,
+				EECE51C4284145F800B5CC72 /* Products */,
+				D19A4A872CC4E1F8AFC30E3C /* Pods */,
+				9E6AD0A8C80B2C5474D9F479 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		EECE51C4284145F800B5CC72 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EECE51C3284145F800B5CC72 /* NewMedConnect.app */,
+				EECE51D9284145FB00B5CC72 /* NewMedConnectTests.xctest */,
+				EECE51E3284145FB00B5CC72 /* NewMedConnectUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EECE51C5284145F800B5CC72 /* NewMedConnect */ = {
+			isa = PBXGroup;
+			children = (
+				EE5B8E1A28FF6DC800FA1F0A /* Activity */,
+				EE93827E28F1354000CCB9F6 /* NewMedConnect.entitlements */,
+				EE00DDD928734D41005CD04A /* Posts */,
+				EE00DDD628734AA2005CD04A /* Storyboard */,
+				EE7C5A242854792E000A32EA /* fonts */,
+				EEBC3BDE28663A5C00715395 /* Discussion */,
+				EEB390122850D98400050B18 /* Categories */,
+				EEA75905284A228C008CBC37 /* Home */,
+				EE340B3728476AC600E2798C /* Resources */,
+				EE340B3628476A9400E2798C /* Sign Up Login */,
+				EECE51C6284145F800B5CC72 /* AppDelegate.swift */,
+				EECE51C8284145F800B5CC72 /* SceneDelegate.swift */,
+				EECE51CA284145F800B5CC72 /* ViewController.swift */,
+				EECE51CF284145FB00B5CC72 /* Assets.xcassets */,
+				EECE51D1284145FB00B5CC72 /* LaunchScreen.storyboard */,
+				EECE51D4284145FB00B5CC72 /* Info.plist */,
+				EE340B6F2847731C00E2798C /* GoogleService-Info.plist */,
+			);
+			path = NewMedConnect;
+			sourceTree = "<group>";
+		};
+		EECE51DC284145FB00B5CC72 /* NewMedConnectTests */ = {
+			isa = PBXGroup;
+			children = (
+				EECE51DD284145FB00B5CC72 /* NewMedConnectTests.swift */,
+			);
+			path = NewMedConnectTests;
+			sourceTree = "<group>";
+		};
+		EECE51E6284145FB00B5CC72 /* NewMedConnectUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EECE51E7284145FB00B5CC72 /* NewMedConnectUITests.swift */,
+				EECE51E9284145FB00B5CC72 /* NewMedConnectUITestsLaunchTests.swift */,
+			);
+			path = NewMedConnectUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EECE51C2284145F800B5CC72 /* NewMedConnect */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EECE51ED284145FB00B5CC72 /* Build configuration list for PBXNativeTarget "NewMedConnect" */;
+			buildPhases = (
+				9FC6B973F8B31261C909C4DF /* [CP] Check Pods Manifest.lock */,
+				EECE51BF284145F800B5CC72 /* Sources */,
+				EECE51C0284145F800B5CC72 /* Frameworks */,
+				EECE51C1284145F800B5CC72 /* Resources */,
+				F050ECBD11A15A8BD0EB0D2D /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NewMedConnect;
+			packageProductDependencies = (
+			);
+			productName = NewMedConnect;
+			productReference = EECE51C3284145F800B5CC72 /* NewMedConnect.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EECE51D8284145FB00B5CC72 /* NewMedConnectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EECE51F0284145FB00B5CC72 /* Build configuration list for PBXNativeTarget "NewMedConnectTests" */;
+			buildPhases = (
+				EECE51D5284145FB00B5CC72 /* Sources */,
+				EECE51D6284145FB00B5CC72 /* Frameworks */,
+				EECE51D7284145FB00B5CC72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EECE51DB284145FB00B5CC72 /* PBXTargetDependency */,
+			);
+			name = NewMedConnectTests;
+			productName = NewMedConnectTests;
+			productReference = EECE51D9284145FB00B5CC72 /* NewMedConnectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EECE51E2284145FB00B5CC72 /* NewMedConnectUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EECE51F3284145FB00B5CC72 /* Build configuration list for PBXNativeTarget "NewMedConnectUITests" */;
+			buildPhases = (
+				EECE51DF284145FB00B5CC72 /* Sources */,
+				EECE51E0284145FB00B5CC72 /* Frameworks */,
+				EECE51E1284145FB00B5CC72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EECE51E5284145FB00B5CC72 /* PBXTargetDependency */,
+			);
+			name = NewMedConnectUITests;
+			productName = NewMedConnectUITests;
+			productReference = EECE51E3284145FB00B5CC72 /* NewMedConnectUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EECE51BB284145F800B5CC72 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					EECE51C2284145F800B5CC72 = {
+						CreatedOnToolsVersion = 13.4;
+					};
+					EECE51D8284145FB00B5CC72 = {
+						CreatedOnToolsVersion = 13.4;
+						TestTargetID = EECE51C2284145F800B5CC72;
+					};
+					EECE51E2284145FB00B5CC72 = {
+						CreatedOnToolsVersion = 13.4;
+						TestTargetID = EECE51C2284145F800B5CC72;
+					};
+				};
+			};
+			buildConfigurationList = EECE51BE284145F800B5CC72 /* Build configuration list for PBXProject "NewMedConnect" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EECE51BA284145F800B5CC72;
+			packageReferences = (
+			);
+			productRefGroup = EECE51C4284145F800B5CC72 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EECE51C2284145F800B5CC72 /* NewMedConnect */,
+				EECE51D8284145FB00B5CC72 /* NewMedConnectTests */,
+				EECE51E2284145FB00B5CC72 /* NewMedConnectUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EECE51C1284145F800B5CC72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB9E36EA2908698C007CB5DA /* Manrope-SemiBold.ttf in Resources */,
+				BB9E36E92908698C007CB5DA /* Manrope-ExtraBold.ttf in Resources */,
+				EE00DDD828734AE2005CD04A /* Discussion.storyboard in Resources */,
+				EECE51D3284145FB00B5CC72 /* LaunchScreen.storyboard in Resources */,
+				BB9E36EC2908698C007CB5DA /* Manrope-Bold.ttf in Resources */,
+				EE340B702847731C00E2798C /* GoogleService-Info.plist in Resources */,
+				EECE51D0284145FB00B5CC72 /* Assets.xcassets in Resources */,
+				BB9E36E62908698C007CB5DA /* Manrope-Light.ttf in Resources */,
+				BB9E36EB2908698C007CB5DA /* Manrope-Medium.ttf in Resources */,
+				BB9E36E82908698C007CB5DA /* Manrope-ExtraLight.ttf in Resources */,
+				EECE51CE284145F800B5CC72 /* Main.storyboard in Resources */,
+				BB9E36E72908698C007CB5DA /* Manrope-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EECE51D7284145FB00B5CC72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EECE51E1284145FB00B5CC72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9FC6B973F8B31261C909C4DF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NewMedConnect-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F050ECBD11A15A8BD0EB0D2D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NewMedConnect/Pods-NewMedConnect-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NewMedConnect/Pods-NewMedConnect-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NewMedConnect/Pods-NewMedConnect-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EECE51BF284145F800B5CC72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE93828428F2777400CCB9F6 /* SavedDiscussionsCollectionViewCell.swift in Sources */,
+				EE5B8E1628FF29E200FA1F0A /* PushNotificationSender.swift in Sources */,
+				EE340B332846462100E2798C /* HapticsManager.swift in Sources */,
+				EE740004289F4C4400C21FB0 /* DownvoteReference.swift in Sources */,
+				EEA758FC2848C3D6008CBC37 /* PasswordResetViewController.swift in Sources */,
+				EE93828028F241AA00CCB9F6 /* YourDiscussionsCollectionViewCell.swift in Sources */,
+				EEA75907284A2313008CBC37 /* YourInformationViewController.swift in Sources */,
+				EEA5A70F2867B35C00F0DE6F /* Discussion.swift in Sources */,
+				EEF9F6C12879118400FDB1D4 /* DiscussionCommentsCollectionViewCell.swift in Sources */,
+				EEBFD94928723470001834DB /* SearchDiscussionCollectionViewCell.swift in Sources */,
+				EE3D45A028587D0E00A2E0E6 /* ConditionTableViewCell.swift in Sources */,
+				EE340B312845FDD400E2798C /* SelectPersonalViewController.swift in Sources */,
+				EE740002289F4C0800C21FB0 /* UpvoteReference.swift in Sources */,
+				EECE6CC5286BFE6F00E4A04A /* SearchConditionCollectionViewCell.swift in Sources */,
+				EEBC3BE228663BD600715395 /* DiscussionNewCollectionViewCell.swift in Sources */,
+				EE93827B28EB8BC600CCB9F6 /* PieChartViewController.swift in Sources */,
+				EE313F0B28433AF00084994E /* LoginViewController.swift in Sources */,
+				EE3D45A2285895A000A2E0E6 /* PinnedReference.swift in Sources */,
+				EE00DDDB28734D56005CD04A /* DiscussionPostViewController.swift in Sources */,
+				EECE51CB284145F800B5CC72 /* ViewController.swift in Sources */,
+				EE0F71B328F75D7C00626F95 /* ReportABugViewController.swift in Sources */,
+				EE5B8E1828FF370F00FA1F0A /* DeviceTokenReference.swift in Sources */,
+				EE5B8E1428FC9A4300FA1F0A /* RequestConditionViewController.swift in Sources */,
+				EE9DF0C62854C07900A26D61 /* ConditionsViewController.swift in Sources */,
+				EECE51C7284145F800B5CC72 /* AppDelegate.swift in Sources */,
+				EECE51C9284145F800B5CC72 /* SceneDelegate.swift in Sources */,
+				EE5B8E1C28FF704500FA1F0A /* ActivityViewController.swift in Sources */,
+				EEB3900F284B880300050B18 /* RaceReference.swift in Sources */,
+				EEB3900B284B879D00050B18 /* BirthdayReference.swift in Sources */,
+				EEBC3BE028663A7900715395 /* DiscussionNewViewController.swift in Sources */,
+				EE313F0F2843AA850084994E /* EnterInformationViewController.swift in Sources */,
+				EE93827928E8E6B700CCB9F6 /* ReportResponseViewController.swift in Sources */,
+				EEA758FE2848D8CB008CBC37 /* Service.swift in Sources */,
+				EE0F71B528FA38B900626F95 /* PrivacyPolicyViewController.swift in Sources */,
+				EE98997B28B5CB6200D74F8F /* ResponseCommentsCollectionViewCell.swift in Sources */,
+				EEB39011284B884900050B18 /* GenderReference.swift in Sources */,
+				EEB89B69287BBA7700801388 /* DiscussionComments.swift in Sources */,
+				EE5B8E2028FF8BF100FA1F0A /* ActivityTableViewCell.swift in Sources */,
+				EEB39009284B877400050B18 /* UIDReference.swift in Sources */,
+				EEB390142850D99C00050B18 /* CategoriesViewController.swift in Sources */,
+				EEB89B6B287BC2F700801388 /* AddDiscussionCommentViewController.swift in Sources */,
+				EEB3900D284B87E300050B18 /* CountryReference.swift in Sources */,
+				EE93828628F28AFB00CCB9F6 /* SavedDiscussionReference.swift in Sources */,
+				EE340B2F2845D5B600E2798C /* SelectAgeViewController.swift in Sources */,
+				EE313F0D28433B240084994E /* SignUpViewController.swift in Sources */,
+				EE93828228F25CBF00CCB9F6 /* YourDiscussionReference.swift in Sources */,
+				EE93827D28EBB9CC00CCB9F6 /* UserReference.swift in Sources */,
+				EE5B8E1E28FF76AE00FA1F0A /* NotificationReference.swift in Sources */,
+				EE61085E28B841BE005EC9EB /* DiscussionResponseReplies.swift in Sources */,
+				EEBFD9472870BE4E001834DB /* SavedReference.swift in Sources */,
+				EE3D45A42858CBD700A2E0E6 /* PinnedTableViewCell.swift in Sources */,
+				EE1CF51F285A39AD00089CF9 /* ConditionReference.swift in Sources */,
+				EE5B8E222900D2E200FA1F0A /* HowToUseViewController.swift in Sources */,
+				EEA759032848EFC8008CBC37 /* EmailReference.swift in Sources */,
+				EEA759002848E200008CBC37 /* HomeViewController.swift in Sources */,
+				EEA5A7112867E3FE00F0DE6F /* AddDiscussionViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EECE51D5284145FB00B5CC72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EECE51DE284145FB00B5CC72 /* NewMedConnectTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EECE51DF284145FB00B5CC72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EECE51E8284145FB00B5CC72 /* NewMedConnectUITests.swift in Sources */,
+				EECE51EA284145FB00B5CC72 /* NewMedConnectUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EECE51DB284145FB00B5CC72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EECE51C2284145F800B5CC72 /* NewMedConnect */;
+			targetProxy = EECE51DA284145FB00B5CC72 /* PBXContainerItemProxy */;
+		};
+		EECE51E5284145FB00B5CC72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EECE51C2284145F800B5CC72 /* NewMedConnect */;
+			targetProxy = EECE51E4284145FB00B5CC72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EECE51CC284145F800B5CC72 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EECE51CD284145F800B5CC72 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EECE51D1284145FB00B5CC72 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EECE51D2284145FB00B5CC72 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EECE51EB284145FB00B5CC72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EECE51EC284145FB00B5CC72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EECE51EE284145FB00B5CC72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95DCE37A2BAE4AB66FB2C343 /* Pods-NewMedConnect.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NewMedConnect/NewMedConnect.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KK6V8C52YD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NewMedConnect/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MedConnect+";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
+				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnect;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		EECE51EF284145FB00B5CC72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C01C24E6608D4EE1068CA1B /* Pods-NewMedConnect.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NewMedConnect/NewMedConnect.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KK6V8C52YD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NewMedConnect/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MedConnect+";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
+				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnect;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		EECE51F1284145FB00B5CC72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 986PBCGC56;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NewMedConnect.app/NewMedConnect";
+			};
+			name = Debug;
+		};
+		EECE51F2284145FB00B5CC72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 986PBCGC56;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NewMedConnect.app/NewMedConnect";
+			};
+			name = Release;
+		};
+		EECE51F4284145FB00B5CC72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 986PBCGC56;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NewMedConnect;
+			};
+			name = Debug;
+		};
+		EECE51F5284145FB00B5CC72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 986PBCGC56;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EshaanSharma.NewMedConnectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NewMedConnect;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EECE51BE284145F800B5CC72 /* Build configuration list for PBXProject "NewMedConnect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EECE51EB284145FB00B5CC72 /* Debug */,
+				EECE51EC284145FB00B5CC72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EECE51ED284145FB00B5CC72 /* Build configuration list for PBXNativeTarget "NewMedConnect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EECE51EE284145FB00B5CC72 /* Debug */,
+				EECE51EF284145FB00B5CC72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EECE51F0284145FB00B5CC72 /* Build configuration list for PBXNativeTarget "NewMedConnectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EECE51F1284145FB00B5CC72 /* Debug */,
+				EECE51F2284145FB00B5CC72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EECE51F3284145FB00B5CC72 /* Build configuration list for PBXNativeTarget "NewMedConnectUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EECE51F4284145FB00B5CC72 /* Debug */,
+				EECE51F5284145FB00B5CC72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EECE51BB284145F800B5CC72 /* Project object */;
+}
