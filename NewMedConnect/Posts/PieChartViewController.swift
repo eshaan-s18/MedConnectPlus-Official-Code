@@ -22,19 +22,18 @@ var selectedAgeVotes:[Int] = []
 var selectedCountry:[String] = []
 var selectedCountryVotes:[Int] = []
 
-
-
+// MARK: - Pie Chart Page
 class PieChartViewController: UIViewController {
     
     @IBOutlet weak var filterControl: UISegmentedControl!
-    @IBOutlet weak var pieChart: PieChartView!
     
+    @IBOutlet weak var pieChart: PieChartView!
+
     @IBOutlet weak var selectedResponseLabel: UILabel!
     
     @IBOutlet weak var selectedResponseView: UIView!
     
-    
-    //GENDER VARIABLEs
+    //GENDER VARIABLES
     var maleDataEntry = PieChartDataEntry(value: 0)
     var femaleDataEntry = PieChartDataEntry(value: 0)
     var otherDataEntry = PieChartDataEntry(value: 0)
@@ -45,7 +44,6 @@ class PieChartViewController: UIViewController {
     var indianAlaskaDataEntry = PieChartDataEntry(value: 0)
     var asianDataEntry = PieChartDataEntry(value: 0)
     var hawaiianIslanderDataEntry = PieChartDataEntry(value: 0)
-
 
     //AGE RANGE VARIABLES
     var zeroToTenDataEntry = PieChartDataEntry(value: 0)
@@ -64,15 +62,12 @@ class PieChartViewController: UIViewController {
     
     var filter = ""
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         selectedResponseLabel.text = selectedPieChartResponse
         
         pieChart.chartDescription.text = "Graph displays upvotes by category"
-        
-        
         pieChart.centerText = "Filtered By: Gender"
         
         
@@ -93,16 +88,12 @@ class PieChartViewController: UIViewController {
         
         updateChartData()
         
-        
-        
-
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func filterValueChanged(_ sender: Any) {
         switch filterControl.selectedSegmentIndex {
         case 0:
-            print("gender")
+            print("Gender")
             pieChart.centerText = "Filtered By: Gender"
 
             maleDataEntry.value = Double(selectedGenderVotes[0])
@@ -159,7 +150,7 @@ class PieChartViewController: UIViewController {
             
             
         case 2:
-            print("race")
+            print("Race")
             pieChart.centerText = "Filtered By: Race"
 
             whiteDataEntry.value = Double(selectedRaceVotes[0])
@@ -184,7 +175,7 @@ class PieChartViewController: UIViewController {
             updateChartData()
             
         case 3:
-            print("country")
+            print("Country")
             pieChart.centerText = "Filtered By: Country"
             numberOfUpvotesDataEntries = [PieChartDataEntry]()
             var i = 0
@@ -303,14 +294,5 @@ class PieChartViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

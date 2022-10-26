@@ -18,6 +18,7 @@ struct NotificationStruct {
     var notificationDiscussion:String
 }
 
+// MARK: - Activity Page
 class ActivityViewController: UIViewController {
     
     @IBOutlet weak var activityTableView: UITableView!
@@ -25,7 +26,6 @@ class ActivityViewController: UIViewController {
     @IBOutlet weak var noNotiLabel: UILabel!
     
     @IBOutlet weak var loading: UIActivityIndicatorView!
-    
     
     
     var notificationsArray = [NotificationStruct]()
@@ -49,7 +49,6 @@ class ActivityViewController: UIViewController {
 
         
         getData()
-        // Do any additional setup after loading the view.
     }
     
     @objc func refresh() {
@@ -71,7 +70,7 @@ class ActivityViewController: UIViewController {
                     let docID = document.documentID
                     
                     if docID == "0" {
-                        print("skip")
+                        print("Skipped Document")
                         self.noNotiLabel.isHidden = false
                         self.loading.stopAnimating()
                     }
@@ -90,8 +89,6 @@ class ActivityViewController: UIViewController {
                             switch result {
                             case .success(let notification):
                                 if let notification = notification {
-                                    // A `City` value was successfully initialized from the DocumentSnapshot.
-                                    //                                let notificationDate = notification.notificationDate?.prefix(10)
                                     
                                     
                                     self.notificationsArray.append(NotificationStruct(notificationTitle: notification.notificationTitle!, notificationBody: notification.notificationBody!, notificationDate: notification.notificationDate!, notificationCondition: notification.notificationCondition!, notificationDiscussion: notification.notificationDiscussion!))
@@ -103,19 +100,11 @@ class ActivityViewController: UIViewController {
                                         self.activityTableView.delegate = self
                                         self.activityTableView.reloadData()
                                     }
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    print("okay")
+                                   
                                 } else {
-                                    // A nil value was successfully initialized from the DocumentSnapshot,
-                                    // or the DocumentSnapshot was nil.
                                     print("Document does not exist")
                                 }
                             case .failure(let error):
-                                // A `City` value could not be initialized from the DocumentSnapshot.
                                 print("Error decoding question: \(error)")
                             }
                         }
@@ -129,18 +118,9 @@ class ActivityViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+// MARK: - Activity Page TableView Setup
 extension ActivityViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notificationsArray.count
@@ -153,10 +133,6 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource {
         cell.notificationBodyLabel.text = notificationsArray.map({$0.notificationBody})[indexPath.row]
         let notificationDate = notificationsArray.map({$0.notificationDate})[indexPath.row]
         cell.notificationDateLabel.text = String(notificationDate.prefix(10))
-        
-        
-        
-        
         
         cell.backgroundColor = UIColor.systemGray6
         

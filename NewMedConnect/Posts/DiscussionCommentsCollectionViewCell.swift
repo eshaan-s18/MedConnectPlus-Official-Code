@@ -14,20 +14,11 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
-var selectedTextFieldCount2 = 0
 var replyTextFieldVal2 = ""
 
-
-
-var x = 3
-
+// MARK: - Discussion Responses CollectionView Cell
 class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate, UIPopoverPresentationControllerDelegate {
-    
-    var cellHeightNew = 0
-    
-    
-
-    
+        
     var db = Firestore.firestore()
 
     @IBOutlet weak var commentLabel: UILabel!
@@ -62,19 +53,13 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
     
     @IBOutlet weak var responseCommentsView: UIView!
     
-    
     @IBOutlet weak var responseCommentsCollectionView: UICollectionView!
-    
     
     @IBOutlet weak var repliesButtonWidth: NSLayoutConstraint!
     
-    
     @IBOutlet weak var replyButton: UIButton!
     
-    
     @IBOutlet weak var pieChartButton: UIButton!
-    
-    
     
     @IBOutlet weak var postReplyView: UIView!
     
@@ -82,14 +67,11 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
     
     @IBOutlet weak var replyTextFieldHeightConstraint: NSLayoutConstraint!
     
-    
     @IBOutlet weak var replyCancelSendButton: UIButton!
     
     @IBOutlet weak var postReplyViewHeightConstraint: NSLayoutConstraint!
     
-    
     @IBOutlet weak var deleteOrFlag: UIButton!
-    
     
     @IBOutlet weak var postCommentReplyView: UIView!
     
@@ -103,17 +85,10 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
     
     @IBOutlet weak var postCommentReplyUpperConstraint: NSLayoutConstraint!
     
-    
     var discussionCommentUserDownvote = [String]()
     var discussionCommentUserUpvote = [String]()
     
-    var test = [[1,2,3], [1,2,3,4], [1,2,3,4,5]]
-
-
-    var displayedReplies = 0
     var dateFormatter = DateFormatter()
-
-    var collectionViewTag = 0
 
     var discussions: DiscussionComment? {
         didSet {
@@ -124,10 +99,9 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        // Initialization code
         responseCommentsCollectionView.delegate = self
         responseCommentsCollectionView.dataSource = self
-//        replyTextField.delegate = self
+        
         replyTextField.delegate = self
         
         let docRefTwo = db.collection("Users").document(Auth.auth().currentUser!.uid)
@@ -142,7 +116,6 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
             switch result {
             case .success(let upvote):
                 if let upvote = upvote {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     let docRefThree = self.db.collection("Users").document(Auth.auth().currentUser!.uid)
                     docRefThree.getDocument { (document, error) in
 
@@ -154,29 +127,20 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
                         switch result {
                         case .success(let downvote):
                             if let downvote = downvote {
-                                // A `City` value was successfully initialized from the DocumentSnapshot.
                                 self.discussionCommentUserDownvote = downvote.downvotes!
                                 self.discussionCommentUserUpvote = upvote.upvotes!
                                 
-                                print("okay")
                             } else {
-                                // A nil value was successfully initialized from the DocumentSnapshot,
-                                // or the DocumentSnapshot was nil.
                                 print("Document does not exist")
                             }
                         case .failure(let error):
-                            // A `City` value could not be initialized from the DocumentSnapshot.
                             print("Error decoding question: \(error)")
                             }
                         }
-                    print("okay")
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
                 }
             }
@@ -196,7 +160,6 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
             switch result {
             case .success(let upvote):
                 if let upvote = upvote {
-                    // A `City` value was successfully initialized from the DocumentSnapshot.
                     let docRefThree = self.db.collection("Users").document(Auth.auth().currentUser!.uid)
                     docRefThree.getDocument { (document, error) in
 
@@ -208,48 +171,35 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
                         switch result {
                         case .success(let downvote):
                             if let downvote = downvote {
-                                // A `City` value was successfully initialized from the DocumentSnapshot.
                                 self.discussionCommentUserDownvote = downvote.downvotes!
                                 self.discussionCommentUserUpvote = upvote.upvotes!
                                 
-                                countNum = self.responseCommentsCollectionView.tag - 1
-                                print(countNum)
+                                discussionRepliesIndicator = self.responseCommentsCollectionView.tag - 1
                                 
                                 self.responseCommentsCollectionView.reloadData()
                                 self.responseCommentsCollectionView.dataSource = self
                                 self.responseCommentsCollectionView.delegate = self
                                 
-                                print("okay")
                             } else {
-                                // A nil value was successfully initialized from the DocumentSnapshot,
-                                // or the DocumentSnapshot was nil.
                                 print("Document does not exist")
                             }
                         case .failure(let error):
-                            // A `City` value could not be initialized from the DocumentSnapshot.
                             print("Error decoding question: \(error)")
                             }
                         }
-                    print("okay")
                 } else {
-                    // A nil value was successfully initialized from the DocumentSnapshot,
-                    // or the DocumentSnapshot was nil.
                     print("Document does not exist")
                 }
             case .failure(let error):
-                // A `City` value could not be initialized from the DocumentSnapshot.
                 print("Error decoding question: \(error)")
                 }
             }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("TEst")
         selectedTextFieldCount = textField.tag + 1
         
-        whichTextField = "comment"
-        
-
+        textFieldIndicator = "comment"
         
     }
     
@@ -271,7 +221,7 @@ class DiscussionCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDel
 }
 
 
-    
+// MARK: - Discussion Response Replies CollectionView Setup
 extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             return CGSize(width: 320, height: 105)
@@ -281,32 +231,23 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        
-        print(sharedComments.count)
-        print(countNum)
-        if countNum == sharedComments.count - 1 {
-            countNum = -1
+        if discussionRepliesIndicator == sharedComments.count - 1 {
+            discussionRepliesIndicator = -1
         }
-        countNum += 1
-        print(countNum)
+        discussionRepliesIndicator += 1
         
-        collectionView.tag = countNum
+        collectionView.tag = discussionRepliesIndicator
         
-        print(sharedComments)
+        if sharedComments.map({$0.commentReplies})[discussionRepliesIndicator].count > 0 {
 
-        print(sharedComments.map({$0.commentReplies})[countNum])
-        
-        if sharedComments.map({$0.commentReplies})[countNum].count > 0 {
-
-            
             
             var sortedComments = [DiscussionComment]()
           
-            sharedComments[countNum].commentReplies = sharedComments.map({$0.commentReplies})[countNum].sorted(by: {$0.discussionCommentReplyDate.compare($1.discussionCommentReplyDate) == .orderedDescending})
+            sharedComments[discussionRepliesIndicator].commentReplies = sharedComments.map({$0.commentReplies})[discussionRepliesIndicator].sorted(by: {$0.discussionCommentReplyDate.compare($1.discussionCommentReplyDate) == .orderedDescending})
         
         
         
-            return sharedComments.map({$0.commentReplies})[countNum].count
+            return sharedComments.map({$0.commentReplies})[discussionRepliesIndicator].count
 
         }
         else {
@@ -317,10 +258,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
      
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "responseCommentsCollectionCell", for: indexPath) as? ResponseCommentsCollectionViewCell
-        
-        print(sharedComments.map({$0.commentReplies})[collectionView.tag])
-        print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyTitle}))
-        print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyTitle})[indexPath.row])
+
        
         cell?.responseReplyLabel.text = sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyTitle})[indexPath.row]
   
@@ -385,10 +323,8 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                     switch result {
                                     case .success(let deviceToken):
                                         if let deviceToken = deviceToken {
-                                            // A `City` value was successfully initialized from the DocumentSnapshot.
 
                                             let commentReply = cell?.responseReplyLabel.text
-                                            print(deviceToken.deviceToken!)
                                             let sender = PushNotificationSender()
                                             sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect+", body: "💬 Someone replied to your response reply: \(commentReply!)")
                                             
@@ -409,14 +345,10 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                             }
                                             
                                             
-                                            print("okay")
                                         } else {
-                                            // A nil value was successfully initialized from the DocumentSnapshot,
-                                            // or the DocumentSnapshot was nil.
                                             print("Document does not exist")
                                         }
                                     case .failure(let error):
-                                        // A `City` value could not be initialized from the DocumentSnapshot.
                                         print("Error decoding question: \(error)")
                                         }
                                     }
@@ -446,7 +378,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
         }
         
         else {
-            whichTextField = "commentReply"
+            textFieldIndicator = "commentReply"
 
             cell?.postCommentReplyViewHeightConstraint.constant = 80
             cell?.postCommentReplyLabel.text = "     Reply To: User " + sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row]
@@ -461,7 +393,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
             cell?.postCommentReplyCancelorPost.isEnabled = true
             
             replyIndex = indexPath.row
-            print(replyIndex)
         }
         
         
@@ -503,7 +434,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 
                 
                 
-                print(discussionCommentUserDownvote)
                 
                 if self.discussionCommentUserDownvote.contains((cell?.responseReplyLabel.text)!) {
                     cell?.downheartImage.image = UIImage(systemName: "arrow.down.heart.fill")
@@ -540,7 +470,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 UIAction(title: "Delete Response", image: UIImage(systemName: "trash"), handler: { action in
                     
                     
-                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row])
                     self.db.collection(conditionSelected).document(discussionDocument).collection("comments").whereField("commentTitle", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row])
                         .getDocuments() { (querySnapshot, err) in
                             if let err = err {
@@ -551,11 +480,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                     
                                     let commentDocument = document.documentID
                                     
-                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row])
-                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyTitle})[indexPath.row])
-                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyDate})[indexPath.row])
-                                    print(sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row])
-
+                                    
 
                                     
                                     self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(document.documentID).collection("replies").whereField("commentTitle", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussCommentTitle})[indexPath.row]).whereField("repliesTitle", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionCommentReplyTitle})[indexPath.row]).whereField("repliesDate", isEqualTo: displayedDate[indexPath.row]).whereField("repliesUser", isEqualTo: sharedComments.map({$0.commentReplies})[collectionView.tag].map({$0.discussionReplyUsername})[indexPath.row])
@@ -582,7 +507,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                             }
                                             
                                             else {
-                                                print(querySnapshot!.documents)
                                                 for document in querySnapshot!.documents {
                                                     self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(commentDocument).collection("replies").document(document.documentID).updateData(["repliesTitle" : " "])
                                                     
@@ -661,8 +585,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
         var commentTitle = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row]
         var newCommentTitle = commentTitle.components(separatedBy: delimeter)
         
-        print(newCommentTitle[0])
-        
+
         selectedPieChartResponse = newCommentTitle[0]
         
         selectedGenderVotes = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyGenderUpvotes})[indexpath1.row]
@@ -671,7 +594,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
         selectedCountry = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row]
         selectedCountryVotes = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row]
         
-        print(selectedGenderVotes)
         
         self.window?.rootViewController?.present(pieChartVC, animated: true, completion: nil)
 
@@ -701,7 +623,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
             sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyButtonTapped = false
             sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCancelorPost = ""
 
-            countNum = self.responseCommentsCollectionView.tag - 1
+            discussionRepliesIndicator = self.responseCommentsCollectionView.tag - 1
 
             self.responseCommentsCollectionView.reloadData()
 
@@ -710,7 +632,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
             sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyButtonTapped = false
             sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCancelorPost = "Post"
 
-            countNum = self.responseCommentsCollectionView.tag - 1
+            discussionRepliesIndicator = self.responseCommentsCollectionView.tag - 1
 
             self.responseCommentsCollectionView.reloadData()
         }
@@ -720,9 +642,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
     
     @objc func commentReplyButtonTapped(sender: UIButton) {
         let indexpath = IndexPath(row: sender.tag, section: 0)
-        
-        print("Test")
-        
+                
         
         if sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionReplyButtonTapped})[indexpath.row] == false {
             
@@ -735,13 +655,12 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
             while i < sharedComments[self.responseCommentsCollectionView.tag].commentReplies.count {
                 if i != indexpath.row {
                     sharedComments[self.responseCommentsCollectionView.tag].commentReplies[i].discussionReplyButtonTapped = false
-                    print(sharedComments[self.responseCommentsCollectionView.tag].commentReplies[i])
                 }
                 i+=1
             }
             
             
-            countNum = self.responseCommentsCollectionView.tag - 1
+            discussionRepliesIndicator = self.responseCommentsCollectionView.tag - 1
 
             self.responseCommentsCollectionView.reloadData()
             
@@ -759,13 +678,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
         
         var docCommentNum = ""
         
-        
-        
-        
-        
-        
-        print(discussionCommentUserUpvote)
-
         if self.discussionCommentUserUpvote.contains((sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row])) {
             self.db.collection("Users").document(Auth.auth().currentUser!.uid).updateData([
                 "upvotes": FieldValue.arrayRemove([sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row]
@@ -919,8 +831,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
 
             var index = 0
             var i = 1
-            print(discussionCommentUserUpvote.count)
-            print(discussionCommentUserUpvote)
+            
             while i < discussionCommentUserUpvote.count {
                 if discussionCommentUserUpvote[i] == sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row] {
                     index = i
@@ -928,9 +839,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 i+=1
             }
 
-            print(index)
             discussionCommentUserUpvote.remove(at: index)
-            print(discussionCommentUserUpvote)
 
 
         }
@@ -941,15 +850,8 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                                 ])])
 
 
-            print(discussionCommentUserUpvote)
             discussionCommentUserUpvote.append(sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row])
-            print(discussionCommentUserUpvote)
 
-
-
-            print(conditionSelected)
-            print(discussionDocument)
-            print(docCommentNum)
             
             self.db.collection(conditionSelected).document(discussionDocument).collection("comments").whereField("commentTitle", isEqualTo: sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussCommentTitle})[indexpath1.row])
                 .getDocuments() { (querySnapshot, err) in
@@ -962,8 +864,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                             docCommentNum = document.documentID
                             
                     
-            
-            
 
                             self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies")
                                 .whereField("repliesTitle", isEqualTo: sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row])
@@ -990,9 +890,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                                 switch result {
                                                 case .success(let deviceToken):
                                                     if let deviceToken = deviceToken {
-                                                        // A `City` value was successfully initialized from the DocumentSnapshot.
                                                         
-                                                        print(deviceToken.deviceToken!)
                                                         let sender = PushNotificationSender()
                                                         sender.sendPushNotification(to: deviceToken.deviceToken!, title: "MedConnect+", body: "♥️⬆️ Someone upvoted your response reply: \(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row])")
                                                         
@@ -1012,27 +910,21 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                                                 }
                                                         }
                                                         
-                                                        print("okay")
                                                     } else {
-                                                        // A nil value was successfully initialized from the DocumentSnapshot,
-                                                        // or the DocumentSnapshot was nil.
                                                         print("Document does not exist")
                                                     }
                                                 case .failure(let error):
-                                                    // A `City` value could not be initialized from the DocumentSnapshot.
                                                     print("Error decoding question: \(error)")
                                                     }
                                                 }
                                             
                                             
                                             
-                                            print(sharedDiscussionCommentUserCountry)
                                             if sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].contains(sharedDiscussionCommentUserCountry) {
-                                                print(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row])
+
                                                 var countryIndex = sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountry})[indexpath1.row].firstIndex(of: sharedDiscussionCommentUserCountry)
                                                 sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyCountryUpvotes[countryIndex!] += 1
                                                
-                                                print(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row])
 
                                                 self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
                                                     "countryUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyCountryUpvotes})[indexpath1.row]])
@@ -1080,7 +972,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                             ])
                                             
                                             
-                                            print(sharedDiscussionCommentUserRace)
                                             var raceIndex = 0
                                             if sharedDiscussionCommentUserRace == "White" {
                                                 raceIndex = 0
@@ -1106,7 +997,6 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                                             
                                             
                                             sharedComments[self.responseCommentsCollectionView.tag].commentReplies[indexpath1.row].discussionReplyRaceUpvotes[raceIndex] += 1
-                                            print(sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyRaceUpvotes})[indexpath1.row])
                                             self.db.collection(conditionSelected).document(discussionDocument).collection("comments").document(docCommentNum).collection("replies").document(document.documentID).updateData([
                                                 "raceUpvotes": sharedComments.map({$0.commentReplies})[self.responseCommentsCollectionView.tag].map({$0.discussionReplyRaceUpvotes})[indexpath1.row]
                                             ])
@@ -1211,9 +1101,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
 
                 var index = 0
                 var i = 1
-                print(discussionCommentUserDownvote.count)
-                print(discussionCommentUserDownvote)
-                    // print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row])
+                
                 while i < discussionCommentUserDownvote.count {
                     if discussionCommentUserDownvote[i] == sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row] {
                         index = i
@@ -1221,9 +1109,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                     i+=1
                 }
 
-                print(index)
                 discussionCommentUserDownvote.remove(at: index)
-                print(discussionCommentUserDownvote)
 
 
             }
@@ -1321,8 +1207,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
             
             var index = 0
             var i = 1
-            print(discussionCommentUserUpvote.count)
-            print(discussionCommentUserUpvote)
+            
             while i < discussionCommentUserDownvote.count {
                 if discussionCommentUserDownvote[i] == sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row] {
                     index = i
@@ -1330,9 +1215,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 i+=1
             }
             
-            print(index)
             discussionCommentUserDownvote.remove(at: index)
-            print(discussionCommentUserDownvote)
             
             
         }
@@ -1343,9 +1226,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 "downvotes": FieldValue.arrayUnion([sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row]
                                                 ])])
             
-            print(discussionCommentUserUpvote)
             discussionCommentUserDownvote.append(sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row])
-            print(discussionCommentUserUpvote)
 
         
             self.db.collection(conditionSelected).document(discussionDocument).collection("comments").whereField("commentTitle", isEqualTo: sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussCommentTitle})[indexpath1.row])
@@ -1529,9 +1410,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                 
                 var index = 0
                 var i = 1
-                print(discussionCommentUserDownvote.count)
-                print(discussionCommentUserDownvote)
-                    // print(self.sortedDiscussionComments.map({$0.discussionsCommentTitle})[indexpath1.row])
+                
                 while i < discussionCommentUserUpvote.count {
                     if discussionCommentUserUpvote[i] == sharedComments.map({$0.commentReplies})[responseCommentsCollectionView.tag].map({$0.discussionCommentReplyTitle})[indexpath1.row] {
                         index = i
@@ -1539,9 +1418,7 @@ extension DiscussionCommentsCollectionViewCell: UICollectionViewDelegate, UIColl
                     i+=1
                 }
 
-                print(index)
                 discussionCommentUserUpvote.remove(at: index)
-                print(discussionCommentUserUpvote)
             }
             
             else {

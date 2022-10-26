@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Activity Page TableView Cell
 class ActivityTableViewCell: UITableViewCell {
 
     @IBOutlet weak var notificationTitleLabel: UILabel!

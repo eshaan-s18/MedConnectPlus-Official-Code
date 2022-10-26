@@ -7,8 +7,7 @@
 
 import UIKit
 
-var selectedTextFieldCount3 = 0
-
+// MARK: - Discussion Post Response Reply CollectionViewCell
 class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var responseReplyLabel: UILabel!
@@ -37,8 +36,6 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
     
     @IBOutlet weak var pieChartButton: UIButton!
     
-    
-    
     @IBOutlet weak var deleteOrFlag: UIButton!
     
     @IBOutlet weak var postCommentReplyView: UIView!
@@ -58,14 +55,7 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        
- 
         postCommentReplyTextField.delegate = self
-        
-    }
-    
-    @objc func presentPieChart() {
         
     }
     
@@ -89,10 +79,6 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
-    @objc func presentReport() {
-        
-       
-    }
     
     @objc func presentSuccess() {
         let alert = UIAlertController(title: "Success‼️✅", message: "Please Refresh", preferredStyle: .alert)
@@ -116,12 +102,6 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
     
     
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-
-
-        
-    }
-    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField.text!.count > 0 {
             postCommentReplyCancelorPost.setTitle("Post", for: .normal)
@@ -134,17 +114,5 @@ class ResponseCommentsCollectionViewCell: UICollectionViewCell, UITextFieldDeleg
     func textFieldDidEndEditing(_ textField: UITextField) {
         replyTextFieldVal2 = textField.text!
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }

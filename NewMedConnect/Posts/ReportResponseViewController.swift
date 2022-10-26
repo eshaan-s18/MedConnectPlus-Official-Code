@@ -14,7 +14,7 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseFirestore
 
-
+// MARK: - Report Response Page
 class ReportResponseViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var reportView: UIView!
@@ -33,12 +33,8 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         reportResponseTextView.delegate = self
-        
-        print(reportedDiscussion)
-        
+                
         if reportedDiscussionReply != "Nil" {
             reportLabel.text = reportedDiscussionReply
 
@@ -48,7 +44,6 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
             var delimeter = "-"
             var commentTitle = reportedDiscussion
             var newCommentTitle = commentTitle.components(separatedBy: delimeter)
-            print(newCommentTitle[0])
 
             reportLabel.text = newCommentTitle[0]
 
@@ -63,7 +58,6 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
         
         allowPost()
 
-        // Do any additional setup after loading the view.
     }
     @objc private func allowPost() {
         if reportResponseTextView.text!.count >= 1 {
@@ -138,13 +132,10 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
             else
             {
                 self.documentsCount = (querySnapshot?.documents.count)!
-                print("Hello this is document count")
-                print(documentsCount)
                 
                 var delimeter = "-"
                 var commentTitle = reportedDiscussion
                 var newCommentTitle = commentTitle.components(separatedBy: delimeter)
-                print(newCommentTitle[0])
                 
                 db.collection("REPORTED DISCUSSIONS").document("\(documentsCount)").setData(["condition": conditionSelected, "post": reportedPost, "discussion": selectedDiscussion, "reportedComment": newCommentTitle[0], "reportedCommentReply": reportedDiscussionReply, "reportDescription": "!!REPORT: " + reportResponseTextView.text])
                 
@@ -175,14 +166,5 @@ class ReportResponseViewController: UIViewController, UITextViewDelegate {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
