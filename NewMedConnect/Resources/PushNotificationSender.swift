@@ -21,6 +21,7 @@ class PushNotificationSender {
         
         # REFERENCE PERSONAL NOTES FOR KEY INFORMATION 
         request.setValue("key=", forHTTPHeaderField: "Authorization")
+        
         let task =  URLSession.shared.dataTask(with: request as URLRequest)  { (data, response, error) in
             do {
                 if let jsonData = data {
